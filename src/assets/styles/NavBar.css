@@ -1,0 +1,10 @@
+.title {
+  font-family: "Alleyn W01 Regular";
+  font-size: 2em;
+}
+
+@media screen and (max-width: 600px) {
+  .title {
+    font-size: 16px;
+  }
+}
