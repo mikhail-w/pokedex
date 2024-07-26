@@ -1,5 +1,6 @@
 'use client';
 import '../assets/styles/NavBar.css';
+import { CgPokemon } from 'react-icons/cg';
 import { Link, useNavigate } from 'react-router-dom';
 import {
   Box,
@@ -17,11 +18,11 @@ import {
   Stack,
   useColorMode,
   Center,
-  Image,
   Input,
   InputGroup,
   InputLeftElement,
   InputRightAddon,
+  HStack,
 } from '@chakra-ui/react';
 import pokeball from '../assets/images/pokeball.png';
 import { MoonIcon, SunIcon } from '@chakra-ui/icons';
@@ -34,11 +35,17 @@ function NavBar() {
 
   return (
     <>
-      <Box bg={useColorModeValue('gray.100', 'gray.900')} px={4}>
+      <Box
+        className="navBar"
+        bg={useColorModeValue('gray.100', 'gray.900')}
+        px={4}
+      >
         <Flex h={16} alignItems={'center'} justifyContent={'space-between'}>
           <Link className="link" to="/">
-            <Box>
-              <Text className="title">POKEDEX</Text>
+            <Box className="title">
+              P
+              <CgPokemon className="inline-img" />
+              KEDEX
             </Box>
           </Link>
 
