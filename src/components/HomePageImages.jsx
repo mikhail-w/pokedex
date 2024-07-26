@@ -3,10 +3,14 @@ import pickachu from '../assets/images/pokemon/pikachu.png';
 import charizard from '../assets/images/pokemon/charizard.png';
 import pokedex from '../assets/images/pokemon/pokedex.png';
 import pokeball2 from '../assets/images/pokeball2.png';
+import outline2 from '../assets/images/balloutline2.png';
 
 function HomePageImages() {
   return (
     <>
+      <div className="ballOutline">
+        <img src={outline2} />
+      </div>
       <div className="logo">
         <img src={pokedex}></img>
       </div>

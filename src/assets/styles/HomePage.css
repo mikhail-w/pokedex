@@ -1,3 +1,14 @@
+.ballOutline {
+  /* height: 100px; */
+  /* width: 300px; */
+  position: fixed;
+  bottom: 100px;
+  right: -470px;
+  opacity: .2;
+  transform: rotate(-0.1turn);
+  z-index: -1;
+}
+
 .logo {
   height: 100px;
   width: 300px;

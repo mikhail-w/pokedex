@@ -52,7 +52,7 @@ function NavBar() {
           <Flex alignItems={'center'} justifyContent={'center'}>
             <Stack direction={'row'} spacing={7}>
               <Box maxW={'250px'} marginLeft={'10px'}>
-                <InputGroup borderRadius={5} size="sm">
+                <InputGroup borderRadius={50} size="sm">
                   <InputLeftElement />
                   <Input
                     type="text"

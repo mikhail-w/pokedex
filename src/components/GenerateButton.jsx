@@ -10,7 +10,7 @@ function GenerateButton() {
         size="lg"
         backgroundColor={useColorModeValue('#3d7dca', '#e53e3e')}
       >
-        GenerateButton
+        Generate Random Pokemon
       </Button>
     </Center>
   );
