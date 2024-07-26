@@ -1,10 +1,10 @@
 import { Button, useColorModeValue, Center } from '@chakra-ui/react';
 
-function GenerateButton() {
+function GenerateButton({ handleClick }) {
   return (
     <Center marginTop={'60vh'}>
       <Button
-        // onClick={getRandomPokemon}
+        onClick={handleClick}
         marginTop={'60px'}
         colorScheme="red"
         size="lg"

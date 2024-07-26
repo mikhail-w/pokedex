@@ -1,6 +1,10 @@
 'use client';
 import '../assets/styles/NavBar.css';
+import pokeball from '../assets/images/pokeballs/pokeball.png';
+import { MoonIcon, SunIcon } from '@chakra-ui/icons';
+import { useRef, useState } from 'react';
 import { CgPokemon } from 'react-icons/cg';
+
 import { Link, useNavigate } from 'react-router-dom';
 import {
   Box,
@@ -24,9 +28,6 @@ import {
   InputRightAddon,
   HStack,
 } from '@chakra-ui/react';
-import pokeball from '../assets/images/pokeball.png';
-import { MoonIcon, SunIcon } from '@chakra-ui/icons';
-import { useRef, useState } from 'react';
 
 function NavBar() {
   const { colorMode, toggleColorMode } = useColorMode();
