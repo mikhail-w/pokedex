@@ -3,12 +3,12 @@ import { getChoice } from '../utils';
 import { Button, useColorModeValue, Center } from '@chakra-ui/react';
 
 function GenerateButton({ getRandomPokemon }) {
-  const { randomChoice, setRandomChoice } = useOutletContext();
+  const { randomChoice, setRandomChoice, setIsLoading } = useOutletContext();
   function handleClick() {
-    console.log('Inside Button Component');
+    console.log('Inside Generate Random Button Component');
     console.log('Current Random Choice', randomChoice);
     setRandomChoice(getChoice(1025));
-    console.log('Current Random Choice after', randomChoice);
+    setIsLoading(true);
     getRandomPokemon();
   }
   return (

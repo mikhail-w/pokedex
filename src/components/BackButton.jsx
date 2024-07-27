@@ -4,6 +4,7 @@ import { Button, Center } from '@chakra-ui/react';
 function BackButton() {
   const navigate = useNavigate();
   const handleClick = () => {
+    console.log('<<<<BACK BUTTON PRESSED>>>>');
     navigate(-1);
   };
 

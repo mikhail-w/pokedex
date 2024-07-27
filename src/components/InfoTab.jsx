@@ -5,8 +5,8 @@ import '../assets/styles/InfoTab.css';
 
 function InfoTab() {
   const { pokemon } = useOutletContext();
-  console.log('Inside Info Tab');
-  console.log(pokemon);
+  // console.log('Inside Info Tab');
+  // console.log(pokemon);
   return (
     <TableContainer>
       <Table size="md">

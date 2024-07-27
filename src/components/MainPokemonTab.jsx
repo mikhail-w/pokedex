@@ -32,61 +32,67 @@ function MainPokemonTab() {
     setPokemon,
   } = useOutletContext();
   return (
-    <Tabs align="center" variant="enclosed" size="lg">
+    <>
       {isLoading ? (
         <Loading />
       ) : (
-        <TabPanels height={'650px'}>
-          <TabPanel>
-            {/* Main Image */}
-            <MainPokemonName />
+        <Tabs align="center" variant="enclosed" size="lg">
+          {isLoading ? (
+            <Loading />
+          ) : (
+            <TabPanels height={'650px'}>
+              <TabPanel>
+                {/* Main Image */}
+                <MainPokemonName />
 
-            <Center
-              objectFit="contain"
-              height={'550px'}
-              flexDirection={'column'}
-            >
-              <Image
-                maxW={'90%'}
-                maxH={'90%'}
-                src={pokemon.sprites.other.home.front_default}
-              />
-            </Center>
-          </TabPanel>
-          <TabPanel>
-            {/* Art Image */}
-            <MainPokemonName />
-            <Center objectFit="contain" height={'550px'}>
-              <Image
-                maxW={'90%'}
-                maxH={'90%'}
-                src={pokemon.sprites.other[`official-artwork`].front_default}
-              />
-            </Center>
-          </TabPanel>
-          <TabPanel>
-            {/* GIF Image */}
-            <MainPokemonName />
-            <Center objectFit="contain" height={'550px'} flexDir={'column'}>
-              <Image
-                minWidth={'150px'}
-                src={
-                  pokemon.sprites.other.showdown.front_default == null
-                    ? ball
-                    : pokemon.sprites.other.showdown.front_default
-                }
-              />
-            </Center>
-          </TabPanel>
-          <TabPanel>
-            {/* INFO TAB */}
-            <Center objectFit="contain" minHeight={'550px'}>
-              <InfoTab />
-            </Center>
-          </TabPanel>
-          <TabPanel>
-            <h1>Team Tab</h1>
-            {/* {team.map((card, idx) => {
+                <Center
+                  objectFit="contain"
+                  height={'550px'}
+                  flexDirection={'column'}
+                >
+                  <Image
+                    maxW={'90%'}
+                    maxH={'90%'}
+                    src={pokemon.sprites.other.home.front_default}
+                  />
+                </Center>
+              </TabPanel>
+              <TabPanel>
+                {/* Art Image */}
+                <MainPokemonName />
+                <Center objectFit="contain" height={'550px'}>
+                  <Image
+                    maxW={'90%'}
+                    maxH={'90%'}
+                    src={
+                      pokemon.sprites.other[`official-artwork`].front_default
+                    }
+                  />
+                </Center>
+              </TabPanel>
+              <TabPanel>
+                {/* GIF Image */}
+                <MainPokemonName />
+                <Center objectFit="contain" height={'550px'} flexDir={'column'}>
+                  <Image
+                    minWidth={'150px'}
+                    src={
+                      pokemon.sprites.other.showdown.front_default == null
+                        ? ball
+                        : pokemon.sprites.other.showdown.front_default
+                    }
+                  />
+                </Center>
+              </TabPanel>
+              <TabPanel>
+                {/* INFO TAB */}
+                <Center objectFit="contain" minHeight={'550px'}>
+                  <InfoTab />
+                </Center>
+              </TabPanel>
+              <TabPanel>
+                <h1>Team Tab</h1>
+                {/* {team.map((card, idx) => {
                   console.log('Card:', idx, card);
                   return (
                     <PokemonCard
@@ -108,27 +114,29 @@ function MainPokemonTab() {
                   );
                 }
               )} */}
-          </TabPanel>
-        </TabPanels>
+              </TabPanel>
+            </TabPanels>
+          )}
+          <TabList>
+            <Tab>
+              <CgPokemon color="#ef5350" size={'2.5em'} />
+            </Tab>
+            <Tab>
+              <CgPokemon color="#ffcc00" size={'2.5em'} />
+            </Tab>
+            <Tab>
+              <MdGif color="#396bba" size={'2.5em'} />
+            </Tab>
+            <Tab>
+              <FaInfo border="1px solid black" color="#188038" size={'2.5em'} />
+            </Tab>
+            <Tab>
+              <Image src={groupImg} />
+            </Tab>
+          </TabList>
+        </Tabs>
       )}
-      <TabList>
-        <Tab>
-          <CgPokemon color="#ef5350" size={'2.5em'} />
-        </Tab>
-        <Tab>
-          <CgPokemon color="#ffcc00" size={'2.5em'} />
-        </Tab>
-        <Tab>
-          <MdGif color="#396bba" size={'2.5em'} />
-        </Tab>
-        <Tab>
-          <FaInfo border="1px solid black" color="#188038" size={'2.5em'} />
-        </Tab>
-        <Tab>
-          <Image src={groupImg} />
-        </Tab>
-      </TabList>
-    </Tabs>
+    </>
   );
 }
 

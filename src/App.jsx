@@ -2,6 +2,7 @@ import NavBar from './components/NavBar';
 import { Outlet } from 'react-router-dom';
 import { useState } from 'react';
 import './App.css';
+import { getChoice } from './utils';
 
 function App() {
   const [team, setTeam] = useState([]);
@@ -9,7 +10,7 @@ function App() {
   const [disabled, setDisabled] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [pokemon, setPokemon] = useState(null);
-  const [randomChoice, setRandomChoice] = useState(1);
+  const [randomChoice, setRandomChoice] = useState(getChoice(1025));
 
   return (
     <>

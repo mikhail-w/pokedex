@@ -3,7 +3,7 @@ import MainPokemonTab from '../components/MainPokemonTab';
 import GenerateButton from '../components/GenerateButton';
 import Loading from '../components/Loading';
 import { useOutletContext, useParams } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import {
   getChoice,
   isInTeam,
@@ -26,12 +26,14 @@ import {
 
 function RandPokemonPage() {
   const [valid, setValid] = useState(false);
-  const { setTeam, pokemon, setPokemon, randomChoice } = useOutletContext();
+  const timerId = useRef(null);
+  const { setTeam, pokemon, setPokemon, randomChoice, setIsLoading } =
+    useOutletContext();
   console.log('-------- On Random Pokeon Page');
 
   const getRandomPokemon = async () => {
     let response;
-    console.log('Pokemon Object', pokemon);
+    console.log('****On Random Pokeon Page Pokemon Object', pokemon);
     // const choice = getChoice(1025);
 
     try {
@@ -76,6 +78,11 @@ function RandPokemonPage() {
       //   // console.log('Team Member Values', values);
       //   setTeam(values);
       // });
+
+      //Creating a timeout
+      timerId.current = setTimeout(() => {
+        setIsLoading(false);
+      }, 500);
       setValid(true);
     } catch (err) {
       setValid(false);
@@ -92,10 +99,19 @@ function RandPokemonPage() {
 
   return (
     <>
-      {valid ? <MainPokemonTab /> : ''}
+      {valid ? (
+        <MainPokemonTab />
+      ) : (
+        <Center marginTop={'50px'}>Not Valid</Center>
+      )}
       <GenerateButton getRandomPokemon={getRandomPokemon} />
     </>
   );
 }
 
 export default RandPokemonPage;
+
+{
+  /* {valid ? <MainPokemonTab /> : ''}
+      <GenerateButton getRandomPokemon={getRandomPokemon} /> */
+}

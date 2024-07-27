@@ -1,5 +1,6 @@
 import snorlax from '../assets/images/gifs/snorlax.gif';
 import BackButton from '../components/BackButton';
+import { useOutletContext } from 'react-router-dom';
 
 import { Center, Image, Text } from '@chakra-ui/react';
 
