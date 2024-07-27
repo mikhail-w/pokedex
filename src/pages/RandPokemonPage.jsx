@@ -1,6 +1,8 @@
 import axios from 'axios';
 import MainPokemonTab from '../components/MainPokemonTab';
 import GenerateButton from '../components/GenerateButton';
+import Loading from '../components/Loading';
+import { useOutletContext, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import {
   getChoice,
@@ -23,12 +25,13 @@ import {
 } from '@chakra-ui/react';
 
 function RandPokemonPage() {
-  const [team, setTeam] = useState([]);
-  const [myTeam, setMyTeam] = useState([]);
-  const [disabled, setDisabled] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const [pokemon, setPokemon] = useState(null);
+  // const [team, setTeam] = useState([]);
+  // const [myTeam, setMyTeam] = useState([]);
+  // const [disabled, setDisabled] = useState(false);
+  // const [isLoading, setIsLoading] = useState(false);
+  // const [pokemon, setPokemon] = useState(null);
   const [valid, setValid] = useState(false);
+  const { setTeam, pokemon, setPokemon } = useOutletContext();
 
   const getRandomPokemon = async () => {
     let response;
@@ -93,13 +96,13 @@ function RandPokemonPage() {
       {' '}
       {valid ? (
         <>
-          <Center marginTop={'30px'} fontSize={'2rem'}>
+          {/* <Center marginTop={'30px'} fontSize={'2rem'}>
             Random Pokemon Page
-          </Center>
-          {/* <MainPokemonTab /> */}
+          </Center> */}
+          <MainPokemonTab />
         </>
       ) : (
-        <h1>Not Valid</h1>
+        <Loading />
       )}
       <GenerateButton handleClick={getRandomPokemon} />
     </>
