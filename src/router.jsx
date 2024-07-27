@@ -1,4 +1,5 @@
 import { createBrowserRouter } from 'react-router-dom';
+import React, { lazy } from 'react';
 import App from './App.jsx';
 import HomePage from './pages/HomePage.jsx';
 import RandPokemonPage from './pages/RandPokemonPage.jsx';

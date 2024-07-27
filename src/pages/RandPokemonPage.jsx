@@ -1,6 +1,7 @@
 import axios from 'axios';
+import MainPokemonTab from '../components/MainPokemonTab';
 import GenerateButton from '../components/GenerateButton';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   getChoice,
   isInTeam,
@@ -27,16 +28,18 @@ function RandPokemonPage() {
   const [disabled, setDisabled] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [pokemon, setPokemon] = useState(null);
+  const [valid, setValid] = useState(false);
+
   const getRandomPokemon = async () => {
     let response;
-    const choice = getChoice(1000);
+    const choice = getChoice(1025);
     console.log('Choice:', choice);
     try {
-      setIsLoading(true);
+      // setIsLoading(true);
       // ========== FIRST AXIOS CALL ===========
       response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${choice}`);
       setPokemon(response.data);
-      console.log('Pokemon DATA:', response.data);
+      // console.log('Pokemon DATA:', response.data);
 
       // ========== SECOND AXIOS CALL ===========
       // ================ GET TEAM ==============
@@ -45,9 +48,9 @@ function RandPokemonPage() {
       let urls = [];
       const teamMasterList = teamResponse.data.pokemon;
       let teamMasterListSize = teamMasterList.length;
-      console.log('teamMasterListSize:', teamMasterListSize);
+      // console.log('teamMasterListSize:', teamMasterListSize);
 
-      console.log('Pokemon Team:', teamResponse.data.pokemon);
+      // console.log('Pokemon Team:', teamResponse.data.pokemon);
       // Make sure selected Pokemon aren't repeated
       const indexes = [];
       while (indexes.length < 5) {
@@ -55,7 +58,7 @@ function RandPokemonPage() {
         let r = getChoice(teamMasterListSize);
         if (indexes.indexOf(r) === -1 && r.id != pokemon.id) indexes.push(r);
       }
-      console.log('Indexes', indexes);
+      // console.log('Indexes', indexes);
 
       for (let i = 0; i < 5; i++) {
         let teamMember = teamMasterList[indexes[i]];
@@ -68,21 +71,36 @@ function RandPokemonPage() {
           return (await axios.get(url)).data;
         })
       ).then(values => {
-        console.log('Team Member Values', values);
+        // console.log('Team Member Values', values);
         setTeam(values);
       });
+      setValid(true);
     } catch (err) {
+      setValid(false);
       console.error('Error response:');
       console.error(err.response.data); // ***
       console.error(err.response.status); // ***
       console.error(err.response.headers); // ***
     }
   };
+
+  useEffect(() => {
+    getRandomPokemon();
+  }, []);
+
   return (
     <>
-      <Center marginTop={'30px'} fontSize={'2rem'}>
-        Random Pokemon Page
-      </Center>
+      {' '}
+      {valid ? (
+        <>
+          <Center marginTop={'30px'} fontSize={'2rem'}>
+            Random Pokemon Page
+          </Center>
+          {/* <MainPokemonTab /> */}
+        </>
+      ) : (
+        <h1>Not Valid</h1>
+      )}
       <GenerateButton handleClick={getRandomPokemon} />
     </>
   );

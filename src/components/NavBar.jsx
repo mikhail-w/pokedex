@@ -50,7 +50,7 @@ function NavBar({ myTeam, isLoading }) {
       >
         <Flex h={16} alignItems={'center'} justifyContent={'space-between'}>
           <Link className="link" to="/">
-            <Box className="title">
+            <Box className="logo-title">
               P
               <CgPokemon className="inline-img" />
               KEDEX
