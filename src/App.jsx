@@ -9,7 +9,7 @@ function App() {
   const [disabled, setDisabled] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [pokemon, setPokemon] = useState(null);
-  const [randomChoice, setRandomChoice] = useState(null);
+  const [randomChoice, setRandomChoice] = useState(1);
 
   return (
     <>

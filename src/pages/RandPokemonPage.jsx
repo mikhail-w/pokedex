@@ -27,6 +27,7 @@ import {
 function RandPokemonPage() {
   const [valid, setValid] = useState(false);
   const { setTeam, pokemon, setPokemon, randomChoice } = useOutletContext();
+  console.log('-------- On Random Pokeon Page');
 
   const getRandomPokemon = async () => {
     let response;
@@ -85,9 +86,9 @@ function RandPokemonPage() {
     }
   };
 
-  // useEffect(() => {
-  //   getRandomPokemon();
-  // }, [randomChoice]);
+  useEffect(() => {
+    getRandomPokemon();
+  }, [randomChoice]);
 
   return (
     <>

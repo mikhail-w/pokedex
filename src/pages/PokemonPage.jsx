@@ -1,6 +1,7 @@
 import { Center } from '@chakra-ui/react';
 
 function PokemonPage() {
+  console.log('-------- On Pokeon Page');
   return (
     <Center marginTop={'30px'} fontSize={'2rem'}>
       Pokemon Page

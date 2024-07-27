@@ -1,13 +1,9 @@
 import snorlax from '../assets/images/gifs/snorlax.gif';
-import { useNavigate } from 'react-router-dom';
+import BackButton from '../components/BackButton';
 
-import { Button, Center, Image, Text } from '@chakra-ui/react';
+import { Center, Image, Text } from '@chakra-ui/react';
 
 function NotFoundPage() {
-  const navigate = useNavigate();
-  const handleClick = () => {
-    navigate(`/`);
-  };
   return (
     <>
       <Center marginTop={'300px'} flexDirection={'column'}>
@@ -16,11 +12,7 @@ function NotFoundPage() {
           404 Pokemon Not Found
         </Text>
       </Center>
-      <Center>
-        <Button onClick={handleClick} marginTop={'50px'}>
-          Go Back
-        </Button>
-      </Center>
+      <BackButton />
     </>
   );
 }

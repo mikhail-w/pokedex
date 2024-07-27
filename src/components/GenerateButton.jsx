@@ -8,6 +8,7 @@ function GenerateButton({ getRandomPokemon }) {
     console.log('Inside Button Component');
     console.log('Current Random Choice', randomChoice);
     setRandomChoice(getChoice(1025));
+    console.log('Current Random Choice after', randomChoice);
     getRandomPokemon();
   }
   return (

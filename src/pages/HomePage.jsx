@@ -1,17 +1,16 @@
 import '../assets/styles/HomePage.css';
 import HomePageImages from '../components/HomePageImages';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useOutletContext } from 'react-router-dom';
-import { getChoice } from '../utils';
 import { Button, Center } from '@chakra-ui/react';
 
 function HomePage() {
-  const { randomChoice, setRandomChoice } = useOutletContext();
+  const { randomChoice } = useOutletContext();
   const navigate = useNavigate();
-  console.log('On Home Page, Current Random Choice:', randomChoice);
+  console.log('-------- On Home Page, Current Random Choice:', randomChoice);
   function handleClick() {
     console.log('Home Page Get Pokemon Button Clicked', randomChoice);
-    setRandomChoice(getChoice(1025));
+    // setRandomChoice(getChoice(1025));
     return navigate(`/random/`);
   }
   return (
