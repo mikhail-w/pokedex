@@ -1,5 +1,10 @@
+import { Center } from '@chakra-ui/react';
 function MyTeamPage() {
-  return <div>MyTeamPage</div>;
+  return (
+    <Center marginTop={'30px'} fontSize={'2rem'}>
+      My Team Page
+    </Center>
+  );
 }
 
 export default MyTeamPage;

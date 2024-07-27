@@ -18,6 +18,7 @@ import {
   Tab,
   TabPanel,
   Flex,
+  Center,
 } from '@chakra-ui/react';
 
 function RandPokemonPage() {
@@ -79,6 +80,9 @@ function RandPokemonPage() {
   };
   return (
     <>
+      <Center marginTop={'30px'} fontSize={'2rem'}>
+        Random Pokemon Page
+      </Center>
       <GenerateButton handleClick={getRandomPokemon} />
     </>
   );

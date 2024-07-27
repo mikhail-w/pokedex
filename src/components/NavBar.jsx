@@ -1,6 +1,7 @@
 'use client';
 import '../assets/styles/NavBar.css';
 import pokeball from '../assets/images/pokeballs/pokeball.png';
+import Loading from './Loading';
 import { MoonIcon, SunIcon } from '@chakra-ui/icons';
 import { useRef, useState } from 'react';
 import { CgPokemon } from 'react-icons/cg';
@@ -10,14 +11,12 @@ import {
   Box,
   Flex,
   Avatar,
-  Text,
   Button,
   Menu,
   MenuButton,
   MenuList,
   MenuItem,
   MenuDivider,
-  useDisclosure,
   useColorModeValue,
   Stack,
   useColorMode,
@@ -26,13 +25,13 @@ import {
   InputGroup,
   InputLeftElement,
   InputRightAddon,
-  HStack,
 } from '@chakra-ui/react';
 
-function NavBar() {
+function NavBar({ myTeam, isLoading }) {
   const { colorMode, toggleColorMode } = useColorMode();
   const inputRef = useRef();
   const [search, setSearch] = useState('');
+  const navigate = useNavigate();
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -120,7 +119,7 @@ function NavBar() {
                   </MenuItem>
                   <MenuItem>
                     <Link className="link" to="/random/">
-                      Generate Random Pokemon
+                      Get Random Pokemon
                     </Link>
                   </MenuItem>
                   <MenuItem>

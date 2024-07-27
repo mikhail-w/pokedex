@@ -1,6 +1,7 @@
 import NavBar from './components/NavBar';
 import { Outlet } from 'react-router-dom';
 import { useState } from 'react';
+import './App.css';
 
 function App() {
   const [team, setTeam] = useState([]);
