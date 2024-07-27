@@ -144,7 +144,7 @@ export const buildTeam = async teamResponse => {
 };
 
 export function getChoice(max) {
-  console.log('Inside Utils Get Choice Function');
+  // console.log('Inside Utils Get Choice Function');
   return Math.floor(Math.random() * max);
 }
 

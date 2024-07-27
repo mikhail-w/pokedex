@@ -29,11 +29,11 @@ function RandPokemonPage() {
   const timerId = useRef(null);
   const { setTeam, pokemon, setPokemon, randomChoice, setIsLoading } =
     useOutletContext();
-  console.log('-------- On Random Pokeon Page');
+  // console.log('-------- On Random Pokeon Page');
 
   const getRandomPokemon = async () => {
     let response;
-    console.log('****On Random Pokeon Page Pokemon Object', pokemon);
+    // console.log('****On Random Pokeon Page Pokemon Object', pokemon);
     // const choice = getChoice(1025);
 
     try {
@@ -58,7 +58,7 @@ function RandPokemonPage() {
       // // Make sure selected Pokemon aren't repeated
       // const indexes = [];
       // while (indexes.length < 5) {
-      //   console.log('Card ID', pokemon.id);
+      //   // console.log('Card ID', pokemon.id);
       //   let r = getChoice(teamMasterListSize);
       //   if (indexes.indexOf(r) === -1 && r.id != pokemon.id) indexes.push(r);
       // }
@@ -99,11 +99,7 @@ function RandPokemonPage() {
 
   return (
     <>
-      {valid ? (
-        <MainPokemonTab />
-      ) : (
-        <Center marginTop={'50px'}>Not Valid</Center>
-      )}
+      {valid ? <MainPokemonTab /> : ''}
       <GenerateButton getRandomPokemon={getRandomPokemon} />
     </>
   );

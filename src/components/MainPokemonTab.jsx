@@ -36,7 +36,7 @@ function MainPokemonTab() {
       {isLoading ? (
         <Loading />
       ) : (
-        <Tabs align="center" variant="enclosed" size="lg">
+        <Tabs align="center" variant="enclosed" size="lg" maxHeight={'70vh'}>
           {isLoading ? (
             <Loading />
           ) : (
