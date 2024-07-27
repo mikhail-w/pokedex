@@ -1,6 +1,15 @@
+import { useOutletContext } from 'react-router-dom';
+import { getChoice } from '../utils';
 import { Button, useColorModeValue, Center } from '@chakra-ui/react';
 
-function GenerateButton({ handleClick }) {
+function GenerateButton({ getRandomPokemon }) {
+  const { randomChoice, setRandomChoice } = useOutletContext();
+  function handleClick() {
+    console.log('Inside Button Component');
+    console.log('Current Random Choice', randomChoice);
+    setRandomChoice(getChoice(1025));
+    getRandomPokemon();
+  }
   return (
     <Center marginTop={'60vh'}>
       <Button

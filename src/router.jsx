@@ -18,7 +18,7 @@ const router = createBrowserRouter([
         element: <HomePage />,
       },
       {
-        path: '/random/',
+        path: '/random/:randomChoice?',
         element: <RandPokemonPage />,
       },
       {
