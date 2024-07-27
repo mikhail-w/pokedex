@@ -1,4 +1,4 @@
-.ballOutline {
+.ballOutline2 {
   /* height: 100px; */
   /* width: 300px; */
   position: fixed;
@@ -10,7 +10,7 @@
   animation: rotation 20s infinite linear;
 }
 
-.pokeball3 {
+.ballOutline3 {
   position: fixed;
   bottom: 50px;
   top: 0px;
@@ -19,6 +19,11 @@
   transform: rotate(-0.1turn);
   z-index: -1;
   animation: rotation 20s infinite linear;
+}
+
+.pokeball3 img {
+  width: 100%;
+  height: 100%;
 }
 
 .logo {
@@ -73,7 +78,7 @@
   height: 100%;
 }
 
-.pokeball2 {
+.pokeball3 {
   /* outline: 1px solid red; */
   height: 200px;
   position: fixed;
@@ -81,11 +86,6 @@
   right: -65px;
   /* opacity: .6; */
   /* transform: rotate(-0.1turn); */
-}
-
-.pokeball2 img {
-  width: 100%;
-  height: 100%;
 }
 
 @keyframes rotation {
