@@ -7,6 +7,18 @@
   opacity: .1;
   transform: rotate(-0.1turn);
   z-index: -1;
+  animation: rotation 20s infinite linear;
+}
+
+.pokeball3 {
+  position: fixed;
+  bottom: 50px;
+  top: 0px;
+  left: 50px;
+  opacity: .3;
+  transform: rotate(-0.1turn);
+  z-index: -1;
+  animation: rotation 20s infinite linear;
 }
 
 .logo {
@@ -74,4 +86,14 @@
 .pokeball2 img {
   width: 100%;
   height: 100%;
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(359deg);
+  }
 }

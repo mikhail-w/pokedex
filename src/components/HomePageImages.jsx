@@ -3,6 +3,7 @@ import pickachu from '../assets/images/pokemon/pikachu.png';
 import charizard from '../assets/images/pokemon/charizard.png';
 import pokedex from '../assets/images/pokemon/pokedex.png';
 import pokeball2 from '../assets/images/pokeballs/pokeball2.png';
+import pokeball3 from '../assets/images/pokeballs/pokeball3.svg';
 import outline2 from '../assets/images/pokeballs/balloutline2.png';
 
 function HomePageImages() {
@@ -25,6 +26,9 @@ function HomePageImages() {
       </div>
       <div className="pokeball2">
         <img src={pokeball2} alt="pokeballs" />
+      </div>
+      <div className="pokeball3">
+        <img src={pokeball3} alt="pokeball" />
       </div>
     </>
   );
