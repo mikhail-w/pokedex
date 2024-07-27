@@ -4,6 +4,8 @@ function GenerateButton({ handleClick }) {
   return (
     <Center marginTop={'60vh'}>
       <Button
+        pos={'fixed'}
+        bottom={'80px'}
         onClick={handleClick}
         marginTop={'60px'}
         colorScheme="red"

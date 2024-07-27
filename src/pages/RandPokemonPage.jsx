@@ -1,15 +1,6 @@
-import React from 'react';
 import axios from 'axios';
-import {
-  Center,
-  Flex,
-  Image,
-  Box,
-  Button,
-  Tag,
-  Avatar,
-  TagLabel,
-} from '@chakra-ui/react';
+import GenerateButton from '../components/GenerateButton';
+import { useState } from 'react';
 import {
   getChoice,
   isInTeam,
@@ -20,13 +11,28 @@ import {
   catchPokemon,
   getType,
 } from '../utils';
+import {
+  Tabs,
+  TabList,
+  TabPanels,
+  Tab,
+  TabPanel,
+  Flex,
+} from '@chakra-ui/react';
 
-function GetRandomPage() {
+function RandPokemonPage() {
+  const [team, setTeam] = useState([]);
+  const [myTeam, setMyTeam] = useState([]);
+  const [disabled, setDisabled] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [pokemon, setPokemon] = useState(null);
   const getRandomPokemon = async () => {
     let response;
     const choice = getChoice(1000);
+    console.log('Choice:', choice);
     try {
       setIsLoading(true);
+      // ========== FIRST AXIOS CALL ===========
       response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${choice}`);
       setPokemon(response.data);
       console.log('Pokemon DATA:', response.data);
@@ -61,25 +67,21 @@ function GetRandomPage() {
           return (await axios.get(url)).data;
         })
       ).then(values => {
-        console.log('Values', values);
+        console.log('Team Member Values', values);
         setTeam(values);
       });
-
-      //Creating a timeout
-      timerId.current = setTimeout(() => {
-        setIsLoading(false);
-      }, 500);
-
-      setValid(true);
     } catch (err) {
-      setValid(false);
       console.error('Error response:');
       console.error(err.response.data); // ***
       console.error(err.response.status); // ***
       console.error(err.response.headers); // ***
     }
   };
-  return <></>;
+  return (
+    <>
+      <GenerateButton handleClick={getRandomPokemon} />
+    </>
+  );
 }
 
-export default GetRandomPage;
+export default RandPokemonPage;

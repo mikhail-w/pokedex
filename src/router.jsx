@@ -1,7 +1,10 @@
 import { createBrowserRouter } from 'react-router-dom';
 import App from './App.jsx';
 import HomePage from './pages/HomePage.jsx';
-import GetRandomPage from './pages/GetRandomPage.jsx';
+import RandPokemonPage from './pages/RandPokemonPage.jsx';
+import PokemonPage from './pages/PokemonPage.jsx';
+import MyTeamPage from './pages/MyTeamPage.jsx';
+import PokemonListPage from './pages/PokemonListPage.jsx';
 import NotFoundPage from './pages/NotFoundPage.jsx';
 
 const router = createBrowserRouter([
@@ -15,7 +18,19 @@ const router = createBrowserRouter([
       },
       {
         path: '/random/',
-        element: <GetRandomPage />,
+        element: <RandPokemonPage />,
+      },
+      {
+        path: '/pokemon/:name',
+        element: <PokemonPage />,
+      },
+      {
+        path: '/team/',
+        element: <MyTeamPage />,
+      },
+      {
+        path: '/list/',
+        element: <PokemonListPage />,
       },
     ],
     errorElement: <NotFoundPage />,

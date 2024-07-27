@@ -34,6 +34,14 @@ function NavBar() {
   const inputRef = useRef();
   const [search, setSearch] = useState('');
 
+  function handleSubmit(e) {
+    e.preventDefault();
+    const pokemonName = inputRef.current.value;
+    setSearch('');
+
+    return isLoading ? <Loading /> : navigate(`/pokemon/${pokemonName}`);
+  }
+
   return (
     <>
       <Box
@@ -66,6 +74,7 @@ function NavBar() {
                   <InputRightAddon p={0} border="none">
                     <Button
                       size="sm"
+                      onClick={handleSubmit}
                       borderLeftRadius={0}
                       borderRightRadius={3.3}
                       border="1px solid #949494"
