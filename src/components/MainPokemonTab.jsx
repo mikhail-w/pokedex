@@ -36,7 +36,13 @@ function MainPokemonTab() {
       {isLoading ? (
         <Loading />
       ) : (
-        <Tabs align="center" variant="enclosed" size="lg" maxHeight={'70vh'}>
+        <Tabs
+          align="center"
+          variant="enclosed"
+          size="lg"
+          maxHeight={'100px'}
+          // outline={'2px solid white'}
+        >
           {isLoading ? (
             <Loading />
           ) : (
