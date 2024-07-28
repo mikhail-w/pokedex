@@ -88,10 +88,19 @@ function RandPokemonPage() {
   };
 
   useEffect(() => {
+    const pokemon_data = window.localStorage.getItem('MAIN_POKEMON');
+    const team_data = window.localStorage.getItem('MAIN_POKEMON_TEAM');
+    console.log('Pokemon:', JSON.parse(pokemon_data));
+    console.log('Pokemon Team:', JSON.parse(team_data));
+    setPokemon(JSON.parse(pokemon_data));
+    setTeam(JSON.parse(team_data));
+  }, []);
+
+  useEffect(() => {
     getRandomPokemon();
     window.localStorage.setItem('MAIN_POKEMON', JSON.stringify(pokemon));
     window.localStorage.setItem('MAIN_POKEMON_TEAM', JSON.stringify(team));
-  }, [setPokemon]);
+  }, [randomChoice]);
 
   return (
     <>
