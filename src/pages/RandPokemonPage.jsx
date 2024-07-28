@@ -87,9 +87,11 @@ function RandPokemonPage() {
     }
   };
 
-  // useEffect(() => {
-  //   getRandomPokemon();
-  // }, []);
+  useEffect(() => {
+    getRandomPokemon();
+    window.localStorage.setItem('MAIN_POKEMON', JSON.stringify(pokemon));
+    window.localStorage.setItem('MAIN_POKEMON_TEAM', JSON.stringify(team));
+  }, [setPokemon]);
 
   return (
     <>
