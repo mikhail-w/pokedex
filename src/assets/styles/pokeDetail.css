@@ -15,13 +15,24 @@
   top: 40%;
   transition-duration: 100ms;
   color: white;
+  transform: rotate(0deg);
+  transition: transform .5s linear;
 }
 
 .extend-modal:hover {
   cursor: pointer;
-  transform: translateX(5px);
   transition-duration: 200ms;
-  color: rgb(7, 150, 57);
+  filter: brightness(120%) saturate(240%);
+}
+
+.notExtended:hover {
+  color: #3d7dca;
+}
+
+.isExtended {
+  color: #ac4f51;
+  transform: rotate(180deg);
+  /* transition: transform 1s linear; */
 }
 
 .pokeDetail-type-tab {
