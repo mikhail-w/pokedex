@@ -3,16 +3,7 @@ import { motion, AnimatePresence, AnimateSharedLayout } from 'framer-motion';
 import axios from 'axios';
 //Import Components
 import PokemonCard from '../components/PokemonCard';
-import {
-  Tabs,
-  TabList,
-  TabPanels,
-  Tab,
-  TabPanel,
-  Flex,
-  Center,
-  Button,
-} from '@chakra-ui/react';
+import { Center, Button } from '@chakra-ui/react';
 
 //Import Utils
 import { useLocation } from 'react-router-dom';

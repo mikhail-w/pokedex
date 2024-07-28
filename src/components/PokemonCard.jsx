@@ -204,18 +204,13 @@ function PokemonCard({ card, src, src2, name, type, id }) {
           <ModalContent
             w={'90%'}
             className={isExpanded ? 'modal-content extended' : 'modal-content'}
-            // maxWidth={'fit-content'}
-            // maxWidth={'1000px'}
-            // className="modal-content"
-            // transitionDuration={'3000ms'}
-            // maxWidth={isExpanded ? '1200px' : 'fit-content'}
             background={` linear-gradient(in lch,${finalColor[0]}, ${finalColor[1]})`}
             alignItems={'center'}
             borderRadius={'50px'}
             // outline={'2px solid red'}
             overflow={'hidden'}
-            maxHeight={'740px'}
-            flexDirection={'row'}
+            // maxHeight={'740px'}
+            // flexDirection={'row'}
           >
             <Box
             // outline={'2px solid yellow'}
@@ -447,236 +442,233 @@ function PokemonCard({ card, src, src2, name, type, id }) {
           </ModalContent>
         </Modal>
       )}
-      <AnimatePresence AnimatePresence mode="wait">
-        {true && (
-          <motion.div
-            initial={{ y: -250 }}
-            animate={{ y: 1 }}
-            exit={{ opacity: 0, y: '-100%' }}
-            transition={{
-              ease: 'linear',
-              duration: 0.5,
-            }}
-            layout
-          >
-            <Box className="top-container">
-              <ReactCardFlip flipDirection="horizontal" isFlipped={isFlipped}>
-                {/* CARD FRONT */}
+      {/* <AnimatePresence AnimatePresence mode="wait"> */}
+      {true && (
+        <motion.div
+          initial={{ y: -250 }}
+          animate={{ y: 1 }}
+          exit={{ opacity: 0, y: '-100%' }}
+          transition={{
+            ease: 'linear',
+            duration: 0.5,
+          }}
+          layout
+        >
+          <Box className="top-container">
+            <ReactCardFlip flipDirection="horizontal" isFlipped={isFlipped}>
+              {/* CARD FRONT */}
+              <Flex
+                className={hovered ? `card pokemonCard ${type[0]}` : 'card'}
+                onMouseEnter={() => {
+                  // toggleHover();
+                  handleMouseEnter();
+                }}
+                onMouseLeave={() => {
+                  // toggleHover();
+                  handleMouseLeave();
+                }}
+                flexDirection={'column'}
+                justifyContent={'center'}
+              >
                 <Flex
-                  className={hovered ? `card pokemonCard ${type[0]}` : 'card'}
-                  onMouseEnter={() => {
-                    // toggleHover();
-                    handleMouseEnter();
-                  }}
-                  onMouseLeave={() => {
-                    // toggleHover();
-                    handleMouseLeave();
-                  }}
+                  className="card__content"
                   flexDirection={'column'}
-                  justifyContent={'center'}
+                  justifyContent={'Center'}
+                  background={` linear-gradient(in lch,${finalColor[0]}, ${finalColor[1]})`}
                 >
                   <Flex
-                    className="card__content"
-                    flexDirection={'column'}
-                    justifyContent={'Center'}
-                    background={` linear-gradient(in lch,${finalColor[0]}, ${finalColor[1]})`}
+                    className="card__header"
+                    justifyContent={'space-between'}
+                    alignItems={'center'}
                   >
-                    <Flex
-                      className="card__header"
-                      justifyContent={'space-between'}
-                      alignItems={'center'}
+                    <Tooltip
+                      label={`${
+                        disabled ? 'disabled' : isCaught ? 'release' : 'catch'
+                      }`}
+                      placement="top"
+                      fontSize="lg"
+                      hasArrow
+                      arrowSize={15}
+                      color={'white'}
+                      bg={`${
+                        disabled ? 'gray' : isCaught ? '#e53e3e' : '#3d7dca'
+                      }`}
                     >
-                      <Tooltip
-                        label={`${
-                          disabled ? 'disabled' : isCaught ? 'release' : 'catch'
+                      <Box
+                        className={`catch-ball ${
+                          isCaught ? 'release' : 'catch'
                         }`}
-                        placement="top"
-                        fontSize="lg"
-                        hasArrow
-                        arrowSize={15}
-                        color={'white'}
-                        bg={`${
-                          disabled ? 'gray' : isCaught ? '#e53e3e' : '#3d7dca'
-                        }`}
+                        style={{ width: '1.7em' }}
                       >
-                        <Box
-                          className={`catch-ball ${
-                            isCaught ? 'release' : 'catch'
-                          }`}
-                          style={{ width: '1.7em' }}
-                        >
-                          {disabled ? (
-                            <TbPokeballOff
-                              size={30}
-                              className="disabled-icon"
-                            />
-                          ) : (
-                            <motion.div
-                              className="catch-ball"
-                              whileHover={{ scale: 1.2, rotate: 180 }}
-                              whileTap={{
-                                scale: 1.2,
-                                rotate: 180,
-                                borderRadius: '100%',
-                              }}
-                            >
-                              <Image
-                                w={'100%'}
-                                src={isCaught ? catch02 : catch01}
-                                onClick={() => {
-                                  isInTeam(myTeam, card)
-                                    ? (toast({
-                                        title: 'Pokemon Released',
-                                        description: `You just removed ${name} from your team.`,
-                                        status: 'error',
-                                        duration: 3000,
-                                        isClosable: true,
-                                        position: 'bottom-right',
-                                      }),
-                                      handleReleasePokemon())
-                                    : (toast({
-                                        title: 'Pokemon Caught',
-                                        description: `You just added ${name} to your team.`,
-                                        status: 'success',
-                                        duration: 3000,
-                                        isClosable: true,
-                                        position: 'bottom-right',
-                                      }),
-                                      handleCatchPokemon());
-                                }}
-                              />
-                            </motion.div>
-                          )}
-                        </Box>
-                      </Tooltip>
-
-                      <Box>
-                        <Text
-                          marginLeft={'auto'}
-                          marginRight={'auto'}
-                          className="poke__number"
-                          color={idColor}
-                        >
-                          #{String(id).padStart(3, '0')}
-                        </Text>
-                      </Box>
-                      {/* INFO-ICON */}
-
-                      <Box>
-                        <motion.div
-                          className="catch-ball"
-                          whileHover={{ scale: 1.2, rotate: 360 }}
-                          whileTap={{
-                            scale: 1.2,
-                            rotate: 180,
-                            borderRadius: '100%',
-                          }}
-                        >
-                          <Tooltip
-                            label={`Info`}
-                            placement="top"
-                            fontSize="lg"
-                            hasArrow
-                            arrowSize={20}
-                            color={'black'}
-                            bg={`#ebeef5`}
+                        {disabled ? (
+                          <TbPokeballOff size={30} className="disabled-icon" />
+                        ) : (
+                          <motion.div
+                            className="catch-ball"
+                            whileHover={{ scale: 1.2, rotate: 180 }}
+                            whileTap={{
+                              scale: 1.2,
+                              rotate: 180,
+                              borderRadius: '100%',
+                            }}
                           >
                             <Image
-                              // marginLeft={'auto'}
-                              className="info__icon"
-                              src={info}
-                              onClick={handleClick}
+                              w={'100%'}
+                              src={isCaught ? catch02 : catch01}
+                              onClick={() => {
+                                isInTeam(myTeam, card)
+                                  ? (toast({
+                                      title: 'Pokemon Released',
+                                      description: `You just removed ${name} from your team.`,
+                                      status: 'error',
+                                      duration: 3000,
+                                      isClosable: true,
+                                      position: 'bottom-right',
+                                    }),
+                                    handleReleasePokemon())
+                                  : (toast({
+                                      title: 'Pokemon Caught',
+                                      description: `You just added ${name} to your team.`,
+                                      status: 'success',
+                                      duration: 3000,
+                                      isClosable: true,
+                                      position: 'bottom-right',
+                                    }),
+                                    handleCatchPokemon());
+                              }}
                             />
-                          </Tooltip>
-                        </motion.div>
+                          </motion.div>
+                        )}
                       </Box>
-                    </Flex>
-                    <Center className="card__image-container">
-                      <Image
-                        onClick={() => {
-                          handleMouseEnter();
-                          handleFlip();
+                    </Tooltip>
+
+                    <Box>
+                      <Text
+                        marginLeft={'auto'}
+                        marginRight={'auto'}
+                        className="poke__number"
+                        color={idColor}
+                      >
+                        #{String(id).padStart(3, '0')}
+                      </Text>
+                    </Box>
+                    {/* INFO-ICON */}
+
+                    <Box>
+                      <motion.div
+                        className="catch-ball"
+                        whileHover={{ scale: 1.2, rotate: 360 }}
+                        whileTap={{
+                          scale: 1.2,
+                          rotate: 180,
+                          borderRadius: '100%',
                         }}
-                        className="card-image"
-                        src={src == null ? ball : src}
+                      >
+                        <Tooltip
+                          label={`Info`}
+                          placement="top"
+                          fontSize="lg"
+                          hasArrow
+                          arrowSize={20}
+                          color={'black'}
+                          bg={`#ebeef5`}
+                        >
+                          <Image
+                            // marginLeft={'auto'}
+                            className="info__icon"
+                            src={info}
+                            onClick={handleClick}
+                          />
+                        </Tooltip>
+                      </motion.div>
+                    </Box>
+                  </Flex>
+                  <Center className="card__image-container">
+                    <Image
+                      onClick={() => {
+                        handleMouseEnter();
+                        handleFlip();
+                      }}
+                      className="card-image"
+                      src={src == null ? ball : src}
+                    />
+                  </Center>
+                  <Center whiteSpace={'nowrap'} className="pokemonName">
+                    {name}
+                  </Center>
+                  {/* POKEMON TYPE */}
+                  <Center padding={'10px'} marginBottom={'10px'} gap={'10px'}>
+                    <Tooltip
+                      label={type[0]}
+                      placement="bottom"
+                      fontSize="lg"
+                      color={'black'}
+                      hasArrow
+                      arrowSize={15}
+                      bg={colors[type[0]]}
+                    >
+                      <Image
+                        className="type-icon"
+                        width={'40px'}
+                        height={'40px'}
+                        src={typeIcons[type[0]]}
                       />
-                    </Center>
-                    <Center whiteSpace={'nowrap'} className="pokemonName">
-                      {name}
-                    </Center>
-                    {/* POKEMON TYPE */}
-                    <Center padding={'10px'} marginBottom={'10px'} gap={'10px'}>
+                    </Tooltip>
+                    {type[1] ? (
                       <Tooltip
-                        label={type[0]}
+                        label={type[1]}
                         placement="bottom"
                         fontSize="lg"
                         color={'black'}
                         hasArrow
                         arrowSize={15}
-                        bg={colors[type[0]]}
+                        bg={colors[type[1]]}
                       >
                         <Image
                           className="type-icon"
                           width={'40px'}
                           height={'40px'}
-                          src={typeIcons[type[0]]}
+                          src={typeIcons[type[1]]}
                         />
                       </Tooltip>
-                      {type[1] ? (
-                        <Tooltip
-                          label={type[1]}
-                          placement="bottom"
-                          fontSize="lg"
-                          color={'black'}
-                          hasArrow
-                          arrowSize={15}
-                          bg={colors[type[1]]}
-                        >
-                          <Image
-                            className="type-icon"
-                            width={'40px'}
-                            height={'40px'}
-                            src={typeIcons[type[1]]}
-                          />
-                        </Tooltip>
-                      ) : (
-                        ''
-                      )}
-                    </Center>
-                  </Flex>
+                    ) : (
+                      ''
+                    )}
+                  </Center>
                 </Flex>
-                {/* CARD BACK */}
-                <Center
-                  // className="card card-back"
-                  // className={`card card-back pokemonCard ${type[0]}`}
-                  className={hovered ? `card pokemonCard ${type[0]}` : 'card'}
-                  onMouseEnter={() => {
-                    // toggleHover();
+              </Flex>
+              {/* CARD BACK */}
+              <Center
+                // className="card card-back"
+                // className={`card card-back pokemonCard ${type[0]}`}
+                className={hovered ? `card pokemonCard ${type[0]}` : 'card'}
+                onMouseEnter={() => {
+                  // toggleHover();
+                  handleMouseEnter();
+                }}
+                onMouseLeave={() => {
+                  // toggleHover();
+                  handleMouseLeave();
+                }}
+                background={`linear-gradient(${finalColor[0]}, ${finalColor[1]})`}
+              >
+                <Image
+                  className="back-image"
+                  onClick={() => {
                     handleMouseEnter();
+                    handleFlip();
                   }}
-                  onMouseLeave={() => {
-                    // toggleHover();
-                    handleMouseLeave();
-                  }}
-                  background={`linear-gradient(${finalColor[0]}, ${finalColor[1]})`}
-                >
-                  <Image
-                    className="back-image"
-                    onClick={() => {
-                      handleMouseEnter();
-                      handleFlip();
-                    }}
-                    maxH={'200px'}
-                    // width={'50%'}
-                    src={src2 == null ? ball : src2}
-                  />
-                </Center>
-                {/* </Box> */}
-              </ReactCardFlip>
-            </Box>
-          </motion.div>
-        )}
-      </AnimatePresence>
+                  maxH={'200px'}
+                  // width={'50%'}
+                  src={src2 == null ? ball : src2}
+                />
+              </Center>
+              {/* </Box> */}
+            </ReactCardFlip>
+          </Box>
+        </motion.div>
+      )}
+      {/* </AnimatePresence> */}
     </>
   );
 }
