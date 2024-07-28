@@ -290,13 +290,18 @@ function PokemonCard({ card, src, src2, name, type, id }) {
                 position={'relative'}
               >
                 <Image src={src == null ? ball : src} />
+
                 <IoArrowForwardCircleOutline
                   onClick={handleExpand}
                   size={'4.5em'}
                   // color="white"
                   // color="red"
 
-                  className="extend-modal"
+                  className={
+                    isExpanded
+                      ? 'isExtended extend-modal'
+                      : 'extend-modal notExtended'
+                  }
                 />
               </Flex>
               {/* <ModalBody w={'110%'} outline={'2px solid'}> */}
@@ -394,7 +399,7 @@ function PokemonCard({ card, src, src2, name, type, id }) {
                     >
                       <Image
                         h={'100%'}
-                        w={'96px'}
+                        w={'90px'}
                         src={
                           card.sprites.back_default == null
                             ? ball
@@ -403,7 +408,7 @@ function PokemonCard({ card, src, src2, name, type, id }) {
                       />
                       <Image
                         h={'100%'}
-                        w={'96px'}
+                        w={'90px'}
                         src={
                           card.sprites.back_shiny == null
                             ? ball
@@ -412,7 +417,7 @@ function PokemonCard({ card, src, src2, name, type, id }) {
                       />
                       <Image
                         h={'100%'}
-                        w={'96px'}
+                        w={'90px'}
                         src={
                           card.sprites.front_default == null
                             ? ball
@@ -421,7 +426,7 @@ function PokemonCard({ card, src, src2, name, type, id }) {
                       />
                       <Image
                         h={'100%'}
-                        w={'96px'}
+                        w={'90px'}
                         src={
                           card.sprites.front_shiny == null
                             ? ball
