@@ -38,14 +38,15 @@ function RandPokemonPage() {
     passed,
     setPassed,
   } = useOutletContext();
-  let response;
+
   // console.log('-------- On Random Pokeon Page');
 
   const getRandomPokemon = async () => {
     try {
+      // let response;
       // setIsLoading(true);
       // ========== FIRST AXIOS CALL ===========
-      response = await axios.get(
+      let response = await axios.get(
         `https://pokeapi.co/api/v2/pokemon/${randomChoice}`
       );
       setPokemon(response.data);
@@ -57,18 +58,34 @@ function RandPokemonPage() {
       const teamResponse = await axios.get(teamURL);
       let urls = [];
       const teamMasterList = teamResponse.data.pokemon;
+      let teamMasterListSize = teamMasterList.length;
+      console.log('teamMasterListSize:', teamMasterListSize);
+
+      console.log('Card ID', pokemon.id);
+      console.log('Pokemon Team:', teamResponse.data.pokemon);
+      // Make sure selected Pokemon aren't repeated
+      const indexes = [];
+      while (indexes.length < 5) {
+        console.log('Card ID', pokemon.id);
+        let r = getChoice(teamMasterListSize);
+        if (indexes.indexOf(r) === -1 && r.id != pokemon.id) indexes.push(r);
+      }
+      console.log('Indexes', indexes);
 
       for (let i = 0; i < 5; i++) {
-        let teamMember = teamMasterList[i];
+        let teamMember = teamMasterList[indexes[i]];
         let url = `https://pokeapi.co/api/v2/pokemon/${teamMember.pokemon.name}`;
         urls.push(url.toString());
       }
+
+      console.log('=====URLS:', urls);
 
       await Promise.all(
         urls.map(async url => {
           return (await axios.get(url)).data;
         })
       ).then(values => {
+        console.log('Values', values);
         setTeam(values);
       });
 
@@ -80,18 +97,19 @@ function RandPokemonPage() {
       console.log('TEAM:', team);
     } catch (err) {
       setValid(false);
-      console.error('Error response:');
-      console.error(err.response.data); // ***
-      console.error(err.response.status); // ***
-      console.error(err.response.headers); // ***
+      // console.error('Error response:');
+      // console.error(err.response.data); // ***
+      // console.error(err.response.status); // ***
+      // console.error(err.response.headers); // ***
     }
   };
 
   useEffect(() => {
+    console.log('+++++Inside Use Effect!');
     getRandomPokemon();
     window.localStorage.setItem('MAIN_POKEMON', JSON.stringify(pokemon));
     window.localStorage.setItem('MAIN_POKEMON_TEAM', JSON.stringify(team));
-  }, [setPokemon]);
+  }, []);
 
   return (
     <>
