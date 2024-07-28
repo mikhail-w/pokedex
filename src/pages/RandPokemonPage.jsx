@@ -1,55 +1,29 @@
 import axios from 'axios';
 import MainPokemonTab from '../components/MainPokemonTab';
 import GenerateButton from '../components/GenerateButton';
-import Loading from '../components/Loading';
 import { useOutletContext, useParams } from 'react-router-dom';
 import { useEffect, useState, useRef } from 'react';
-import {
-  getChoice,
-  isInTeam,
-  colors,
-  bgs,
-  modalIcons,
-  releasePokemon,
-  catchPokemon,
-  getType,
-} from '../utils';
-import {
-  Tabs,
-  TabList,
-  TabPanels,
-  Tab,
-  TabPanel,
-  Flex,
-  Center,
-} from '@chakra-ui/react';
+import { getChoice } from '../utils';
 
 function RandPokemonPage() {
   const [valid, setValid] = useState(false);
   const timerId = useRef(null);
   // const { randomChoice } = useParams();
-  const {
-    setTeam,
-    team,
-    pokemon,
-    setPokemon,
-    randomChoice,
-    setIsLoading,
-    passed,
-    setPassed,
-  } = useOutletContext();
-  let response;
+  const { setTeam, team, pokemon, setPokemon, randomChoice, setIsLoading } =
+    useOutletContext();
+
   // console.log('-------- On Random Pokeon Page');
 
   const getRandomPokemon = async () => {
     try {
+      // let response;
       // setIsLoading(true);
       // ========== FIRST AXIOS CALL ===========
-      response = await axios.get(
+      let response = await axios.get(
         `https://pokeapi.co/api/v2/pokemon/${randomChoice}`
       );
       setPokemon(response.data);
-      console.log('Pokemon DATA:', response.data);
+      // console.log('Pokemon DATA:', response.data);
 
       // // ========== SECOND AXIOS CALL ===========
       // // ================ GET TEAM ==============
@@ -77,7 +51,7 @@ function RandPokemonPage() {
         setIsLoading(false);
       }, 500);
       setValid(true);
-      console.log('TEAM:', team);
+      // console.log('TEAM:', team);
     } catch (err) {
       setValid(false);
       console.error('Error response:');
@@ -90,16 +64,25 @@ function RandPokemonPage() {
   useEffect(() => {
     const pokemon_data = window.localStorage.getItem('MAIN_POKEMON');
     const team_data = window.localStorage.getItem('MAIN_POKEMON_TEAM');
-    console.log('Pokemon:', JSON.parse(pokemon_data));
-    console.log('Pokemon Team:', JSON.parse(team_data));
+    // console.log(
+    //   '>>>>>>>>>>>>>>>>>>>>>>> LOADING FROM STORAGE >>>>>>>>>>>>>>>>>>>>>>'
+    // );
+    // console.log('Pokemon:', JSON.parse(pokemon_data));
+    // console.log('Pokemon Team:', JSON.parse(team_data));
     setPokemon(JSON.parse(pokemon_data));
     setTeam(JSON.parse(team_data));
   }, []);
 
   useEffect(() => {
+    // console.log(
+    //   '^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ UPDATE COMPONENTS ^^^^^^^^^^^^^^^^^^^^^'
+    // );
+
     getRandomPokemon();
-    window.localStorage.setItem('MAIN_POKEMON', JSON.stringify(pokemon));
-    window.localStorage.setItem('MAIN_POKEMON_TEAM', JSON.stringify(team));
+    return () => {
+      window.localStorage.setItem('MAIN_POKEMON', JSON.stringify(pokemon));
+      window.localStorage.setItem('MAIN_POKEMON_TEAM', JSON.stringify(team));
+    };
   }, [randomChoice]);
 
   return (
@@ -111,8 +94,3 @@ function RandPokemonPage() {
 }
 
 export default RandPokemonPage;
-
-{
-  /* {valid ? <MainPokemonTab /> : ''}
-      <GenerateButton getRandomPokemon={getRandomPokemon} /> */
-}

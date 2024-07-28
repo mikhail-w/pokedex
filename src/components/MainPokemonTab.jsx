@@ -1,6 +1,7 @@
 import Loading from './Loading';
 import MainPokemonName from './MainPokemonName';
 import InfoTab from './InfoTab';
+import PokemonCard from './PokemonCard';
 import ball from '../assets/images/pokeballs/pokeball.png';
 import { CgPokemon } from 'react-icons/cg';
 import { MdGif } from 'react-icons/md';
@@ -8,6 +9,7 @@ import { FaInfo } from 'react-icons/fa';
 import groupImg from '../assets/images/pokeballs/group.png';
 import { useEffect, useState, useRef } from 'react';
 import { useOutletContext, useParams } from 'react-router-dom';
+import { getType } from '../utils';
 import {
   Tabs,
   TabList,
@@ -16,21 +18,12 @@ import {
   TabPanel,
   Center,
   Image,
+  Flex,
 } from '@chakra-ui/react';
 
 function MainPokemonTab() {
-  const {
-    team,
-    setTeam,
-    myTeam,
-    setMyTeam,
-    disabled,
-    setDisabled,
-    isLoading,
-    setIsLoading,
-    pokemon,
-    setPokemon,
-  } = useOutletContext();
+  const { team, myTeam, setMyTeam, disabled, setDisabled, isLoading, pokemon } =
+    useOutletContext();
   return (
     <>
       {isLoading ? (
@@ -97,8 +90,8 @@ function MainPokemonTab() {
                 </Center>
               </TabPanel>
               <TabPanel>
-                <h1>Team Tab</h1>
-                {/* {team.map((card, idx) => {
+                {/* <h1>Team Tab</h1>
+                {team.map((card, idx) => {
                   console.log('Card:', idx, card);
                   return (
                     <PokemonCard
@@ -118,8 +111,45 @@ function MainPokemonTab() {
                       setDisabldisableded={setDisabled}
                     />
                   );
-                }
-              )} */}
+                })} */}
+                <MainPokemonName pokemonName={pokemon.name} isTeam={'true'} />
+                <Flex
+                  flexWrap="wrap"
+                  paddingTop={'60px'}
+                  justifyContent="center"
+                  maxW={'100vw'}
+                  height={'550px'}
+                  gap="25px"
+                  overflow={'scroll'}
+                >
+                  {isLoading ? (
+                    <Loading />
+                  ) : (
+                    team.map((card, idx) => {
+                      // console.log('Card:', idx, card);
+                      return (
+                        <PokemonCard
+                          key={idx}
+                          index={idx}
+                          card={card}
+                          src={
+                            card.sprites.other[`official-artwork`].front_default
+                          }
+                          src2={card.sprites.other.showdown.front_default}
+                          name={card.name}
+                          pokemon={pokemon}
+                          type={getType(card.types)}
+                          id={card.id}
+                          isLoading={isLoading}
+                          team={team}
+                          disabled={disabled}
+                          setDisabled={setDisabled}
+                          myTeam={myTeam}
+                        />
+                      );
+                    })
+                  )}
+                </Flex>
               </TabPanel>
             </TabPanels>
           )}

@@ -13,9 +13,13 @@ function HomePage() {
   function handleClick() {
     // console.log('Home Page Get Pokemon Button Clicked', randomChoice);
 
-    setIsLoading(true);
-    setRandomChoice(getChoice(1025));
+    // setIsLoading(true);
+    // setRandomChoice(getChoice(1025));
     return navigate(`/random/`);
+  }
+
+  function handleViewList() {
+    return navigate(`/list/`);
   }
   return (
     <>
@@ -24,13 +28,22 @@ function HomePage() {
       <Center>
         <Button
           pos={'fixed'}
-          bottom={'80px'}
+          bottom={'100px'}
           onClick={handleClick}
           marginTop={'60px'}
-          colorScheme="teal"
+          colorScheme="blue"
           size="lg"
         >
           Get Pokemon
+        </Button>
+        <Button
+          pos={'fixed'}
+          bottom={'40px'}
+          onClick={handleViewList}
+          size="lg"
+          colorScheme="red"
+        >
+          View Pokemon List
         </Button>
       </Center>
     </>

@@ -129,7 +129,7 @@ function NavBar({ myTeam, isLoading }) {
                   </MenuItem>
                   <MenuItem>
                     <Link className="link" to="/team">
-                      My Team
+                      My Team #{myTeam.length}
                     </Link>
                   </MenuItem>
                 </MenuList>
