@@ -191,10 +191,9 @@ function PokemonCard({ card, src, src2, name, type, id }) {
           isOpen={isOpen}
           onClose={onClose}
           isCentered
-          motionPreset="slideInBottom"
+          // motionPreset="slideInBottom"
           scrollBehavior="inside"
           size="md"
-
           // animation="true"
         >
           <ModalOverlay
@@ -294,9 +293,6 @@ function PokemonCard({ card, src, src2, name, type, id }) {
                 <IoArrowForwardCircleOutline
                   onClick={handleExpand}
                   size={'4.5em'}
-                  // color="white"
-                  // color="red"
-
                   className={
                     isExpanded
                       ? 'isExtended extend-modal'
@@ -385,10 +381,10 @@ function PokemonCard({ card, src, src2, name, type, id }) {
                   </TabPanel>
                   {/* MOVES TAB */}
                   <TabPanel className="content-moves" overflow={'scroll'}>
-                    <div>{pokemon.moves[0].move.name}</div>
-                    <div>{pokemon.moves[1].move.name}</div>
-                    <div>{pokemon.moves[2].move.name}</div>
-                    <div>{pokemon.moves[3].move.name}</div>
+                    <div>{card.moves[0].move.name}</div>
+                    <div>{card.moves[1].move.name}</div>
+                    <div>{card.moves[2].move.name}</div>
+                    <div>{card.moves[3].move.name}</div>
                   </TabPanel>
                   {/* SPRITES TAB */}
                   <TabPanel className="content-stats">
