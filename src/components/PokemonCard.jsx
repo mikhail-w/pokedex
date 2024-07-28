@@ -78,7 +78,14 @@ function PokemonCard({ card, src, src2, name, type, id }) {
   console.log('pokeInfo:', pokeInfo);
   // console.log('Flavor Text: ', pokeInfo.flavor_text_entries);
   if (flavorText.length > 0) {
-    console.log('Flavor Text: ', flavorText[0].flavor_text);
+    let newFlavorTexts = flavorText.filter(function (el) {
+      return el.language.name == 'en';
+    });
+    console.log('English Flavor Text:', newFlavorTexts);
+    // flavorText.map(t => {
+    //   console.log(t);
+    // });
+    // console.log('Flavor Text: ', flavorText[0].flavor_text);
   }
 
   const modalVariants = {
