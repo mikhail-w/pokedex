@@ -73,6 +73,14 @@ function PokemonCard({ card, src, src2, name, type, id }) {
 
   const [pokeInfo, setPokeInfo] = useState([]);
 
+  const [flavorText, setFlavorText] = useState([]);
+
+  console.log('pokeInfo:', pokeInfo);
+  // console.log('Flavor Text: ', pokeInfo.flavor_text_entries);
+  if (flavorText.length > 0) {
+    console.log('Flavor Text: ', flavorText[0].flavor_text);
+  }
+
   const modalVariants = {
     expanded: {
       width: '1400px',
@@ -121,11 +129,12 @@ function PokemonCard({ card, src, src2, name, type, id }) {
     setPokeInfoLoading(true);
     axios.get(currentCardInfo).then(res => {
       setPokeInfo(res.data);
+      setFlavorText(res.data.flavor_text_entries);
       setPokeInfoLoading(false);
     });
     onOpen();
-    console.log(card);
-    console.log(pokeInfo);
+    // console.log(card);
+    // console.log('Old Info:', pokeInfo);
   }
 
   function handleMouseEnter() {
@@ -208,7 +217,7 @@ function PokemonCard({ card, src, src2, name, type, id }) {
             // justifyContent={'center'}
             justifyContent={'left'}
             borderRadius={'50px'}
-            // outline={'2px solid blue'}
+            outline={'2px solid blue'}
             overflow={'hidden'}
             maxHeight={'740px'}
             flexDirection={'row'}
@@ -300,7 +309,6 @@ function PokemonCard({ card, src, src2, name, type, id }) {
                   }
                 />
               </Flex>
-              {/* <ModalBody w={'110%'} outline={'2px solid'}> */}
               <Tabs
                 className="pokeDetail-info-container"
                 isFitted
@@ -308,7 +316,7 @@ function PokemonCard({ card, src, src2, name, type, id }) {
                 colorScheme="green"
                 size="sm"
                 w={'100%'}
-                // outline={'2px solid red'}
+                outline={'2px solid red'}
               >
                 <TabList>
                   <Tab>About</Tab>
@@ -434,6 +442,18 @@ function PokemonCard({ card, src, src2, name, type, id }) {
                 </TabPanels>
               </Tabs>
               {/* </ModalBody> */}
+            </Box>
+
+            <Box
+              width={'300px'}
+              height={'300px'}
+              outline={'3px solid'}
+              overflow={'scroll'}
+            >
+              {/* {flavorText.map(t => {
+                <p>{`${t.flavor_text}`}</p>;
+              })} */}
+              <p>{flavorText[0].flavor_text}</p>
             </Box>
           </ModalContent>
         </Modal>
