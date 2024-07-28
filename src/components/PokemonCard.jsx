@@ -41,6 +41,7 @@ import InfoTab from './InfoTab';
 import { isInTeam, catchPokemon, releasePokemon, bgs, colors } from '../utils';
 import { IoArrowForwardCircleOutline } from 'react-icons/io5';
 import { useOutletContext } from 'react-router-dom';
+import FlavorText from './FlavorText';
 
 function PokemonCard({ card, src, src2, name, type, id }) {
   const {
@@ -74,32 +75,25 @@ function PokemonCard({ card, src, src2, name, type, id }) {
   const [pokeInfo, setPokeInfo] = useState([]);
 
   const [flavorText, setFlavorText] = useState([]);
+  const [textArray, setTextArray] = useState([]);
 
-  console.log('pokeInfo:', pokeInfo);
+  // console.log('pokeInfo:', pokeInfo);
   // console.log('Flavor Text: ', pokeInfo.flavor_text_entries);
-  if (flavorText.length > 0) {
-    let newFlavorTexts = flavorText.filter(function (el) {
-      return el.language.name == 'en';
-    });
-    console.log('English Flavor Text:', newFlavorTexts);
-    // flavorText.map(t => {
-    //   console.log(t);
-    // });
-    // console.log('Flavor Text: ', flavorText[0].flavor_text);
-  }
-
-  const modalVariants = {
-    expanded: {
-      width: '1400px',
-    },
-    collapsed: {
-      width: '740px',
-    },
-  };
-  // console.log('isExpanded', isExpanded);
 
   const handleExpand = () => {
     console.log('Expand Handled', isExpanded);
+    if (flavorText.length > 0) {
+      let newFlavorTexts = flavorText.filter(function (el) {
+        return el.language.name == 'en';
+      });
+      let result = newFlavorTexts.map(a => a.flavor_text);
+      setTextArray(result);
+      console.log('English Flavor Text:', result);
+      // flavorText.map(t => {
+      //   console.log(t);
+      // });
+      // console.log('Flavor Text: ', flavorText[0].flavor_text);
+    }
     setIsExpanded(!isExpanded);
   };
 
@@ -452,15 +446,17 @@ function PokemonCard({ card, src, src2, name, type, id }) {
             </Box>
 
             <Box
-              width={'300px'}
-              height={'300px'}
+              width={'500px'}
+              height={'500px'}
               outline={'3px solid'}
               overflow={'scroll'}
             >
               {/* {flavorText.map(t => {
                 <p>{`${t.flavor_text}`}</p>;
               })} */}
-              <p>{flavorText[0].flavor_text}</p>
+              {/* <p>{flavorText[0].flavor_text}</p> */}
+
+              <FlavorText textArray={textArray} />
             </Box>
           </ModalContent>
         </Modal>
