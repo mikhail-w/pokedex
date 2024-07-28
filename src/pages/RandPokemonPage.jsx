@@ -27,15 +27,21 @@ import {
 function RandPokemonPage() {
   const [valid, setValid] = useState(false);
   const timerId = useRef(null);
-  const { setTeam, pokemon, setPokemon, randomChoice, setIsLoading } =
-    useOutletContext();
+  // const { randomChoice } = useParams();
+  const {
+    setTeam,
+    team,
+    pokemon,
+    setPokemon,
+    randomChoice,
+    setIsLoading,
+    passed,
+    setPassed,
+  } = useOutletContext();
+  let response;
   // console.log('-------- On Random Pokeon Page');
 
   const getRandomPokemon = async () => {
-    let response;
-    // console.log('****On Random Pokeon Page Pokemon Object', pokemon);
-    // const choice = getChoice(1025);
-
     try {
       // setIsLoading(true);
       // ========== FIRST AXIOS CALL ===========
@@ -43,47 +49,35 @@ function RandPokemonPage() {
         `https://pokeapi.co/api/v2/pokemon/${randomChoice}`
       );
       setPokemon(response.data);
-      // console.log('Pokemon DATA:', response.data);
+      console.log('Pokemon DATA:', response.data);
 
       // // ========== SECOND AXIOS CALL ===========
       // // ================ GET TEAM ==============
-      // let teamURL = response.data.types[0].type.url;
-      // const teamResponse = await axios.get(teamURL);
-      // let urls = [];
-      // const teamMasterList = teamResponse.data.pokemon;
-      // let teamMasterListSize = teamMasterList.length;
-      // // console.log('teamMasterListSize:', teamMasterListSize);
+      let teamURL = response.data.types[0].type.url;
+      const teamResponse = await axios.get(teamURL);
+      let urls = [];
+      const teamMasterList = teamResponse.data.pokemon;
 
-      // // console.log('Pokemon Team:', teamResponse.data.pokemon);
-      // // Make sure selected Pokemon aren't repeated
-      // const indexes = [];
-      // while (indexes.length < 5) {
-      //   // console.log('Card ID', pokemon.id);
-      //   let r = getChoice(teamMasterListSize);
-      //   if (indexes.indexOf(r) === -1 && r.id != pokemon.id) indexes.push(r);
-      // }
-      // // console.log('Indexes', indexes);
+      for (let i = 0; i < 5; i++) {
+        let teamMember = teamMasterList[i];
+        let url = `https://pokeapi.co/api/v2/pokemon/${teamMember.pokemon.name}`;
+        urls.push(url.toString());
+      }
 
-      // for (let i = 0; i < 5; i++) {
-      //   let teamMember = teamMasterList[indexes[i]];
-      //   let url = `https://pokeapi.co/api/v2/pokemon/${teamMember.pokemon.name}`;
-      //   urls.push(url.toString());
-      // }
-
-      // await Promise.all(
-      //   urls.map(async url => {
-      //     return (await axios.get(url)).data;
-      //   })
-      // ).then(values => {
-      //   // console.log('Team Member Values', values);
-      //   setTeam(values);
-      // });
+      await Promise.all(
+        urls.map(async url => {
+          return (await axios.get(url)).data;
+        })
+      ).then(values => {
+        setTeam(values);
+      });
 
       //Creating a timeout
       timerId.current = setTimeout(() => {
         setIsLoading(false);
       }, 500);
       setValid(true);
+      console.log('TEAM:', team);
     } catch (err) {
       setValid(false);
       console.error('Error response:');
@@ -93,9 +87,9 @@ function RandPokemonPage() {
     }
   };
 
-  useEffect(() => {
-    getRandomPokemon();
-  }, [randomChoice]);
+  // useEffect(() => {
+  //   getRandomPokemon();
+  // }, []);
 
   return (
     <>
