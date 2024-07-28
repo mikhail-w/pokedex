@@ -1,6 +1,6 @@
 .modal-content {
   max-width: fit-content;
-  /* max-width: 475px; */
+  transition-property: max-width;
   transition-duration: 2000ms;
 }
 
