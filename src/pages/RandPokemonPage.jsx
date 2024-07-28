@@ -1,43 +1,16 @@
 import axios from 'axios';
 import MainPokemonTab from '../components/MainPokemonTab';
 import GenerateButton from '../components/GenerateButton';
-import Loading from '../components/Loading';
 import { useOutletContext, useParams } from 'react-router-dom';
 import { useEffect, useState, useRef } from 'react';
-import {
-  getChoice,
-  isInTeam,
-  colors,
-  bgs,
-  modalIcons,
-  releasePokemon,
-  catchPokemon,
-  getType,
-} from '../utils';
-import {
-  Tabs,
-  TabList,
-  TabPanels,
-  Tab,
-  TabPanel,
-  Flex,
-  Center,
-} from '@chakra-ui/react';
+import { getChoice } from '../utils';
 
 function RandPokemonPage() {
   const [valid, setValid] = useState(false);
   const timerId = useRef(null);
   // const { randomChoice } = useParams();
-  const {
-    setTeam,
-    team,
-    pokemon,
-    setPokemon,
-    randomChoice,
-    setIsLoading,
-    passed,
-    setPassed,
-  } = useOutletContext();
+  const { setTeam, team, pokemon, setPokemon, randomChoice, setIsLoading } =
+    useOutletContext();
 
   // console.log('-------- On Random Pokeon Page');
 
@@ -61,12 +34,12 @@ function RandPokemonPage() {
       let teamMasterListSize = teamMasterList.length;
       console.log('teamMasterListSize:', teamMasterListSize);
 
-      console.log('Card ID', pokemon.id);
+      // console.log('Card ID', pokemon.id);
       console.log('Pokemon Team:', teamResponse.data.pokemon);
       // Make sure selected Pokemon aren't repeated
       const indexes = [];
       while (indexes.length < 5) {
-        console.log('Card ID', pokemon.id);
+        // console.log('Card ID', pokemon.id);
         let r = getChoice(teamMasterListSize);
         if (indexes.indexOf(r) === -1 && r.id != pokemon.id) indexes.push(r);
       }
@@ -78,14 +51,14 @@ function RandPokemonPage() {
         urls.push(url.toString());
       }
 
-      console.log('=====URLS:', urls);
+      // console.log('=====URLS:', urls);
 
       await Promise.all(
         urls.map(async url => {
           return (await axios.get(url)).data;
         })
       ).then(values => {
-        console.log('Values', values);
+        // console.log('Values', values);
         setTeam(values);
       });
 
@@ -105,11 +78,28 @@ function RandPokemonPage() {
   };
 
   useEffect(() => {
-    console.log('+++++Inside Use Effect!');
-    getRandomPokemon();
-    window.localStorage.setItem('MAIN_POKEMON', JSON.stringify(pokemon));
-    window.localStorage.setItem('MAIN_POKEMON_TEAM', JSON.stringify(team));
+    const pokemon_data = window.localStorage.getItem('MAIN_POKEMON');
+    const team_data = window.localStorage.getItem('MAIN_POKEMON_TEAM');
+    console.log(
+      '>>>>>>>>>>>>>>>>>>>>>>> LOADING FROM STORAGE >>>>>>>>>>>>>>>>>>>>>>'
+    );
+    console.log('Pokemon:', JSON.parse(pokemon_data));
+    console.log('Pokemon Team:', JSON.parse(team_data));
+    setPokemon(JSON.parse(pokemon_data));
+    setTeam(JSON.parse(team_data));
   }, []);
+
+  useEffect(() => {
+    console.log(
+      '^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ UPDATE COMPONENTS ^^^^^^^^^^^^^^^^^^^^^'
+    );
+
+    getRandomPokemon();
+    return () => {
+      window.localStorage.setItem('MAIN_POKEMON', JSON.stringify(pokemon));
+      window.localStorage.setItem('MAIN_POKEMON_TEAM', JSON.stringify(team));
+    };
+  }, [randomChoice]);
 
   return (
     <>

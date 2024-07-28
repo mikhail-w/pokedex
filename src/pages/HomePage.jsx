@@ -13,8 +13,8 @@ function HomePage() {
   function handleClick() {
     // console.log('Home Page Get Pokemon Button Clicked', randomChoice);
 
-    setIsLoading(true);
-    setRandomChoice(getChoice(1025));
+    // setIsLoading(true);
+    // setRandomChoice(getChoice(1025));
     return navigate(`/random/`);
   }
   return (
