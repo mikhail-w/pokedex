@@ -145,7 +145,6 @@ function MainPokemonTab() {
                           disabled={disabled}
                           setDisabled={setDisabled}
                           myTeam={myTeam}
-                          setMyTeam={setMyTeam}
                         />
                       );
                     })

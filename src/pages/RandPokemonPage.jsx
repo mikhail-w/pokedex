@@ -31,34 +31,18 @@ function RandPokemonPage() {
       const teamResponse = await axios.get(teamURL);
       let urls = [];
       const teamMasterList = teamResponse.data.pokemon;
-      let teamMasterListSize = teamMasterList.length;
-      // console.log('teamMasterListSize:', teamMasterListSize);
-
-      // console.log('Card ID', pokemon.id);
-      // console.log('Pokemon Team:', teamResponse.data.pokemon);
-      // Make sure selected Pokemon aren't repeated
-      const indexes = [];
-      while (indexes.length < 5) {
-        // console.log('Card ID', pokemon.id);
-        let r = getChoice(teamMasterListSize);
-        if (indexes.indexOf(r) === -1 && r.id != pokemon.id) indexes.push(r);
-      }
-      // console.log('Indexes', indexes);
 
       for (let i = 0; i < 5; i++) {
-        let teamMember = teamMasterList[indexes[i]];
+        let teamMember = teamMasterList[i];
         let url = `https://pokeapi.co/api/v2/pokemon/${teamMember.pokemon.name}`;
         urls.push(url.toString());
       }
-
-      // console.log('=====URLS:', urls);
 
       await Promise.all(
         urls.map(async url => {
           return (await axios.get(url)).data;
         })
       ).then(values => {
-        // console.log('Values', values);
         setTeam(values);
       });
 
@@ -67,7 +51,7 @@ function RandPokemonPage() {
         setIsLoading(false);
       }, 500);
       setValid(true);
-      // console.log('TEAM:', team);
+      console.log('TEAM:', team);
     } catch (err) {
       setValid(false);
       console.error('Error response:');

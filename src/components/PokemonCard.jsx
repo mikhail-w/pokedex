@@ -601,11 +601,7 @@ function PokemonCard({ card, src, src2, name, type, id }) {
                         src={src == null ? ball : src}
                       />
                     </Center>
-                    <Center
-                      whiteSpace={'nowrap'}
-                      className="name"
-                      color={'black'}
-                    >
+                    <Center whiteSpace={'nowrap'} className="pokemonName">
                       {name}
                     </Center>
                     {/* POKEMON TYPE */}
