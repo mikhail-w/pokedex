@@ -51,7 +51,7 @@ function RandPokemonPage() {
         setIsLoading(false);
       }, 500);
       setValid(true);
-      console.log('TEAM:', team);
+      // console.log('TEAM:', team);
     } catch (err) {
       setValid(false);
       console.error('Error response:');
@@ -94,8 +94,3 @@ function RandPokemonPage() {
 }
 
 export default RandPokemonPage;
-
-{
-  /* {valid ? <MainPokemonTab /> : ''}
-      <GenerateButton getRandomPokemon={getRandomPokemon} /> */
-}

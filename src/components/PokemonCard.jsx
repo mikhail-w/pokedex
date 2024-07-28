@@ -81,7 +81,7 @@ function PokemonCard({ card, src, src2, name, type, id }) {
       width: '740px',
     },
   };
-  console.log('isExpanded', isExpanded);
+  // console.log('isExpanded', isExpanded);
 
   const handleExpand = () => {
     console.log('Expand Handled', isExpanded);
