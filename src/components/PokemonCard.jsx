@@ -193,7 +193,7 @@ function PokemonCard({ card, src, src2, name, type, id }) {
           isCentered
           motionPreset="slideInBottom"
           scrollBehavior="inside"
-          size="lg"
+          size="md"
 
           // animation="true"
         >
@@ -206,22 +206,22 @@ function PokemonCard({ card, src, src2, name, type, id }) {
             className={isExpanded ? 'modal-content extended' : 'modal-content'}
             background={` linear-gradient(in lch,${finalColor[0]}, ${finalColor[1]})`}
             alignItems={'center'}
+            // justifyContent={'center'}
+            justifyContent={'left'}
             borderRadius={'50px'}
-            // outline={'2px solid red'}
+            // outline={'2px solid blue'}
             overflow={'hidden'}
-            // maxHeight={'740px'}
-            // flexDirection={'row'}
+            maxHeight={'740px'}
+            flexDirection={'row'}
           >
-            <Box
-            // outline={'2px solid yellow'}
-            >
+            <Box>
               {/* RETURN ARROW BUTTON AND POKEBALL ICON */}
               <Flex
                 // outline={'2px solid red'}
                 w={'90%'}
-                margin={'20px'}
+                margin={'60px 30px 30px 30px'}
                 justifyContent={'space-between'}
-                alignItems={'center'}
+                // alignItems={'center'}
               >
                 <FaArrowLeftLong
                   className="modal-return"
@@ -280,164 +280,159 @@ function PokemonCard({ card, src, src2, name, type, id }) {
                   )}
                 </Flex>
               </ModalHeader>
+              {/* IMAGE AND ARROW */}
               <Flex
                 w={'450px'}
                 h={'250px'}
                 justifyContent={'center'}
                 marginBottom={'20px'}
                 // outline={'2px solid red'}
+                position={'relative'}
               >
                 <Image src={src == null ? ball : src} />
+                <IoArrowForwardCircleOutline
+                  onClick={handleExpand}
+                  size={'4.5em'}
+                  // color="white"
+                  // color="red"
+
+                  className="extend-modal"
+                />
               </Flex>
-              <ModalBody w={'110%'}>
-                <Box />
-                <Tabs
-                  className="pokeDetail-info-container"
-                  isFitted
-                  variant="soft-rounded"
-                  colorScheme="green"
-                  size="sm"
-                  // outline={'2px solid red'}
-                >
-                  <TabList>
-                    <Tab>About</Tab>
-                    <Tab>Base Stats</Tab>
-                    <Tab>Moves</Tab>
-                    <Tab>Sprites</Tab>
-                  </TabList>
-                  <Divider />
-                  <Flex>
-                    <Image />
-                  </Flex>
-                  <TabPanels>
-                    {/* ABOUT TAB */}
-                    <TabPanel
-                      className="about-container content-stats"
-                      overflow={'scroll'}
-                    >
-                      <Box className="subtitle-container">
-                        <p className="subtitle">Base Experience:</p>
-                        <p className="description">{card.base_experience}</p>
-                      </Box>
-                      <Box className="subtitle-container">
-                        <p className="subtitle">Height:</p>
-                        <p className="description">{card.height}m</p>
-                      </Box>
-                      <Box className="subtitle-container">
-                        <p className="subtitle">Weight:</p>
-                        <p className="description">{card.weight}lbs</p>
-                      </Box>
-                      <Box className="subtitle-container">
-                        <p className="subtitle">Growth Rate:</p>
-                        <p className="description">
-                          {pokeInfo.growth_rate.name}
-                        </p>
-                      </Box>
-                      <Box className="subtitle-container">
-                        <p className="subtitle">Capture Rate:</p>
-                        <p className="description">{pokeInfo.capture_rate}</p>
-                      </Box>
-                      <Box className="subtitle-container">
-                        <p className="subtitle">Generation:</p>
-                        <p className="description">
-                          {pokeInfo.generation.name}
-                        </p>
-                      </Box>
-                    </TabPanel>
-                    {/* BASE STATS TAB */}
-                    <TabPanel className="content-stats">
-                      {card.stats.map(stat => (
-                        <div
-                          key={card.name + stat.stat.name}
-                          className="stat-container"
-                        >
-                          <div className="stat-titles-container">
-                            <h3 className="stat-name">{stat.stat.name}</h3>
-                            <h3 className="stat-value">{stat.base_stat}</h3>
-                          </div>
-                          <div className="stat-bar-container">
-                            <div className="stat-bar-bg"></div>
+              {/* <ModalBody w={'110%'} outline={'2px solid'}> */}
+              <Tabs
+                className="pokeDetail-info-container"
+                isFitted
+                variant="soft-rounded"
+                colorScheme="green"
+                size="sm"
+                w={'100%'}
+                // outline={'2px solid red'}
+              >
+                <TabList>
+                  <Tab>About</Tab>
+                  <Tab>Base Stats</Tab>
+                  <Tab>Moves</Tab>
+                  <Tab>Sprites</Tab>
+                </TabList>
+                <Divider />
+                <Flex>
+                  <Image />
+                </Flex>
+                <TabPanels>
+                  {/* ABOUT TAB */}
+                  <TabPanel
+                    className="about-container content-stats"
+                    overflow={'scroll'}
+                  >
+                    <Box className="subtitle-container">
+                      <p className="subtitle">Base Experience:</p>
+                      <p className="description">{card.base_experience}</p>
+                    </Box>
+                    <Box className="subtitle-container">
+                      <p className="subtitle">Height:</p>
+                      <p className="description">{card.height}m</p>
+                    </Box>
+                    <Box className="subtitle-container">
+                      <p className="subtitle">Weight:</p>
+                      <p className="description">{card.weight}lbs</p>
+                    </Box>
+                    <Box className="subtitle-container">
+                      <p className="subtitle">Growth Rate:</p>
+                      <p className="description">{pokeInfo.growth_rate.name}</p>
+                    </Box>
+                    <Box className="subtitle-container">
+                      <p className="subtitle">Capture Rate:</p>
+                      <p className="description">{pokeInfo.capture_rate}</p>
+                    </Box>
+                    <Box className="subtitle-container">
+                      <p className="subtitle">Generation:</p>
+                      <p className="description">{pokeInfo.generation.name}</p>
+                    </Box>
+                  </TabPanel>
+                  {/* BASE STATS TAB */}
+                  <TabPanel className="content-stats">
+                    {card.stats.map(stat => (
+                      <div
+                        key={card.name + stat.stat.name}
+                        className="stat-container"
+                      >
+                        <div className="stat-titles-container">
+                          <h3 className="stat-name">{stat.stat.name}</h3>
+                          <h3 className="stat-value">{stat.base_stat}</h3>
+                        </div>
+                        <div className="stat-bar-container">
+                          <div className="stat-bar-bg"></div>
+                          <div
+                            className="stat-bar-parent"
+                            style={{
+                              width: stat.base_stat + '%',
+                              maxWidth: '100%',
+                            }}
+                          >
                             <div
-                              className="stat-bar-parent"
-                              style={{
-                                width: stat.base_stat + '%',
-                                maxWidth: '100%',
-                              }}
-                            >
-                              <div
-                                className={`stat-bar-fill ${card.types[0].type.name}`}
-                              ></div>
-                            </div>
+                              className={`stat-bar-fill ${card.types[0].type.name}`}
+                            ></div>
                           </div>
                         </div>
-                      ))}
-                    </TabPanel>
-                    {/* MOVES TAB */}
-                    <TabPanel className="content-moves" overflow={'scroll'}>
-                      <div>{pokemon.moves[0].move.name}</div>
-                      <div>{pokemon.moves[1].move.name}</div>
-                      <div>{pokemon.moves[2].move.name}</div>
-                      <div>{pokemon.moves[3].move.name}</div>
-                    </TabPanel>
-                    {/* SPRITES TAB */}
-                    <TabPanel className="content-stats">
-                      <Flex
-                        alignItems={'center'}
-                        // outline={'1px solid red'}
-                        // marginTop={'20px'}
-                      >
-                        <Image
-                          h={'100%'}
-                          w={'96px'}
-                          src={
-                            card.sprites.back_default == null
-                              ? ball
-                              : card.sprites.back_default
-                          }
-                        />
-                        <Image
-                          h={'100%'}
-                          w={'96px'}
-                          src={
-                            card.sprites.back_shiny == null
-                              ? ball
-                              : card.sprites.back_shiny
-                          }
-                        />
-                        <Image
-                          h={'100%'}
-                          w={'96px'}
-                          src={
-                            card.sprites.front_default == null
-                              ? ball
-                              : card.sprites.front_default
-                          }
-                        />
-                        <Image
-                          h={'100%'}
-                          w={'96px'}
-                          src={
-                            card.sprites.front_shiny == null
-                              ? ball
-                              : card.sprites.front_shiny
-                          }
-                        />
-                      </Flex>
-                    </TabPanel>
-                  </TabPanels>
-                </Tabs>
-              </ModalBody>
-            </Box>
-            <Box
-              onClick={handleExpand}
-              alignSelf={'center'}
-              outline={'1px solid red'}
-            >
-              <IoArrowForwardCircleOutline
-                size={'4.5em'}
-                color="white"
-                className="extend-modal"
-              />
+                      </div>
+                    ))}
+                  </TabPanel>
+                  {/* MOVES TAB */}
+                  <TabPanel className="content-moves" overflow={'scroll'}>
+                    <div>{pokemon.moves[0].move.name}</div>
+                    <div>{pokemon.moves[1].move.name}</div>
+                    <div>{pokemon.moves[2].move.name}</div>
+                    <div>{pokemon.moves[3].move.name}</div>
+                  </TabPanel>
+                  {/* SPRITES TAB */}
+                  <TabPanel className="content-stats">
+                    <Flex
+                      alignItems={'center'}
+                      // outline={'1px solid red'}
+                      // marginTop={'20px'}
+                    >
+                      <Image
+                        h={'100%'}
+                        w={'96px'}
+                        src={
+                          card.sprites.back_default == null
+                            ? ball
+                            : card.sprites.back_default
+                        }
+                      />
+                      <Image
+                        h={'100%'}
+                        w={'96px'}
+                        src={
+                          card.sprites.back_shiny == null
+                            ? ball
+                            : card.sprites.back_shiny
+                        }
+                      />
+                      <Image
+                        h={'100%'}
+                        w={'96px'}
+                        src={
+                          card.sprites.front_default == null
+                            ? ball
+                            : card.sprites.front_default
+                        }
+                      />
+                      <Image
+                        h={'100%'}
+                        w={'96px'}
+                        src={
+                          card.sprites.front_shiny == null
+                            ? ball
+                            : card.sprites.front_shiny
+                        }
+                      />
+                    </Flex>
+                  </TabPanel>
+                </TabPanels>
+              </Tabs>
+              {/* </ModalBody> */}
             </Box>
           </ModalContent>
         </Modal>

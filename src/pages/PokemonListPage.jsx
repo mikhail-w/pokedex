@@ -33,7 +33,7 @@ function PokemonListPage() {
         );
         const data = await res.json();
         setAllPokemons(currentList => [...currentList, data]);
-        await allPokemons.sort((a, b) => a.id - b.id);
+        // await allPokemons.sort((a, b) => a.id - b.id);
       });
     }
     createPokemonObject(data.results);
