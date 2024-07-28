@@ -23,51 +23,51 @@ function RandPokemonPage() {
         `https://pokeapi.co/api/v2/pokemon/${randomChoice}`
       );
       setPokemon(response.data);
-      console.log('Pokemon DATA:', response.data);
+      // console.log('Pokemon DATA:', response.data);
 
       // // ========== SECOND AXIOS CALL ===========
       // // ================ GET TEAM ==============
-      // let teamURL = response.data.types[0].type.url;
-      // const teamResponse = await axios.get(teamURL);
-      // let urls = [];
-      // const teamMasterList = teamResponse.data.pokemon;
-      // let teamMasterListSize = teamMasterList.length;
+      let teamURL = response.data.types[0].type.url;
+      const teamResponse = await axios.get(teamURL);
+      let urls = [];
+      const teamMasterList = teamResponse.data.pokemon;
+      let teamMasterListSize = teamMasterList.length;
       // console.log('teamMasterListSize:', teamMasterListSize);
 
-      // // console.log('Card ID', pokemon.id);
+      // console.log('Card ID', pokemon.id);
       // console.log('Pokemon Team:', teamResponse.data.pokemon);
-      // // Make sure selected Pokemon aren't repeated
-      // const indexes = [];
-      // while (indexes.length < 5) {
-      //   // console.log('Card ID', pokemon.id);
-      //   let r = getChoice(teamMasterListSize);
-      //   if (indexes.indexOf(r) === -1 && r.id != pokemon.id) indexes.push(r);
-      // }
+      // Make sure selected Pokemon aren't repeated
+      const indexes = [];
+      while (indexes.length < 5) {
+        // console.log('Card ID', pokemon.id);
+        let r = getChoice(teamMasterListSize);
+        if (indexes.indexOf(r) === -1 && r.id != pokemon.id) indexes.push(r);
+      }
       // console.log('Indexes', indexes);
 
-      // for (let i = 0; i < 5; i++) {
-      //   let teamMember = teamMasterList[indexes[i]];
-      //   let url = `https://pokeapi.co/api/v2/pokemon/${teamMember.pokemon.name}`;
-      //   urls.push(url.toString());
-      // }
+      for (let i = 0; i < 5; i++) {
+        let teamMember = teamMasterList[indexes[i]];
+        let url = `https://pokeapi.co/api/v2/pokemon/${teamMember.pokemon.name}`;
+        urls.push(url.toString());
+      }
 
-      // // console.log('=====URLS:', urls);
+      // console.log('=====URLS:', urls);
 
-      // await Promise.all(
-      //   urls.map(async url => {
-      //     return (await axios.get(url)).data;
-      //   })
-      // ).then(values => {
-      //   // console.log('Values', values);
-      //   setTeam(values);
-      // });
+      await Promise.all(
+        urls.map(async url => {
+          return (await axios.get(url)).data;
+        })
+      ).then(values => {
+        // console.log('Values', values);
+        setTeam(values);
+      });
 
       //Creating a timeout
       timerId.current = setTimeout(() => {
         setIsLoading(false);
       }, 500);
       setValid(true);
-      console.log('TEAM:', team);
+      // console.log('TEAM:', team);
     } catch (err) {
       setValid(false);
       console.error('Error response:');
@@ -80,19 +80,19 @@ function RandPokemonPage() {
   useEffect(() => {
     const pokemon_data = window.localStorage.getItem('MAIN_POKEMON');
     const team_data = window.localStorage.getItem('MAIN_POKEMON_TEAM');
-    console.log(
-      '>>>>>>>>>>>>>>>>>>>>>>> LOADING FROM STORAGE >>>>>>>>>>>>>>>>>>>>>>'
-    );
-    console.log('Pokemon:', JSON.parse(pokemon_data));
-    console.log('Pokemon Team:', JSON.parse(team_data));
+    // console.log(
+    //   '>>>>>>>>>>>>>>>>>>>>>>> LOADING FROM STORAGE >>>>>>>>>>>>>>>>>>>>>>'
+    // );
+    // console.log('Pokemon:', JSON.parse(pokemon_data));
+    // console.log('Pokemon Team:', JSON.parse(team_data));
     setPokemon(JSON.parse(pokemon_data));
     setTeam(JSON.parse(team_data));
   }, []);
 
   useEffect(() => {
-    console.log(
-      '^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ UPDATE COMPONENTS ^^^^^^^^^^^^^^^^^^^^^'
-    );
+    // console.log(
+    //   '^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ UPDATE COMPONENTS ^^^^^^^^^^^^^^^^^^^^^'
+    // );
 
     getRandomPokemon();
     return () => {
