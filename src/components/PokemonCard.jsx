@@ -77,7 +77,7 @@ function PokemonCard({ card, src, src2, name, type, id }) {
 
   const [flavorText, setFlavorText] = useState([]);
   const [textArray, setTextArray] = useState([]);
-  const [evoData, setEvoData] = useState([]);
+  // const [evoData, setEvoData] = useState([]);
 
   // console.log('pokeInfo:', pokeInfo);
   // console.log('Flavor Text: ', pokeInfo.flavor_text_entries);
@@ -144,9 +144,9 @@ function PokemonCard({ card, src, src2, name, type, id }) {
       //   evores.data;
       // });
       // setEvoData(res.data.chain);
-      const evoResponse = res.data.evolution_chain;
+      // const evoResponse = res.data.evolution_chain;
 
-      console.log('EVO Data:', evoResponse);
+      // console.log('EVO Data:', evoResponse);
       // console.log('EVO Data:', res.data.evolution_chain);
       // do {
       //   var evoDetails = evoData['evolution_details'][0];
@@ -168,29 +168,29 @@ function PokemonCard({ card, src, src2, name, type, id }) {
     onOpen();
     console.log(card);
     // console.log('Old Info:', pokeInfo);
-    getEvoChain(evoResponse);
+    // getEvoChain(evoResponse);
   }
 
-  const getEvoChain = async evoResponse => {
-    console.log('Inside get EvoChain', evoResponse);
-    var evoChain = [];
-    // var evoData = response.data.chain;
-    const evoData = await axios.get(evoResponse.url);
-    console.log('EVO DATA:', evoData.data);
+  // const getEvoChain = async evoResponse => {
+  //   console.log('Inside get EvoChain', evoResponse);
+  //   var evoChain = [];
+  //   // var evoData = response.data.chain;
+  //   const evoData = await axios.get(evoResponse.url);
+  //   console.log('EVO DATA:', evoData.data);
 
-    do {
-      var evoDetails = evoData['evolution_details'][0];
+  //   do {
+  //     var evoDetails = evoData['evolution_details'][0];
 
-      evoChain.push({
-        species_name: evoData.species.name,
-        min_level: !evoDetails ? 1 : evoDetails.min_level,
-        trigger_name: !evoDetails ? null : evoDetails.trigger.name,
-        item: !evoDetails ? null : evoDetails.item,
-      });
+  //     evoChain.push({
+  //       species_name: evoData.species.name,
+  //       min_level: !evoDetails ? 1 : evoDetails.min_level,
+  //       trigger_name: !evoDetails ? null : evoDetails.trigger.name,
+  //       item: !evoDetails ? null : evoDetails.item,
+  //     });
 
-      evoData = evoData['evolves_to'][0];
-    } while (!!evoData && evoData.hasOwnProperty('evolves_to'));
-  };
+  //     evoData = evoData['evolves_to'][0];
+  //   } while (!!evoData && evoData.hasOwnProperty('evolves_to'));
+  // };
 
   function handleMouseEnter() {
     setHovered(true);
