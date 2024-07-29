@@ -33,17 +33,15 @@
   justify-content: center;
 }
 
-.wrapper ul {
-  list-style: none;
-}
-
 .typewriter {
   display: inline-flex;
+  align-self: baseline;
   position: relative;
   /* outline: 1px solid red; */
 }
 
 .typewriter-dark {
+  align-self: baseline;
   display: inline-flex;
   position: relative;
   /* outline: 1px solid red; */
