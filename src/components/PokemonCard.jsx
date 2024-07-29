@@ -206,7 +206,7 @@ function PokemonCard({ card, src, src2, name, type, id }) {
           isOpen={isOpen}
           onClose={onClose}
           isCentered
-          // motionPreset="slideInBottom"
+          motionPreset="slideInBottom"
           scrollBehavior="inside"
           size="md"
           // animation="true"
