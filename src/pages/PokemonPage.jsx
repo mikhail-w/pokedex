@@ -87,8 +87,7 @@ function PokemonPage() {
         <Center flexDirection={'column'} className="not-found" id="root">
           <Image src={openBall} />
           <Text>
-            No such pokemon with name or id <span>&apos{name}&lsquo</span>{' '}
-            exists!
+            No such pokemon with name or id <span>'{name}'</span> exists!
           </Text>
         </Center>
       )}
