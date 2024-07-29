@@ -35,13 +35,14 @@
 }
 
 .notExtended:hover {
-  color: #3d7dca;
+  /* color: #3d7dca; */
+  color: #8de7a9;
 }
 
 .isExtended {
   color: #ac4f51;
   transform: rotate(180deg);
-  /* transition: transform 1s linear; */
+  transition: transform 1s linear;
 }
 
 .flavorBoxContainer {

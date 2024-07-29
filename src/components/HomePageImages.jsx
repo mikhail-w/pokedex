@@ -5,6 +5,8 @@ import pokedex from '../assets/images/pokemon/pokedex.png';
 import pokeball3 from '../assets/images/pokeballs/pokeball3.png';
 import ballOutline2 from '../assets/images/pokeballs/balloutline2.png';
 import ballOutline3 from '../assets/images/pokeballs/balloutline3.svg';
+import rm from '../assets/images/rm.png';
+import { Center, useColorModeValue } from '@chakra-ui/react';
 
 function HomePageImages() {
   return (
@@ -30,6 +32,19 @@ function HomePageImages() {
       <div className="pokeball3">
         <img src={pokeball3} alt="pokeballs" />
       </div>
+      <Center>
+        <div className="rm-container">
+          <div className="rm-image-container">
+            <img src={rm} alt="rm" />
+          </div>
+          <div className="wrapper">
+            <p className="static-txt">Look Morty...</p>
+            <p className={useColorModeValue('typewriter', 'typewriter-dark')}>
+              Pokemon Everywhere....
+            </p>
+          </div>
+        </div>
+      </Center>
     </>
   );
 }

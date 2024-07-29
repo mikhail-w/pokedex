@@ -7,7 +7,7 @@ import { IconContext } from 'react-icons'; // for customizing icons
 import '../App.css';
 
 function FlavorText({ textArray }) {
-  console.log('INSIDE FLAVOR TEXT COMPONENT', textArray);
+  // console.log('INSIDE FLAVOR TEXT COMPONENT', textArray);
   // const [users, setUsers] = useState([...Array(10).keys()].map(i => i + 1));
   const [pageNumber, setPageNumber] = useState(0);
 
@@ -20,7 +20,7 @@ function FlavorText({ textArray }) {
       return (
         <>
           <div className="flavorText">
-            <h3 key="{idx}">{flavorText}</h3>
+            <p key={flavorText}>{flavorText}</p>
           </div>
         </>
       );
