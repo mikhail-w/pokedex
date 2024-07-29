@@ -1,0 +1,37 @@
+.App {
+  display: flex;
+  margin: 0 auto;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.paginationBttns {
+  width: 400px;
+  /* height: 40px; */
+  padding: 20px;
+  list-style: none;
+  display: flex;
+  justify-content: space-around;
+  /* outline: 1px solid red; */
+}
+
+.pagination {
+  list-style: none;
+  height: 31.5px;
+  width: 31.5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 2px;
+  cursor: pointer;
+}
+
+.flavorText {
+  margin-top: 20px;
+  min-height: 100px;
+}
+
+.flavorText h3 {
+  font-family: "Alleyn W01 Regular";
+}

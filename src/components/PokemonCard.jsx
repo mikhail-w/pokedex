@@ -31,6 +31,7 @@ import ReactCardFlip from 'react-card-flip';
 import { FaArrowLeftLong } from 'react-icons/fa6';
 import { CgPokemon } from 'react-icons/cg';
 import ball from '../assets/images/pokeballs/pokeball.png';
+import ballOutline from '../assets/images/pokeballs/balloutline3.svg';
 import info from '../assets/images/type_icons/i.svg';
 import { TbPokeballOff } from 'react-icons/tb';
 import '../assets/styles/PokemonCard.css';
@@ -41,6 +42,7 @@ import InfoTab from './InfoTab';
 import { isInTeam, catchPokemon, releasePokemon, bgs, colors } from '../utils';
 import { IoArrowForwardCircleOutline } from 'react-icons/io5';
 import { useOutletContext } from 'react-router-dom';
+import FlavorText from './FlavorText';
 
 function PokemonCard({ card, src, src2, name, type, id }) {
   const {
@@ -73,18 +75,30 @@ function PokemonCard({ card, src, src2, name, type, id }) {
 
   const [pokeInfo, setPokeInfo] = useState([]);
 
-  const modalVariants = {
-    expanded: {
-      width: '1400px',
-    },
-    collapsed: {
-      width: '740px',
-    },
-  };
-  // console.log('isExpanded', isExpanded);
+  const [flavorText, setFlavorText] = useState([]);
+  const [textArray, setTextArray] = useState([]);
+
+  // console.log('pokeInfo:', pokeInfo);
+  // console.log('Flavor Text: ', pokeInfo.flavor_text_entries);
 
   const handleExpand = () => {
     console.log('Expand Handled', isExpanded);
+    if (flavorText.length > 0) {
+      let newFlavorTexts = flavorText.filter(function (el) {
+        return el.language.name == 'en';
+      });
+      let result = newFlavorTexts.map(a => a.flavor_text);
+      let uniq = [...new Set(result)];
+      console.log('Original Length:', result.length);
+      console.log('New Length:', uniq.length);
+
+      setTextArray(uniq);
+      // console.log('English Flavor Text:', result);
+      // flavorText.map(t => {
+      //   console.log(t);
+      // });
+      // console.log('Flavor Text: ', flavorText[0].flavor_text);
+    }
     setIsExpanded(!isExpanded);
   };
 
@@ -121,11 +135,12 @@ function PokemonCard({ card, src, src2, name, type, id }) {
     setPokeInfoLoading(true);
     axios.get(currentCardInfo).then(res => {
       setPokeInfo(res.data);
+      setFlavorText(res.data.flavor_text_entries);
       setPokeInfoLoading(false);
     });
     onOpen();
-    console.log(card);
-    console.log(pokeInfo);
+    // console.log(card);
+    // console.log('Old Info:', pokeInfo);
   }
 
   function handleMouseEnter() {
@@ -208,7 +223,7 @@ function PokemonCard({ card, src, src2, name, type, id }) {
             // justifyContent={'center'}
             justifyContent={'left'}
             borderRadius={'50px'}
-            // outline={'2px solid blue'}
+            outline={'2px solid blue'}
             overflow={'hidden'}
             maxHeight={'740px'}
             flexDirection={'row'}
@@ -237,7 +252,7 @@ function PokemonCard({ card, src, src2, name, type, id }) {
                 w={'100%'}
               >
                 <Flex justifyContent={'space-between'} marginBottom={'20px'}>
-                  <Text>{name}</Text>
+                  <Text className="modal-title">{name}</Text>
                   <Text>#{String(id).padStart(3, '0')}</Text>
                 </Flex>
                 <Flex>
@@ -300,7 +315,6 @@ function PokemonCard({ card, src, src2, name, type, id }) {
                   }
                 />
               </Flex>
-              {/* <ModalBody w={'110%'} outline={'2px solid'}> */}
               <Tabs
                 className="pokeDetail-info-container"
                 isFitted
@@ -308,7 +322,7 @@ function PokemonCard({ card, src, src2, name, type, id }) {
                 colorScheme="green"
                 size="sm"
                 w={'100%'}
-                // outline={'2px solid red'}
+                outline={'2px solid red'}
               >
                 <TabList>
                   <Tab>About</Tab>
@@ -435,6 +449,20 @@ function PokemonCard({ card, src, src2, name, type, id }) {
               </Tabs>
               {/* </ModalBody> */}
             </Box>
+            <Flex height={'700px'} outline={'1px solid red'}>
+              <Box
+                width={'500px'}
+                height={'210px'}
+                // outline={'3px solid'}
+                justifyContent={'center'}
+                alignContent={'space-between'}
+                display={'flex'}
+                flexDirection={'column'}
+                overflow={'hidden'}
+              >
+                <FlavorText textArray={textArray} />
+              </Box>
+            </Flex>
           </ModalContent>
         </Modal>
       )}
