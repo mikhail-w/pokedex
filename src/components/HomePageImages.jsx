@@ -10,14 +10,6 @@ import { Center, useColorModeValue, Box } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 
 function HomePageImages() {
-  const [visible, setVisible] = useState(false);
-
-  function handleMouseEnter() {
-    setVisible(true);
-  }
-  function handleMouseLeave() {
-    setVisible(false);
-  }
   return (
     <>
       <div className="ballOutline2">
@@ -32,11 +24,7 @@ function HomePageImages() {
       <div className="pokemon bulbasaur">
         <img src={bulbasaur} alt="bulbasaur" />
       </div>
-      <div
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
-        className="pokemon pickachu"
-      >
+      <div className="pokemon pickachu">
         <img src={pickachu} alt="pickachu" />
       </div>
       <div className="pokemon charizard">
@@ -44,20 +32,6 @@ function HomePageImages() {
       </div>
       <div className="pokeball3">
         <img src={pokeball3} alt="pokeballs" />
-      </div>
-
-      <div className="rm-container">
-        <Center className={visible ? 'shown' : 'make-invisible'}>
-          <div className="rm-image-container">
-            <img src={rm} alt="rm" />
-          </div>
-          <div className={'wrapper'}>
-            <p className="static-txt">Look Morty...</p>
-            <p className={useColorModeValue('typewriter', 'typewriter-dark')}>
-              Pokemon Everywhere....
-            </p>
-          </div>
-        </Center>
       </div>
     </>
   );
