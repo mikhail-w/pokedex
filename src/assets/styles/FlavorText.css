@@ -33,39 +33,12 @@
   min-height: 120px;
 }
 
-.flavorText h3 {
+.flavorText p {
   font-family: "Alleyn W01 Regular";
   font-size: 1.1rem;
-}
-
-/* .previousBttn, .nextBttn {
-  border: none;
-  border-radius: 50px;
-  color: white;
-  padding: 5px 32px;
   text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  margin: 4px 2px;
-  cursor: pointer;
 }
 
-.previousBttn {
-  background-color: #f44336;
-}
-
-.nextBttn {
-  background-color: #04AA6D;
-}
-
-.previousBttn:hover {
-  outline: 3px solid;
-}
-
-.nextBttn:hover {
-  outline: 3px solid;
-} */
 .previousBttn, .nextBttn {
   background-color: initial;
   background-image: linear-gradient(-180deg, #00D775, #00BD68);
