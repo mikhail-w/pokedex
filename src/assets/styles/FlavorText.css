@@ -8,11 +8,12 @@
 
 .paginationBttns {
   width: 400px;
-  /* height: 40px; */
+  height: 120px;
   padding: 20px;
   list-style: none;
   display: flex;
   justify-content: space-around;
+  align-items: center;
   /* outline: 1px solid red; */
 }
 
@@ -28,10 +29,74 @@
 }
 
 .flavorText {
-  margin-top: 20px;
-  min-height: 100px;
+  margin-top: 10px;
+  min-height: 120px;
 }
 
 .flavorText h3 {
   font-family: "Alleyn W01 Regular";
+  font-size: 1.1rem;
+}
+
+/* .previousBttn, .nextBttn {
+  border: none;
+  border-radius: 50px;
+  color: white;
+  padding: 5px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+
+.previousBttn {
+  background-color: #f44336;
+}
+
+.nextBttn {
+  background-color: #04AA6D;
+}
+
+.previousBttn:hover {
+  outline: 3px solid;
+}
+
+.nextBttn:hover {
+  outline: 3px solid;
+} */
+.previousBttn, .nextBttn {
+  background-color: initial;
+  background-image: linear-gradient(-180deg, #00D775, #00BD68);
+  border-radius: 5px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0 2px 4px;
+  color: #FFFFFF;
+  cursor: pointer;
+  display: inline-block;
+  font-family: Inter, -apple-system, system-ui, Roboto, "Helvetica Neue", Arial, sans-serif;
+  height: 44px;
+  line-height: 44px;
+  outline: 0;
+  overflow: hidden;
+  padding: 0 20px;
+  pointer-events: auto;
+  position: relative;
+  text-align: center;
+  touch-action: manipulation;
+  user-select: none;
+  -webkit-user-select: none;
+  vertical-align: top;
+  white-space: nowrap;
+  width: 100%;
+  z-index: 9;
+  border: 0;
+}
+
+.previousBttn:hover {
+  background: #00bd68;
+}
+
+.nextBttn:hover {
+  background: #00bd68;
 }

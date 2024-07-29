@@ -5,11 +5,10 @@
 }
 
 .extended-section {
-  background-image: url(../images/pokeballs/balloutline3.svg);
+  background-image: url(../images/pokeballs/ballopacity.png);
   background-repeat: no-repeat;
   background-size: cover;
-  /* opacity: .5; */
-  filter: alpha(opacity=1);
+  background-position: bottom -100px right -150px;
 }
 
 .modal-content.extended {
@@ -25,12 +24,14 @@
   color: white;
   transform: rotate(0deg);
   transition: transform .5s linear;
+  opacity: 0.2;
 }
 
 .extend-modal:hover {
   cursor: pointer;
   transition-duration: 200ms;
   filter: brightness(120%) saturate(240%);
+  opacity: 1;
 }
 
 .notExtended:hover {
@@ -41,6 +42,13 @@
   color: #ac4f51;
   transform: rotate(180deg);
   /* transition: transform 1s linear; */
+}
+
+.flavorBoxContainer {
+  /* outline: 2px solid green; */
+  height: 280px;
+  justify-content: center;
+  overflow: hidden;
 }
 
 .pokeDetail-type-tab {

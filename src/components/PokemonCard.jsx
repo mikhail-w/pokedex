@@ -223,7 +223,7 @@ function PokemonCard({ card, src, src2, name, type, id }) {
             // justifyContent={'center'}
             justifyContent={'left'}
             borderRadius={'50px'}
-            outline={'2px solid blue'}
+            // outline={'2px solid blue'}
             overflow={'hidden'}
             maxHeight={'740px'}
             flexDirection={'row'}
@@ -322,7 +322,7 @@ function PokemonCard({ card, src, src2, name, type, id }) {
                 colorScheme="green"
                 size="sm"
                 w={'100%'}
-                outline={'2px solid red'}
+                // outline={'2px solid red'}
               >
                 <TabList>
                   <Tab>About</Tab>
@@ -449,17 +449,12 @@ function PokemonCard({ card, src, src2, name, type, id }) {
               </Tabs>
               {/* </ModalBody> */}
             </Box>
-            <Flex height={'700px'} outline={'1px solid red'}>
-              <Box
-                width={'500px'}
-                height={'210px'}
-                // outline={'3px solid'}
-                justifyContent={'center'}
-                alignContent={'space-between'}
-                display={'flex'}
-                flexDirection={'column'}
-                overflow={'hidden'}
-              >
+            <Flex
+              className="extended-section"
+              height={'700px'}
+              // outline={'1px solid red'}
+            >
+              <Box className="flavorBoxContainer">
                 <FlavorText textArray={textArray} />
               </Box>
             </Flex>

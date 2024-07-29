@@ -36,12 +36,12 @@ function FlavorText({ textArray }) {
     <Center flexDirection={'column'} margin={'20px'}>
       <Text
         className="text"
-        marginTop={'50px'}
+        marginTop={'40px'}
         fontFamily={'Alleyn W01 Regular'}
       >
         {displayText}
       </Text>
-      <Flex margin={'50px'}>
+      <Flex margin={'0px'}>
         <ReactPaginate
           previousLabel={'prev'}
           nextLabel={'next'}
