@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 import ReactPaginate from 'react-paginate';
 import '../assets/styles/FlavorText.css';
+import { Center, Flex, Text } from '@chakra-ui/react';
+import { AiFillLeftCircle, AiFillRightCircle } from 'react-icons/ai'; // icons form react-icons
+import { IconContext } from 'react-icons'; // for customizing icons
+import '../App.css';
 
 function FlavorText({ textArray }) {
   console.log('INSIDE FLAVOR TEXT COMPONENT', textArray);
@@ -29,20 +33,30 @@ function FlavorText({ textArray }) {
   };
 
   return (
-    <div className="App">
-      {displayText}
-      <ReactPaginate
-        previousLabel={'Previous'}
-        nextLabel={'Next'}
-        pageCount={pageCount}
-        onPageChange={changePage}
-        containerClassName={'paginationBttns'}
-        previousLinkClassName={'previousBttn'}
-        nextLinkClassName={'nextBttn'}
-        disabledClassName={'paginationDisabled'}
-        activeClassName={'paginationActive'}
-      />
-    </div>
+    <Center flexDirection={'column'} margin={'20px'}>
+      <Text
+        className="text"
+        marginTop={'50px'}
+        fontFamily={'Alleyn W01 Regular'}
+      >
+        {displayText}
+      </Text>
+      <Flex margin={'50px'}>
+        <ReactPaginate
+          previousLabel={'prev'}
+          nextLabel={'next'}
+          pageCount={pageCount}
+          onPageChange={changePage}
+          pageRangeDisplayed={0}
+          marginPagesDisplayed={0}
+          containerClassName={'paginationBttns'}
+          previousLinkClassName={'previousBttn'}
+          nextLinkClassName={'nextBttn'}
+          disabledClassName={'paginationDisabled'}
+          activeClassName={'paginationActive'}
+        />
+      </Flex>
+    </Center>
   );
 }
 

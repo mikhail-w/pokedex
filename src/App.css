@@ -5,6 +5,10 @@
     url('../src/fonts/font.woff2') format('woff2');
 }
 
-body {
-  font-family: "Alleyn W01 Regular", monospace;
+body, .text {
+  font-family: 'Alleyn W01 Regular';
+}
+
+.text {
+  font-family: 'Alleyn W01 Regular';
 }

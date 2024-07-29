@@ -1,52 +1,37 @@
 .App {
   display: flex;
+  margin: 0 auto;
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  /* width: 100vw; */
-}
-
-.user {
-  border: 2px solid black;
-  border-radius: 10px;
-  background-color: #b3e3ff;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  width: 500px;
-  height: 300px;
-  margin: 20px;
 }
 
 .paginationBttns {
-  width: 600px;
-  height: 40px;
+  width: 400px;
+  /* height: 40px; */
+  padding: 20px;
   list-style: none;
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
+  /* outline: 1px solid red; */
 }
 
-.paginationBttns a {
-  padding: 10px;
-  margin: 8px;
-  border-radius: 5px;
-  border: 1px solid #2b2eff;
-  color: #2b2eff;
+.pagination {
+  list-style: none;
+  height: 31.5px;
+  width: 31.5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 2px;
   cursor: pointer;
 }
 
-.paginationBttns a:hover {
-  color: white;
-  background-color: #2b2eff;
+.flavorText {
+  margin-top: 20px;
+  min-height: 100px;
 }
 
-.paginationActive a {
-  color: white;
-  background-color: #2b2eff;
-}
-
-.paginationDisabled a {
-  color: grey;
-  background-color: grey;
+.flavorText h3 {
+  font-family: "Alleyn W01 Regular";
 }

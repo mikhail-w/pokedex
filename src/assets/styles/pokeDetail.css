@@ -4,6 +4,14 @@
   transition-duration: 2000ms;
 }
 
+.extended-section {
+  background-image: url(../images/pokeballs/balloutline3.svg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  /* opacity: .5; */
+  filter: alpha(opacity=1);
+}
+
 .modal-content.extended {
   max-width: 1000px;
   transition-duration: 2000ms;
