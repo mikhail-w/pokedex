@@ -23,7 +23,11 @@ function RandPokemonPage() {
         `https://pokeapi.co/api/v2/pokemon/${randomChoice}`
       );
       setPokemon(response.data);
-      // console.log('Pokemon DATA:', response.data);
+      window.localStorage.setItem(
+        'MAIN_POKEMON',
+        JSON.stringify(response.data)
+      );
+      // console.log('Pokemon DATA:', response.data.name, ' added to storage');
 
       // // ========== SECOND AXIOS CALL ===========
       // // ================ GET TEAM ==============
@@ -32,8 +36,20 @@ function RandPokemonPage() {
       let urls = [];
       const teamMasterList = teamResponse.data.pokemon;
 
+      const indexes = [];
+      while (indexes.length < 5) {
+        // console.log('Card ID', pokemon.id);
+        let r = getChoice(50);
+        // indexes.push(r);
+        // if (indexes.indexOf(r) === -1 && r.id != pokemon.id) indexes.push(r);
+        if (indexes.indexOf(r) === -1) indexes.push(r);
+      }
+      // console.log('Indexes', indexes);
+
       for (let i = 0; i < 5; i++) {
-        let teamMember = teamMasterList[i];
+        // console.log('Index:', indexes[i]);
+        // let teamMember = teamMasterList[i];
+        let teamMember = teamMasterList[indexes[i]];
         let url = `https://pokeapi.co/api/v2/pokemon/${teamMember.pokemon.name}`;
         urls.push(url.toString());
       }
@@ -44,6 +60,11 @@ function RandPokemonPage() {
         })
       ).then(values => {
         setTeam(values);
+        window.localStorage.setItem(
+          'MAIN_POKEMON_TEAM',
+          JSON.stringify(values)
+        );
+        // console.log('Pokemon DATA:', values, ' added to storage');
       });
 
       //Creating a timeout
@@ -83,7 +104,8 @@ function RandPokemonPage() {
       window.localStorage.setItem('MAIN_POKEMON', JSON.stringify(pokemon));
       window.localStorage.setItem('MAIN_POKEMON_TEAM', JSON.stringify(team));
     };
-  }, [randomChoice]);
+    // }, [randomChoice]);
+  }, []);
 
   return (
     <>

@@ -47,7 +47,9 @@
   color: #FFFFFF;
   cursor: pointer;
   display: inline-block;
-  font-family: Inter, -apple-system, system-ui, Roboto, "Helvetica Neue", Arial, sans-serif;
+  /* font-family: Inter, -apple-system, system-ui, Roboto, "Helvetica Neue", Arial, sans-serif; */
+  font-family: 'Alleyn W01 Regular';
+  letter-spacing: 2px;
   height: 44px;
   line-height: 44px;
   outline: 0;

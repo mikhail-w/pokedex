@@ -54,6 +54,7 @@ function FlavorText({ textArray }) {
           nextLinkClassName={'nextBttn'}
           disabledClassName={'paginationDisabled'}
           activeClassName={'paginationActive'}
+          
         />
       </Flex>
     </Center>

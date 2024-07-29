@@ -167,15 +167,15 @@ function PokemonCard({ card, src, src2, name, type, id }) {
     });
     onOpen();
     console.log(card);
-    console.log('Old Info:', pokeInfo);
+    // console.log('Old Info:', pokeInfo);
     getEvoChain(evoResponse);
   }
 
   const getEvoChain = async evoResponse => {
-    console.log('Inside get EvoChain');
+    console.log('Inside get EvoChain', evoResponse);
     var evoChain = [];
     // var evoData = response.data.chain;
-    const evoData = await axios.get(evoResponse);
+    const evoData = await axios.get(evoResponse.url);
     console.log('EVO DATA:', evoData.data);
 
     do {
