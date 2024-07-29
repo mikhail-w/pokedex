@@ -4,3 +4,7 @@
   color: #3a6bb7;
   height: 30px;
 }
+
+.pokemon-name, .pokemon-type {
+  text-transform: capitalize;
+}

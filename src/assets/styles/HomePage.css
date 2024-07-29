@@ -1,11 +1,17 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
+.make-invisible {
+  outline: 2px solid red;
+  visibility: hidden;
+}
+
 .rm-container {
-  margin-left: 100px;
+  margin-left: 200px;
   height: 600px;
-  width: 1500px;
+  width: 1000px;
   display: flex;
   /* outline: 3px solid red; */
+  position: absolute;
 }
 
 .rm-image-container {
@@ -81,37 +87,6 @@
   }
 }
 
-/* 
-
-.wrapper .dynamic-txts {
-  margin-left: 55px;
-  line-height: 90px;
-  height: 90px;
-  background: #ff4c29;
-  overflow: hidden;
-}
-
-.dynamic-txts li {
-  position: relative;
-  color: #ff4c29;
-  font-size: 3.2rem;
-  top: 0;
-  font-weight: 700;
-  position: relative;
-}
-
-.dynamic-txts li {
-  position: relative;
-}
-
-.dynamic-txts li::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  height: 100%;
-  width: 50%;
-}
- */
 .ballOutline2 {
   /* height: 100px; */
   /* width: 300px; */

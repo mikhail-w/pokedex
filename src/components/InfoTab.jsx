@@ -14,11 +14,11 @@ function InfoTab() {
         <Tbody>
           <Tr>
             <Td className="title">Name:</Td>
-            <Td>{pokemon.name}</Td>
+            <Td className="pokemon-name">{pokemon.name}</Td>
           </Tr>
           <Tr>
             <Td className="title">Type:</Td>
-            <Td>{getType(pokemon.types)[0]}</Td>
+            <Td className="pokemon-type">{getType(pokemon.types)[0]}</Td>
             {getType(pokemon.types).length == 2 ? (
               <Td>{getType(pokemon.types)[1]}</Td>
             ) : (
