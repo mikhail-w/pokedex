@@ -1,115 +1,98 @@
 import axios from 'axios';
 import MainPokemonTab from '../components/MainPokemonTab';
 import GenerateButton from '../components/GenerateButton';
-import { useOutletContext, useParams } from 'react-router-dom';
+import { useOutletContext } from 'react-router-dom';
 import { useEffect, useState, useRef } from 'react';
 import { getChoice } from '../utils';
 
 function RandPokemonPage() {
   const [valid, setValid] = useState(false);
   const timerId = useRef(null);
-  // const { randomChoice } = useParams();
   const { setTeam, team, pokemon, setPokemon, randomChoice, setIsLoading } =
     useOutletContext();
 
-  // console.log('-------- On Random Pokeon Page');
+  const loadLocalStorageData = key => {
+    try {
+      const data = window.localStorage.getItem(key);
+      return data ? JSON.parse(data) : null;
+    } catch (err) {
+      console.error(`Failed to parse localStorage data for ${key}`, err);
+      return null;
+    }
+  };
 
   const getRandomPokemon = async () => {
     try {
-      // let response;
-      // setIsLoading(true);
-      // ========== FIRST AXIOS CALL ===========
-      let response = await axios.get(
+      setIsLoading(true);
+
+      // Fetch the main Pokémon
+      const pokemonResponse = await axios.get(
         `https://pokeapi.co/api/v2/pokemon/${randomChoice}`
       );
-      setPokemon(response.data);
-      window.localStorage.setItem(
-        'MAIN_POKEMON',
-        JSON.stringify(response.data)
+
+      const mainPokemon = pokemonResponse.data;
+      setPokemon(mainPokemon);
+      window.localStorage.setItem('MAIN_POKEMON', JSON.stringify(mainPokemon));
+
+      // Fetch Pokémon team
+      const teamTypeURL = mainPokemon.types[0].type.url;
+      const teamResponse = await axios.get(teamTypeURL);
+
+      const teamIndexes = [];
+      while (teamIndexes.length < 5) {
+        const randomIndex = getChoice(teamResponse.data.pokemon.length);
+        if (!teamIndexes.includes(randomIndex)) {
+          teamIndexes.push(randomIndex);
+        }
+      }
+
+      const teamURLs = teamIndexes.map(
+        i =>
+          `https://pokeapi.co/api/v2/pokemon/${teamResponse.data.pokemon[i].pokemon.name}`
       );
-      // console.log('Pokemon DATA:', response.data.name, ' added to storage');
 
-      // // ========== SECOND AXIOS CALL ===========
-      // // ================ GET TEAM ==============
-      let teamURL = response.data.types[0].type.url;
-      const teamResponse = await axios.get(teamURL);
-      let urls = [];
-      const teamMasterList = teamResponse.data.pokemon;
+      const teamData = await Promise.all(
+        teamURLs.map(async url => (await axios.get(url)).data)
+      );
 
-      const indexes = [];
-      while (indexes.length < 5) {
-        // console.log('Card ID', pokemon.id);
-        let r = getChoice(50);
-        // indexes.push(r);
-        // if (indexes.indexOf(r) === -1 && r.id != pokemon.id) indexes.push(r);
-        if (indexes.indexOf(r) === -1) indexes.push(r);
-      }
-      // console.log('Indexes', indexes);
-
-      for (let i = 0; i < 5; i++) {
-        // console.log('Index:', indexes[i]);
-        // let teamMember = teamMasterList[i];
-        let teamMember = teamMasterList[indexes[i]];
-        let url = `https://pokeapi.co/api/v2/pokemon/${teamMember.pokemon.name}`;
-        urls.push(url.toString());
-      }
-
-      await Promise.all(
-        urls.map(async url => {
-          return (await axios.get(url)).data;
-        })
-      ).then(values => {
-        setTeam(values);
-        window.localStorage.setItem(
-          'MAIN_POKEMON_TEAM',
-          JSON.stringify(values)
-        );
-        // console.log('Pokemon DATA:', values, ' added to storage');
-      });
-
-      //Creating a timeout
+      setTeam(teamData);
+      window.localStorage.setItem(
+        'MAIN_POKEMON_TEAM',
+        JSON.stringify(teamData)
+      );
+      setValid(true);
+    } catch (error) {
+      setValid(false);
+      console.error('Failed to fetch Pokémon data:', error);
+    } finally {
       timerId.current = setTimeout(() => {
         setIsLoading(false);
-      }, 500);
-      setValid(true);
-      // console.log('TEAM:', team);
-    } catch (err) {
-      setValid(false);
-      console.error('Error response:');
-      console.error(err.response.data); // ***
-      console.error(err.response.status); // ***
-      console.error(err.response.headers); // ***
+      }, 500); // Ensure loading spinner is cleared
     }
   };
 
   useEffect(() => {
-    const pokemon_data = window.localStorage.getItem('MAIN_POKEMON');
-    const team_data = window.localStorage.getItem('MAIN_POKEMON_TEAM');
-    // console.log(
-    //   '>>>>>>>>>>>>>>>>>>>>>>> LOADING FROM STORAGE >>>>>>>>>>>>>>>>>>>>>>'
-    // );
-    // console.log('Pokemon:', JSON.parse(pokemon_data));
-    // console.log('Pokemon Team:', JSON.parse(team_data));
-    setPokemon(JSON.parse(pokemon_data));
-    setTeam(JSON.parse(team_data));
-  }, []);
+    // Load Pokémon and team data from localStorage
+    const pokemonData = loadLocalStorageData('MAIN_POKEMON');
+    const teamData = loadLocalStorageData('MAIN_POKEMON_TEAM');
 
-  useEffect(() => {
-    // console.log(
-    //   '^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ UPDATE COMPONENTS ^^^^^^^^^^^^^^^^^^^^^'
-    // );
+    if (pokemonData) setPokemon(pokemonData);
+    if (teamData) setTeam(teamData);
 
+    // Fetch new Pokémon data on component mount
     getRandomPokemon();
+
     return () => {
+      // Save data to localStorage and clear timeout on unmount
       window.localStorage.setItem('MAIN_POKEMON', JSON.stringify(pokemon));
       window.localStorage.setItem('MAIN_POKEMON_TEAM', JSON.stringify(team));
+      clearTimeout(timerId.current);
     };
-    // }, [randomChoice]);
-  }, []);
+  }, []); // Empty dependency to ensure this runs only once
 
   return (
     <>
-      {valid ? <MainPokemonTab /> : ''}
+      {valid && <MainPokemonTab />}
       <GenerateButton getRandomPokemon={getRandomPokemon} />
     </>
   );

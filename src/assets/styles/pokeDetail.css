@@ -12,7 +12,7 @@
 }
 
 .modal-content.extended {
-  max-width: 1000px;
+  max-width: 1050px;
   transition-duration: 2000ms;
 }
 
@@ -35,14 +35,13 @@
 }
 
 .notExtended:hover {
-  /* color: #3d7dca; */
   color: #8de7a9;
 }
 
 .isExtended {
   color: #ac4f51;
   transform: rotate(180deg);
-  transition: transform 1s linear;
+  /* transition: transform 1s linear; */
 }
 
 .flavorBoxContainer {
@@ -87,6 +86,26 @@
   cursor: pointer;
   transform: translateX(-5px);
   transition-duration: 200ms;
+}
+
+.evoTitle {
+  margin-top: 170px;
+  margin-bottom: 30px;
+  font-size: 1.3rem;
+  font-weight: 600;
+  font-family: 'Alleyn W01 Regular';
+  text-transform: uppercase;
+  text-decoration: underline;
+}
+
+.evoImg:hover {
+  /* scale: 1.5; */
+  /* transition-duration: 200ms; */
+}
+
+.pname {
+  font-family: 'Alleyn W01 Regular';
+  text-transform: capitalize;
 }
 
 .subtitle-container {
