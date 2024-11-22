@@ -5,50 +5,61 @@ import '../assets/styles/InfoTab.css';
 
 function InfoTab() {
   const { pokemon } = useOutletContext();
-  // console.log('Inside Info Tab');
-  // console.log(pokemon);
+
+  if (!pokemon) {
+    return <p>Loading...</p>; // Fallback for missing data
+  }
+
+  const { name, id, height, weight, moves, types, abilities } = pokemon;
+  const [primaryType, secondaryType] = getType(types);
+  const abilityList = getAbilities(abilities);
+  const movesToDisplay = moves.slice(0, 4); // Safely handle moves array
+
   return (
     <TableContainer>
       <Table size="md">
-        <Thead></Thead>
+        <Thead>{/* Optional: Add headers if needed */}</Thead>
         <Tbody>
           <Tr>
             <Td className="title">Name:</Td>
-            <Td className="pokemon-name">{pokemon.name}</Td>
+            <Td className="info-value">{name}</Td>
           </Tr>
           <Tr>
             <Td className="title">Type:</Td>
-            <Td className="pokemon-type">{getType(pokemon.types)[0]}</Td>
-            {getType(pokemon.types).length == 2 ? (
-              <Td className="pokemon-type">{getType(pokemon.types)[1]}</Td>
-            ) : (
-              ''
-            )}
+            <Td className="info-value">{primaryType}</Td>
+            {secondaryType && <Td className="info-value">{secondaryType}</Td>}
           </Tr>
           <Tr>
-            <Td className="title">Id: </Td>
-            <Td>{pokemon.id}</Td>
+            <Td className="title">ID:</Td>
+            <Td className="info-value">{id}</Td>
           </Tr>
           <Tr>
             <Td className="title">Height:</Td>
-            <Td>{pokemon.height} inches</Td>
+            <Td className="info-value">{height} inches</Td>
           </Tr>
           <Tr>
             <Td className="title">Weight:</Td>
-            <Td>{pokemon.weight} lbs</Td>
+            <Td className="info-value">{weight} lbs</Td>
           </Tr>
           <Tr>
-            <Td className="title">Abilities: </Td>
-            {getAbilities(pokemon.abilities).map((ability, idx) => {
-              return <Td key={idx}>{ability}</Td>;
-            })}
+            <Td className="title">Abilities:</Td>
+            {abilityList.length > 0 ? (
+              abilityList.map((ability, idx) => (
+                <Td key={idx} className="info-value">
+                  {ability}
+                </Td>
+              ))
+            ) : (
+              <Td className="info-value">None</Td>
+            )}
           </Tr>
           <Tr>
             <Td className="title">Moves:</Td>
-            <Td>{pokemon.moves[0].move.name}</Td>
-            <Td>{pokemon.moves[1].move.name}</Td>
-            <Td>{pokemon.moves[2].move.name}</Td>
-            <Td>{pokemon.moves[3].move.name}</Td>
+            {movesToDisplay.map((move, idx) => (
+              <Td key={idx} className="info-value">
+                {move.move.name}
+              </Td>
+            ))}
           </Tr>
         </Tbody>
       </Table>
