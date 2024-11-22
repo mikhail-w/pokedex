@@ -681,10 +681,10 @@ function PokemonCard({ card, src, src2, name, type, id }) {
                     height="26px" // Fixed height
                   >
                     <Text
-                      fontSize="clamp(13px, 1.5rem, 16px)"
+                      fontSize="clamp(10px, 1rem, 13px)"
                       wordBreak="break-word"
                       lineHeight="26px"
-                      whiteSpace="nowrap"
+                      // whiteSpace="wrap"
                     >
                       {name}
                     </Text>
