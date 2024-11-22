@@ -17,7 +17,7 @@ function InfoTab() {
 
   return (
     <TableContainer>
-      <Table size="md">
+      <Table size="md" mt="20">
         <Tbody>
           <Tr>
             <Td className="title">Name:</Td>
