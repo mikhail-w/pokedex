@@ -17,7 +17,7 @@ import { FaInfo } from 'react-icons/fa';
 import Loading from './Loading';
 import MainPokemonName from './MainPokemonName';
 import InfoTab from './InfoTab';
-import LazyPokemonCard from './PokemonCard'; // Assuming LazyPokemonCard is default exported.
+import LazyPokemonCard from './PokemonCard/PokemonCard'; // Assuming LazyPokemonCard is default exported.
 import { getType } from '../utils';
 import ball from '../assets/images/pokeballs/pokeball.png';
 import groupImg from '../assets/images/pokeballs/group.png';

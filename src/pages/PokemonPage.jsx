@@ -2,7 +2,7 @@ import { useEffect, useState, useRef } from 'react';
 import { useOutletContext, useParams } from 'react-router-dom';
 import axios from 'axios';
 import BackButton from '../components/BackButton';
-import PokemonCard from '../components/PokemonCard';
+import PokemonCard from '../components/PokemonCard/PokemonCard';
 import { Center, Image, Text } from '@chakra-ui/react';
 import { getType } from '../utils';
 import Loading from '../components/Loading';

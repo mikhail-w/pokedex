@@ -4,7 +4,7 @@ import { useOutletContext, useNavigate } from 'react-router-dom';
 import noCatch from '../assets/images/pokeballs/ball-no-catch.png';
 import { Image, Button, Text } from '@chakra-ui/react';
 import '../assets/styles/MyTeamPage.css';
-import PokemonCard from '../components/PokemonCard';
+import PokemonCard from '../components/PokemonCard/PokemonCard';
 import { getType } from '../utils';
 
 function MyTeamPage() {
