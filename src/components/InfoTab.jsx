@@ -18,7 +18,6 @@ function InfoTab() {
   return (
     <TableContainer>
       <Table size="md">
-        <Thead>{/* Optional: Add headers if needed */}</Thead>
         <Tbody>
           <Tr>
             <Td className="title">Name:</Td>
