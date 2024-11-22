@@ -75,3 +75,13 @@
 .nextBttn:hover {
   background: #00bd68;
 }
+
+.paginationActive {
+  color: white;
+  background-color: #00bd68;
+  padding: 5px;
+  /* Teal color */
+  border-color: #00bd68;
+  border-radius: 150px;
+  font-weight: bold;
+}
