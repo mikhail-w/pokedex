@@ -35,7 +35,6 @@ function CardFront({
   handleCatchPokemon,
   handleReleasePokemon,
   hovered, // Assuming this state is passed down to indicate hover status
-  // finalColor,
 }) {
   // CARD BACKGROUND COLOR
   let finalColor;
@@ -52,12 +51,13 @@ function CardFront({
       flexDirection="column"
       justifyContent="center"
       className={hovered ? `card pokemonCard ${type[0]}` : 'card'}
+      border={'2px solid'}
     >
       <Flex
         className="card__content"
         flexDirection="column"
         justifyContent="center"
-        // background={`linear-gradient(${finalColor[0]}, ${finalColor[1]})`}
+        background={`linear-gradient(${finalColor[0]}, ${finalColor[1]})`}
       >
         <Flex
           className="card__header"
@@ -162,8 +162,8 @@ function CardFront({
 
         <Center className="card__image-container">
           <Image
-            onClick={onFlip}
             className="card-image"
+            onClick={onFlip}
             src={src || '/images/default.png'}
           />
         </Center>

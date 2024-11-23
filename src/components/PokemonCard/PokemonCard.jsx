@@ -114,11 +114,7 @@ function PokemonCard({ card, src, src2, name, type, id }) {
         </Modal>
 
         {/* CARD FRONT AND BACK */}
-        <ReactCardFlip
-          flipDirection="horizontal"
-          isFlipped={isFlipped}
-          
-        >
+        <ReactCardFlip flipDirection="horizontal" isFlipped={isFlipped}>
           <CardFront
             src={src}
             name={name}
@@ -187,7 +183,7 @@ function PokemonCard({ card, src, src2, name, type, id }) {
           <CardBack
             src2={src2}
             type={type}
-            handleFlip={handleFlip}
+            onFlip={handleFlip}
             onHover={handleMouseEnter}
             offHover={handleMouseLeave}
           />

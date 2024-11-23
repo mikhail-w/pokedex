@@ -1,16 +1,35 @@
-import { Flex, Image } from '@chakra-ui/react';
+import { Flex, Image, Center } from '@chakra-ui/react';
 
-function CardBack({ src2, type, handleFlip, onHover, offHover }) {
+function CardBack({
+  src2,
+  type,
+  handleFlip,
+  onFlip,
+  handleMouseEnter,
+  handleMouseLeave,
+  hovered,
+  fallbackImage, // Pass a fallback image, like the ball
+}) {
+  let finalColor = [];
   return (
-    <Flex
-      className={`card-back ${type[0]}`}
-      onMouseEnter={onHover}
-      onMouseLeave={offHover}
+    <Center
+      className={hovered ? `card pokemonCard ${type[0]}` : 'card'}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      background={`linear-gradient(${finalColor[0]}, ${finalColor[1]})`}
       justifyContent="center"
       alignItems="center"
     >
-      <Image src={src2} onClick={handleFlip} />
-    </Flex>
+      <Image
+        className="back-image"
+        onClick={() => {
+          handleMouseEnter();
+          onFlip();
+        }}
+        maxH="200px"
+        src={src2 == null ? fallbackImage : src2}
+      />
+    </Center>
   );
 }
 
