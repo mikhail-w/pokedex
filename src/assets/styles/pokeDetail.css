@@ -1,3 +1,7 @@
+.modal-title {
+  font-family: 'Alleyn W01 Regular';
+}
+
 .modal-content {
   max-width: fit-content;
   transition-property: max-width;
