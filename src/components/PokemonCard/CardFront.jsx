@@ -17,7 +17,7 @@ import {
   colors,
 } from '../../utils';
 import info from '../../assets/images/type_icons/i.svg';
-import typeIcons from '../../icons';
+import { typeIcons } from '../../icons';
 import catch01 from '../../assets/images/pokeballs/catch1_100.png';
 import catch02 from '../../assets/images/pokeballs/catch2_100.png';
 
@@ -25,6 +25,7 @@ function CardFront({
   src,
   name,
   id,
+  type,
   onFlip,
   onHover,
   offHover,
