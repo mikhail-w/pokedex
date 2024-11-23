@@ -114,7 +114,11 @@ function PokemonCard({ card, src, src2, name, type, id }) {
         </Modal>
 
         {/* CARD FRONT AND BACK */}
-        <ReactCardFlip flipDirection="horizontal" isFlipped={isFlipped}>
+        <ReactCardFlip
+          flipDirection="horizontal"
+          isFlipped={isFlipped}
+          
+        >
           <CardFront
             src={src}
             name={name}

@@ -39,11 +39,11 @@ function CardFront({
 }) {
   // CARD BACKGROUND COLOR
   let finalColor;
-  // if (type.length === 2) {
-  //   finalColor = [colors[`${type[0]}`], colors[`${type[1]}`]];
-  // } else {
-  //   finalColor = [colors[`${type[0]}`], colors[`${type[0]}`]];
-  // }
+  if (type.length === 2) {
+    finalColor = [colors[`${type[0]}`], colors[`${type[1]}`]];
+  } else {
+    finalColor = [colors[`${type[0]}`], colors[`${type[0]}`]];
+  }
   const toast = useToast();
   return (
     <Flex
