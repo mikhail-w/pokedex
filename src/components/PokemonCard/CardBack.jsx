@@ -1,4 +1,12 @@
-import { Flex, Image, Center } from '@chakra-ui/react';
+import { Image, Center } from '@chakra-ui/react';
+import fallbackImage from '../../assets/images/pokeballs/pokeball.png';
+import {
+  isInTeam,
+  catchPokemon,
+  releasePokemon,
+  bgs,
+  colors,
+} from '../../utils';
 
 function CardBack({
   src2,
@@ -7,33 +15,41 @@ function CardBack({
   onFlip,
   handleMouseEnter,
   handleMouseLeave,
-  hovered,
-  fallbackImage,
+  isHovered,
 }) {
+  // CARD BACKGROUND COLOR
+  let finalColor;
+  if (type.length === 2) {
+    finalColor = [colors[`${type[0]}`], colors[`${type[1]}`]];
+  } else {
+    finalColor = [colors[`${type[0]}`], colors[`${type[0]}`]];
+  }
+
   // Default gradient colors if not provided
   const defaultGradient = ['#e0e0e0', '#ffffff'];
-  const finalColor = type?.length
-    ? [`var(--${type[0]}-start)`, `var(--${type[0]}-end)`] // Ensure type colors are used dynamically
-    : defaultGradient;
-
+  // const finalColor = type ? [`${type[0]}`, `${type[0]}`] : defaultGradient;
+  console.log('Type:', type);
+  console.log('Final Color:', finalColor);
+  // console.log('Background:', background);
   return (
     <Center
-      className={hovered ? `card pokemonCard ${type[0]}` : 'card'}
+      className={isHovered ? `card pokemonCard ${type[0]}` : 'card'}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      background={`linear-gradient(${finalColor[0]}, ${finalColor[1]})`}
+      background={`linear-gradient(in lch, ${finalColor[0]}, ${finalColor[1]})`}
       justifyContent="center"
       alignItems="center"
       role="button" // Accessibility: Adds button role
-      aria-label="Flip back to front" // Accessibility: Describes the action
-      cursor="pointer" // Adds a pointer cursor for better UX
+      aria-label="Flip 'back to front'" // Accessibility: Describes the action
+      cursor="pointer"
+      border={'2px solid'}
     >
       <Image
         className="back-image"
         onClick={onFlip}
         maxH="200px"
-        src={src2 || fallbackImage} // Simplified null check for fallback
-        alt="Pokemon card back" // Accessibility: Provides alt text for the image
+        src={src2 || fallbackImage}
+        alt="Pokemon card back"
       />
     </Center>
   );

@@ -15,7 +15,13 @@ import { useOutletContext } from 'react-router-dom';
 import CardFront from './CardFront';
 import CardBack from './CardBack';
 import ModalContent from './ModalContent';
-import { isInTeam, catchPokemon, releasePokemon, bgs } from '../../utils';
+import {
+  isInTeam,
+  catchPokemon,
+  releasePokemon,
+  bgs,
+  colors,
+} from '../../utils';
 import { motion } from 'framer-motion';
 import ReactCardFlip from 'react-card-flip';
 import { TbPokeballOff } from 'react-icons/tb';
@@ -38,6 +44,14 @@ function PokemonCard({ card, src, src2, name, type, id }) {
   const handleExpand = useCallback(() => setIsExpanded(prev => !prev), []);
 
   const isPokemonInTeam = useMemo(() => isInTeam(myTeam, card), [myTeam, card]);
+
+  // CARD BACKGROUND COLOR
+  let finalColor;
+  if (type.length === 2) {
+    finalColor = [colors[`${type[0]}`], colors[`${type[1]}`]];
+  } else {
+    finalColor = [colors[`${type[0]}`], colors[`${type[0]}`]];
+  }
 
   useEffect(() => {
     if (myTeam.length === 6) {
@@ -187,6 +201,7 @@ function PokemonCard({ card, src, src2, name, type, id }) {
             onFlip={handleFlip}
             onHover={handleMouseEnter}
             offHover={handleMouseLeave}
+            isHovered={isHovered}
           />
         </ReactCardFlip>
       </Box>
