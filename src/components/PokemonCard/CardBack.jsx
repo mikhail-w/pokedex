@@ -30,10 +30,7 @@ function CardBack({
     >
       <Image
         className="back-image"
-        onClick={() => {
-          handleMouseEnter();
-          onFlip();
-        }}
+        onClick={onFlip}
         maxH="200px"
         src={src2 || fallbackImage} // Simplified null check for fallback
         alt="Pokemon card back" // Accessibility: Provides alt text for the image
