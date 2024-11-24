@@ -152,3 +152,10 @@ export function makeString(list) {
   }
   return newString;
 }
+
+export const getBackgroundColors = type => {
+  if (type.length === 2) {
+    return [colors[type[0]], colors[type[1]]];
+  }
+  return [colors[type[0]], colors[type[0]]];
+};

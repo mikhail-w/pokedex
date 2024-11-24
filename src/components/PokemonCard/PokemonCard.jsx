@@ -1,77 +1,80 @@
 import { useState, useEffect, useMemo, useCallback } from 'react';
-import { usePokemonInfo } from '../../hooks/usePokemonInfo';
 import {
   Box,
   Modal,
   ModalOverlay,
   ModalContent as ChakraModalContent,
   useDisclosure,
-  Tooltip,
-  Image,
-  useToast,
   Spinner,
 } from '@chakra-ui/react';
 import { useOutletContext } from 'react-router-dom';
-import CardFront from './CardFront';
-import CardBack from './CardBack';
-import ModalContent from './ModalContent';
-import {
-  isInTeam,
-  catchPokemon,
-  releasePokemon,
-  bgs,
-  colors,
-} from '../../utils';
 import { motion } from 'framer-motion';
 import ReactCardFlip from 'react-card-flip';
 import { TbPokeballOff } from 'react-icons/tb';
+
+import { usePokemonInfo } from '../../hooks/usePokemonInfo';
+import { useToastNotification } from '../../hooks/useToastNotification ';
+import {
+  bgs,
+  isInTeam,
+  catchPokemon,
+  releasePokemon,
+  getBackgroundColors,
+} from '../../utils';
+
+import CardFront from './CardFront';
+import CardBack from './CardBack';
+import ModalContent from './ModalContent';
+import CatchButton from './CatchButton'; // New CatchButton component
 import '../../assets/styles/PokemonCard.css';
-// import '../../assets/styles/pokeDetail.css';
 
 function PokemonCard({ card, src, src2, name, type, id }) {
-  const { team, myTeam, setMyTeam, disabled, setDisabled } = useOutletContext();
+  const { myTeam, setMyTeam, disabled, setDisabled } = useOutletContext();
   const [isFlipped, setIsFlipped] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
   const { pokeInfo, flavorText, evoNames, loading } = usePokemonInfo(card.id);
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const toast = useToast();
+  const { showToast } = useToastNotification(); // Simplified toast logic
 
+  // Memoize to check if the Pokémon is in the team
+  const isPokemonInTeam = useMemo(() => isInTeam(myTeam, card), [myTeam, card]);
+
+  // Determine background color based on Pokémon type
+  const backgroundColor = getBackgroundColors(type);
+
+  // Flip card handlers
   const handleFlip = useCallback(() => setIsFlipped(prev => !prev), []);
   const handleMouseEnter = useCallback(() => setIsHovered(true), []);
   const handleMouseLeave = useCallback(() => setIsHovered(false), []);
   const handleExpand = useCallback(() => setIsExpanded(prev => !prev), []);
 
-  const isPokemonInTeam = useMemo(() => isInTeam(myTeam, card), [myTeam, card]);
-
-  // CARD BACKGROUND COLOR
-  let backgroundColor;
-  if (type.length === 2) {
-    backgroundColor = [colors[`${type[0]}`], colors[`${type[1]}`]];
-  } else {
-    backgroundColor = [colors[`${type[0]}`], colors[`${type[0]}`]];
-  }
-
+  // Disable catch button if the team is full
   useEffect(() => {
-    if (myTeam.length === 6) {
-      setDisabled(!isPokemonInTeam);
-    } else {
-      setDisabled(false);
-    }
+    setDisabled(myTeam.length === 6 && !isPokemonInTeam);
   }, [myTeam, isPokemonInTeam, setDisabled]);
+
+  // Catch and Release handlers
+  const handleCatch = () => {
+    showToast('Pokemon Caught', 'success');
+    catchPokemon(myTeam, setMyTeam, card);
+  };
+
+  const handleRelease = () => {
+    showToast('Pokemon Released', 'error');
+    releasePokemon(myTeam, setMyTeam, card);
+  };
+
   return (
     <motion.div
       initial={{ y: -250 }}
       animate={{ y: 1 }}
       exit={{ opacity: 0, y: '-100%' }}
-      transition={{
-        ease: 'linear',
-        duration: 0.5,
-      }}
+      transition={{ ease: 'linear', duration: 0.5 }}
       layout
     >
-      <Box className={`card-container `}>
-        {/* MODAL */}
+      <Box className="card-container">
+        {/* Modal for detailed Pokémon information */}
         <Modal
           isOpen={isOpen}
           onClose={onClose}
@@ -122,8 +125,9 @@ function PokemonCard({ card, src, src2, name, type, id }) {
           </ChakraModalContent>
         </Modal>
 
-        {/* CARD FRONT AND BACK */}
+        {/* Card Front and Back */}
         <ReactCardFlip flipDirection="horizontal" isFlipped={isFlipped}>
+          {/* Card Front */}
           <CardFront
             src={src}
             name={name}
@@ -136,63 +140,15 @@ function PokemonCard({ card, src, src2, name, type, id }) {
             backgroundColor={backgroundColor}
           >
             {/* Catch/Release Button */}
-            <Tooltip
-              aria-label={`Tooltip: ${
-                isPokemonInTeam ? 'Release' : 'Catch'
-              } Pokémon`}
-              label={isPokemonInTeam ? 'Release' : 'Catch'}
-              placement="top"
-              fontSize="lg"
-              hasArrow
-              bg={isPokemonInTeam ? '#e53e3e' : '#3d7dca'}
-            >
-              <Box
-                className={`catch-ball ${
-                  isPokemonInTeam ? 'release' : 'catch'
-                }`}
-                style={{ width: '1.7em' }}
-              >
-                {disabled ? (
-                  <TbPokeballOff size={30} className="disabled-icon" />
-                ) : (
-                  <motion.div
-                    className="catch-ball"
-                    whileHover={{ scale: 1.2, rotate: 180 }}
-                    whileTap={{
-                      scale: 1.2,
-                      rotate: 180,
-                      borderRadius: '100%',
-                    }}
-                    onClick={() => {
-                      isPokemonInTeam
-                        ? (toast({
-                            title: 'Pokemon Released',
-                            status: 'error',
-                            duration: 3000,
-                          }),
-                          releasePokemon(myTeam, setMyTeam, card))
-                        : (toast({
-                            title: 'Pokemon Caught',
-                            status: 'success',
-                            duration: 3000,
-                          }),
-                          catchPokemon(myTeam, setMyTeam, card));
-                    }}
-                  >
-                    <Image
-                      w="100%"
-                      src={
-                        isPokemonInTeam
-                          ? '/images/release.png'
-                          : '/images/catch.png'
-                      }
-                    />
-                  </motion.div>
-                )}
-              </Box>
-            </Tooltip>
+            <CatchButton
+              isPokemonInTeam={isPokemonInTeam}
+              disabled={disabled}
+              onCatch={handleCatch}
+              onRelease={handleRelease}
+            />
           </CardFront>
 
+          {/* Card Back */}
           <CardBack
             src2={src2}
             type={type}
