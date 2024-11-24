@@ -51,7 +51,7 @@ function CardFront({
       flexDirection="column"
       justifyContent="center"
       className={hovered ? `card pokemonCard ${type[0]}` : 'card'}
-      border={'2px solid'}
+      // border={'2px solid'}
     >
       <Flex
         className="card__content"
