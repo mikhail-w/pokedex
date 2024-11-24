@@ -7,6 +7,7 @@ import {
   Center,
   useToast,
 } from '@chakra-ui/react';
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { TbPokeballOff } from 'react-icons/tb';
 import {
@@ -36,7 +37,6 @@ function CardFront({
   disabled,
   handleCatchPokemon,
   handleReleasePokemon,
-  hovered, // Assuming this state is passed down to indicate hover status
 }) {
   // CARD BACKGROUND COLOR
   let finalColor;
@@ -45,14 +45,23 @@ function CardFront({
   } else {
     finalColor = [colors[`${type[0]}`], colors[`${type[0]}`]];
   }
+
+  const [hovered, setHovered] = useState(false);
+  console.log('Hovered:', hovered);
   const toast = useToast();
   return (
     <Flex
-      onMouseEnter={onHover}
-      onMouseLeave={offHover}
+      onMouseEnter={() => {
+        onHover;
+        setHovered(true);
+      }}
+      onMouseLeave={() => {
+        offHover;
+        setHovered(false);
+      }}
       flexDirection="column"
       justifyContent="center"
-      className={hovered ? 'card' : `card pokemonCard ${type[0]}`}
+      className={hovered ? `card pokemonCard ${type[0]}` : 'card'}
       position="relative"
       overflow="hidden"
     >
