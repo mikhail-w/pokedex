@@ -9,12 +9,6 @@
   border-color: #78c850;
 }
 
-.pokemonName {
-  font-family: "Alleyn W01 Regular", monospace;
-  text-transform: uppercase;
-  font-weight: 300;
-}
-
 .pokemonCard .type-tab.grass {
   background-color: #78c850;
 }

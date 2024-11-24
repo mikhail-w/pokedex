@@ -1,12 +1,8 @@
 import { Image, Center } from '@chakra-ui/react';
+import { useState } from 'react';
 import fallbackImage from '../../assets/images/pokeballs/pokeball.png';
-import {
-  isInTeam,
-  catchPokemon,
-  releasePokemon,
-  bgs,
-  colors,
-} from '../../utils';
+import '../../assets/styles/PokemonCard.css';
+// import '../../assets/styles/pokemonCardStyles.css';
 
 function CardBack({
   src2,
@@ -16,33 +12,27 @@ function CardBack({
   handleMouseEnter,
   handleMouseLeave,
   isHovered,
+  backgroundColor,
 }) {
-  // CARD BACKGROUND COLOR
-  let finalColor;
-  if (type.length === 2) {
-    finalColor = [colors[`${type[0]}`], colors[`${type[1]}`]];
-  } else {
-    finalColor = [colors[`${type[0]}`], colors[`${type[0]}`]];
-  }
-
-  // Default gradient colors if not provided
-  const defaultGradient = ['#e0e0e0', '#ffffff'];
-  // const finalColor = type ? [`${type[0]}`, `${type[0]}`] : defaultGradient;
-  console.log('Type:', type);
-  console.log('Final Color:', finalColor);
-  // console.log('Background:', background);
+  const [hovered, setHovered] = useState(false);
   return (
     <Center
-      className={isHovered ? `card pokemonCard ${type[0]}` : 'card'}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-      background={`linear-gradient(in lch, ${finalColor[0]}, ${finalColor[1]})`}
+      className={hovered ? ` pokemonCard ${type[0]}` : 'pokemonCard'}
+      onMouseEnter={() => {
+        handleMouseEnter;
+        setHovered(true);
+      }}
+      onMouseLeave={() => {
+        handleMouseLeave;
+        setHovered(false);
+      }}
+      background={`linear-gradient(in lch, ${backgroundColor[0]}, ${backgroundColor[1]})`}
       justifyContent="center"
       alignItems="center"
-      role="button" // Accessibility: Adds button role
-      aria-label="Flip 'back to front'" // Accessibility: Describes the action
+      role="button"
+      aria-label="Flip 'back to front'"
       cursor="pointer"
-      border={'2px solid'}
+      // border={'2px solid'}
     >
       <Image
         className="back-image"

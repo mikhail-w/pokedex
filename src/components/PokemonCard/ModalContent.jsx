@@ -7,13 +7,7 @@ import ball from '../../assets/images/pokeballs/pokeball.png';
 import PokemonTabs from './PokemonTabs';
 import { typeIcons, modalIcons } from '../../icons';
 import '../../assets/styles/pokeDetail.css';
-import {
-  isInTeam,
-  catchPokemon,
-  releasePokemon,
-  bgs,
-  colors,
-} from '../../utils';
+import { colors } from '../../utils';
 
 function ModalContent({
   card,

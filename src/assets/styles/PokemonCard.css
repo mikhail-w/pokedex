@@ -6,7 +6,11 @@
   scale: 1.2;
 }
 
-.card {
+.info__icon:hover {
+  scale: 1.2;
+}
+
+.pokemonCard {
   justify-content: center;
   cursor: pointer;
   margin: 10px auto 0;
@@ -16,12 +20,11 @@
   border-radius: 20px;
 }
 
-.top-container {
-  transform: translateY(0px);
+.card-container {
   transition: transform 0.5s ease 0s;
 }
 
-.top-container:hover {
+.card-container:hover {
   transform: translateY(-20px);
   transition: transform 0.5s ease 0s;
 }
@@ -62,18 +65,23 @@
   padding: 30px 30px 40px;
 }
 
-.card:hover {
-  cursor: pointer;
-}
-
-.card:hover:before {
-  animation: animateBG 20s linear infinite;
+.pokemonName {
+  font-family: "Alleyn W01 Regular", monospace;
+  color: #000;
+  letter-spacing: .1rem;
+  text-align: center;
+  font-size: small;
+  /* font-size: .9rem; */
+  text-transform: uppercase;
+  font-weight: 300;
 }
 
 .type-icon:hover {
-  /* filter: brightness(150%); */
-  /* outline: 1px solid red; */
   filter: brightness(120%) saturate(240%);
+}
+
+.pokemonCard:hover:before {
+  animation: animateBG 20s linear infinite;
 }
 
 @keyframes animateBG {
@@ -90,129 +98,92 @@
   }
 }
 
-.info__icon:hover {
-  scale: 1.2;
-}
-
-.name {
-  color: #000;
-  letter-spacing: .1rem;
-  text-align: center;
-  font-size: small;
-  /* font-size: .9rem; */
-  text-transform: uppercase;
-}
-
-.type {
-  font-family: monospace;
-  font-size: 1rem;
-}
-
 .grass:hover {
   box-shadow: 0px 0px 5px 10px #78c850;
   border-radius: 25px;
 }
 
 .fire:hover {
-  border-color: #f08030;
   box-shadow: 0px 0px 5px 10px #f08030;
   border-radius: 25px;
 }
 
 .water:hover {
-  border-color: #6890f0;
   box-shadow: 0px 0px 5px 10px #6890f0;
   border-radius: 25px;
 }
 
 .electric:hover {
-  border-color: #f8d030;
   box-shadow: 0px 0px 5px 10px #f8d030;
   border-radius: 25px;
 }
 
 .bug:hover {
-  border-color: #a8b820;
   box-shadow: 0px 0px 5px 10px #a8b820;
   border-radius: 25px;
 }
 
 .dragon:hover {
-  border-color: #7038f8;
   box-shadow: 0px 0px 5px 10px #7038f8;
   border-radius: 25px;
 }
 
 .fairy:hover {
-  border-color: #ee99ac;
   box-shadow: 0px 0px 5px 10px #ee99ac;
   border-radius: 25px;
 }
 
 .ghost:hover {
-  border-color: #705898;
   box-shadow: 0px 0px 5px 10px #705898;
   border-radius: 25px;
 }
 
 .ground:hover {
-  border-color: #e0c068;
   box-shadow: 0px 0px 5px 10px #e0c068;
   border-radius: 25px;
 }
 
 .ice:hover {
-  border-color: #98d8d8;
   box-shadow: 0px 0px 5px 10px #98d8d8;
   border-radius: 25px;
 }
 
 .normal:hover {
-  border-color: #a8a878;
   box-shadow: 0px 0px 5px 10px #a8a878;
   border-radius: 25px;
 }
 
 .poison:hover {
-  border-color: #a040a0;
   box-shadow: 0px 0px 5px 10px #a040a0;
   border-radius: 25px;
 }
 
 .psychic:hover {
-  border-color: #f85888;
   box-shadow: 0px 0px 5px 10px #f85888;
   border-radius: 25px;
 }
 
 .rock:hover {
-  border-color: #b8a038;
   box-shadow: 0px 0px 5px 10px #b8a038;
   border-radius: 25px;
 }
 
 .steel:hover {
-  border-color: #b8b8d0;
   box-shadow: 0px 0px 5px 10px #b8b8d0;
   border-radius: 25px;
 }
 
 .fighting:hover {
-  border-color: #c03028;
   box-shadow: 0px 0px 5px 10px #c03028;
   border-radius: 25px;
 }
 
 .flying:hover {
-  border-color: #a890f0;
   box-shadow: 0px 0px 5px 10px #a890f0;
   border-radius: 25px;
 }
 
 .dark:hover {
-  border-color: #f8d764;
-  border-color: #49392f;
-  border-color: #3a2d26;
   box-shadow: 0px 0px 5px 10px #3a2d26;
   border-radius: 25px;
 }

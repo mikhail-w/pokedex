@@ -10,19 +10,13 @@ import {
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { TbPokeballOff } from 'react-icons/tb';
-import {
-  isInTeam,
-  catchPokemon,
-  releasePokemon,
-  bgs,
-  colors,
-} from '../../utils';
+import { isInTeam, catchPokemon, releasePokemon, colors } from '../../utils';
 import info from '../../assets/images/type_icons/i.svg';
 import { typeIcons } from '../../icons';
 import catch01 from '../../assets/images/pokeballs/catch1_100.png';
 import catch02 from '../../assets/images/pokeballs/catch2_100.png';
-import '../../assets/styles/PokemonCard.css';
-import '../../assets/styles/pokemonCardStyles.css';
+// import '../../assets/styles/PokemonCard.css';
+// import '../../assets/styles/pokemonCardStyles.css';
 
 function CardFront({
   src,
@@ -30,37 +24,30 @@ function CardFront({
   id,
   type,
   onFlip,
-  onHover,
-  offHover,
+  handleMouseEnter,
+  handleMouseLeave,
   onOpenModal,
   isCaught,
   disabled,
   handleCatchPokemon,
   handleReleasePokemon,
+  backgroundColor,
 }) {
-  // CARD BACKGROUND COLOR
-  let finalColor;
-  if (type.length === 2) {
-    finalColor = [colors[`${type[0]}`], colors[`${type[1]}`]];
-  } else {
-    finalColor = [colors[`${type[0]}`], colors[`${type[0]}`]];
-  }
-
   const [hovered, setHovered] = useState(false);
   const toast = useToast();
   return (
     <Flex
       onMouseEnter={() => {
-        onHover;
+        handleMouseEnter;
         setHovered(true);
       }}
       onMouseLeave={() => {
-        offHover;
+        handleMouseLeave;
         setHovered(false);
       }}
       flexDirection="column"
       justifyContent="center"
-      className={hovered ? `card pokemonCard ${type[0]}` : 'card'}
+      className={hovered ? ` pokemonCard ${type[0]}` : 'pokemonCard'}
       position="relative"
       overflow="hidden"
     >
@@ -68,7 +55,7 @@ function CardFront({
         className="card__content"
         flexDirection="column"
         justifyContent="center"
-        background={`linear-gradient(in lch, ${finalColor[0]}, ${finalColor[1]})`}
+        background={`linear-gradient(in lch, ${backgroundColor[0]}, ${backgroundColor[1]})`}
       >
         <Flex
           className="card__header"
@@ -195,11 +182,12 @@ function CardFront({
         </Center>
 
         {/* Pokémon Type */}
-        <Center padding="10px" marginBottom="10px" gap="10px">
+        <Center className="tip" padding="10px" marginBottom="10px" gap="10px">
           <Tooltip
             label={type[0]}
             placement="bottom"
-            fontSize="lg"
+            textTransform="uppercase"
+            fontSize="sm"
             color="black"
             hasArrow
             arrowSize={15}
@@ -215,8 +203,9 @@ function CardFront({
           {type[1] && (
             <Tooltip
               label={type[1]}
+              textTransform="uppercase"
               placement="bottom"
-              fontSize="lg"
+              fontSize="sm"
               color="black"
               hasArrow
               arrowSize={15}

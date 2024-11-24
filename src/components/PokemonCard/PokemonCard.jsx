@@ -26,8 +26,8 @@ import { motion } from 'framer-motion';
 import ReactCardFlip from 'react-card-flip';
 import { TbPokeballOff } from 'react-icons/tb';
 import '../../assets/styles/PokemonCard.css';
-import '../../assets/styles/pokeDetail.css';
-import '../../assets/styles/pokemonCardStyles.css';
+// import '../../assets/styles/pokeDetail.css';
+// import '../../assets/styles/pokemonCardStyles.css';
 
 function PokemonCard({ card, src, src2, name, type, id }) {
   const { team, myTeam, setMyTeam, disabled, setDisabled } = useOutletContext();
@@ -46,11 +46,11 @@ function PokemonCard({ card, src, src2, name, type, id }) {
   const isPokemonInTeam = useMemo(() => isInTeam(myTeam, card), [myTeam, card]);
 
   // CARD BACKGROUND COLOR
-  let finalColor;
+  let backgroundColor;
   if (type.length === 2) {
-    finalColor = [colors[`${type[0]}`], colors[`${type[1]}`]];
+    backgroundColor = [colors[`${type[0]}`], colors[`${type[1]}`]];
   } else {
-    finalColor = [colors[`${type[0]}`], colors[`${type[0]}`]];
+    backgroundColor = [colors[`${type[0]}`], colors[`${type[0]}`]];
   }
 
   useEffect(() => {
@@ -60,7 +60,6 @@ function PokemonCard({ card, src, src2, name, type, id }) {
       setDisabled(false);
     }
   }, [myTeam, isPokemonInTeam, setDisabled]);
-
   return (
     <motion.div
       initial={{ y: -250 }}
@@ -72,7 +71,7 @@ function PokemonCard({ card, src, src2, name, type, id }) {
       }}
       layout
     >
-      <Box className="top-container">
+      <Box className={`card-container `}>
         {/* MODAL */}
         <Modal
           isOpen={isOpen}
@@ -89,7 +88,7 @@ function PokemonCard({ card, src, src2, name, type, id }) {
           <ChakraModalContent
             w="90%"
             className={isExpanded ? 'modal-content extended' : 'modal-content'}
-            // background={`linear-gradient(${finalColor[0]}, ${finalColor[1]})`}
+            background={`linear-gradient(in lch, ${backgroundColor[0]}, ${backgroundColor[1]})`}
             alignItems="center"
             justifyContent="left"
             borderRadius="50px"
@@ -119,7 +118,6 @@ function PokemonCard({ card, src, src2, name, type, id }) {
                 pokeInfo={pokeInfo}
                 flavorText={flavorText}
                 evoNames={evoNames}
-                // finalColor={finalColor}
               />
             )}
           </ChakraModalContent>
@@ -133,9 +131,10 @@ function PokemonCard({ card, src, src2, name, type, id }) {
             id={id}
             type={type}
             onFlip={handleFlip}
-            onHover={handleMouseEnter}
-            offHover={handleMouseLeave}
+            handleMouseEnter={handleMouseEnter}
+            handleMouseLeave={handleMouseLeave}
             onOpenModal={onOpen}
+            backgroundColor={backgroundColor}
           >
             {/* Catch/Release Button */}
             <Tooltip
@@ -202,6 +201,7 @@ function PokemonCard({ card, src, src2, name, type, id }) {
             onHover={handleMouseEnter}
             offHover={handleMouseLeave}
             isHovered={isHovered}
+            backgroundColor={backgroundColor}
           />
         </ReactCardFlip>
       </Box>

@@ -21,6 +21,7 @@ export const colors = {
   fairy: '#fdb9e9',
 };
 
+// Modal Overlay Background Colors
 export const bgs = {
   grass: 'rgba(120, 200, 80, 0.5)',
   poison: 'rgba(160, 64, 160, 0.5)',
