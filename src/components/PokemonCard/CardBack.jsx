@@ -1,8 +1,6 @@
 import { Image, Center } from '@chakra-ui/react';
 import { useState } from 'react';
 import fallbackImage from '../../assets/images/pokeballs/pokeball.png';
-import '../../assets/styles/PokemonCard.css';
-// import '../../assets/styles/pokemonCardStyles.css';
 
 function CardBack({
   src2,

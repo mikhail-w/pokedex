@@ -27,7 +27,6 @@ import ReactCardFlip from 'react-card-flip';
 import { TbPokeballOff } from 'react-icons/tb';
 import '../../assets/styles/PokemonCard.css';
 // import '../../assets/styles/pokeDetail.css';
-// import '../../assets/styles/pokemonCardStyles.css';
 
 function PokemonCard({ card, src, src2, name, type, id }) {
   const { team, myTeam, setMyTeam, disabled, setDisabled } = useOutletContext();
