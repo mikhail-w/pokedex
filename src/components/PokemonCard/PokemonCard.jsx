@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo, useCallback } from 'react';
 import { usePokemonInfo } from '../../hooks/usePokemonInfo';
 import {
   Box,
@@ -9,18 +9,13 @@ import {
   Tooltip,
   Image,
   useToast,
+  Spinner,
 } from '@chakra-ui/react';
 import { useOutletContext } from 'react-router-dom';
 import CardFront from './CardFront';
 import CardBack from './CardBack';
 import ModalContent from './ModalContent';
-import {
-  isInTeam,
-  catchPokemon,
-  releasePokemon,
-  bgs,
-  colors,
-} from '../../utils';
+import { isInTeam, catchPokemon, releasePokemon, bgs } from '../../utils';
 import { motion } from 'framer-motion';
 import ReactCardFlip from 'react-card-flip';
 import { TbPokeballOff } from 'react-icons/tb';
@@ -37,22 +32,20 @@ function PokemonCard({ card, src, src2, name, type, id }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const toast = useToast();
 
-  const handleFlip = () => setIsFlipped(!isFlipped);
-  const handleMouseEnter = () => setIsHovered(true);
-  const handleMouseLeave = () => setIsHovered(false);
-  const handleExpand = () => setIsExpanded(prev => !prev);
+  const handleFlip = useCallback(() => setIsFlipped(prev => !prev), []);
+  const handleMouseEnter = useCallback(() => setIsHovered(true), []);
+  const handleMouseLeave = useCallback(() => setIsHovered(false), []);
+  const handleExpand = useCallback(() => setIsExpanded(prev => !prev), []);
+
+  const isPokemonInTeam = useMemo(() => isInTeam(myTeam, card), [myTeam, card]);
 
   useEffect(() => {
     if (myTeam.length === 6) {
-      if (isInTeam(myTeam, card)) {
-        setDisabled(false);
-      } else {
-        setDisabled(true);
-      }
+      setDisabled(!isPokemonInTeam);
     } else {
       setDisabled(false);
     }
-  }, [myTeam]);
+  }, [myTeam, isPokemonInTeam, setDisabled]);
 
   return (
     <motion.div
@@ -91,7 +84,14 @@ function PokemonCard({ card, src, src2, name, type, id }) {
             flexDirection="row"
           >
             {loading ? (
-              <Box>Loading...</Box>
+              <Box
+                display="flex"
+                justifyContent="center"
+                alignItems="center"
+                height="100%"
+              >
+                <Spinner size="xl" color="blue.500" />
+              </Box>
             ) : (
               <ModalContent
                 card={card}
@@ -125,15 +125,18 @@ function PokemonCard({ card, src, src2, name, type, id }) {
           >
             {/* Catch/Release Button */}
             <Tooltip
-              label={isInTeam(myTeam, card) ? 'Release' : 'Catch'}
+              aria-label={`Tooltip: ${
+                isPokemonInTeam ? 'Release' : 'Catch'
+              } Pokémon`}
+              label={isPokemonInTeam ? 'Release' : 'Catch'}
               placement="top"
               fontSize="lg"
               hasArrow
-              bg={isInTeam(myTeam, card) ? '#e53e3e' : '#3d7dca'}
+              bg={isPokemonInTeam ? '#e53e3e' : '#3d7dca'}
             >
               <Box
                 className={`catch-ball ${
-                  isInTeam(myTeam, card) ? 'release' : 'catch'
+                  isPokemonInTeam ? 'release' : 'catch'
                 }`}
                 style={{ width: '1.7em' }}
               >
@@ -149,7 +152,7 @@ function PokemonCard({ card, src, src2, name, type, id }) {
                       borderRadius: '100%',
                     }}
                     onClick={() => {
-                      isInTeam(myTeam, card)
+                      isPokemonInTeam
                         ? (toast({
                             title: 'Pokemon Released',
                             status: 'error',
@@ -167,7 +170,7 @@ function PokemonCard({ card, src, src2, name, type, id }) {
                     <Image
                       w="100%"
                       src={
-                        isInTeam(myTeam, card)
+                        isPokemonInTeam
                           ? '/images/release.png'
                           : '/images/catch.png'
                       }
