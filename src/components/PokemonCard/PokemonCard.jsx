@@ -8,8 +8,6 @@ import {
   useDisclosure,
   Tooltip,
   Image,
-  Text,
-  Center,
   useToast,
 } from '@chakra-ui/react';
 import { useOutletContext } from 'react-router-dom';

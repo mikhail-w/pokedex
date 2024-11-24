@@ -47,7 +47,6 @@ function CardFront({
   }
 
   const [hovered, setHovered] = useState(false);
-  console.log('Hovered:', hovered);
   const toast = useToast();
   return (
     <Flex
