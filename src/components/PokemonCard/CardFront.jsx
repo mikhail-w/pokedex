@@ -57,7 +57,7 @@ function CardFront({
         className="card__content"
         flexDirection="column"
         justifyContent="center"
-        background={`linear-gradient(${finalColor[0]}, ${finalColor[1]})`}
+        background={` linear-gradient(in lch,${finalColor[0]}, ${finalColor[1]})`}
       >
         <Flex
           className="card__header"
