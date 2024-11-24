@@ -50,6 +50,7 @@ function CardFront({
       className={hovered ? ` pokemonCard ${type[0]}` : 'pokemonCard'}
       position="relative"
       overflow="hidden"
+      // border={'6px solid'}
     >
       <Flex
         className="card__content"

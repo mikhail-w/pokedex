@@ -28,20 +28,17 @@
 }
 
 /*Fire Type*/
-.fill-bg.fire {
+/* .fill-bg.fire {
   background-color: #f5ac78;
   border: solid 3px transparent;
   transition: border-color 500ms;
-}
-
-.pokemonCard.fire:hover .fill-bg.fire {
+} */
+/* .pokemonCard.fire:hover .fill-bg.fire {
   border-color: #f08030;
-}
-
-.pokemonCard .type-tab.fire {
+} */
+/* .pokemonCard .type-tab.fire {
   background-color: #f08030;
-}
-
+} */
 .pokemonCard.fire::before {
   content: " ";
   position: absolute;
