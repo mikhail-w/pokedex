@@ -20,6 +20,8 @@ import info from '../../assets/images/type_icons/i.svg';
 import { typeIcons } from '../../icons';
 import catch01 from '../../assets/images/pokeballs/catch1_100.png';
 import catch02 from '../../assets/images/pokeballs/catch2_100.png';
+import '../../assets/styles/PokemonCard.css';
+import '../../assets/styles/pokemonCardStyles.css';
 
 function CardFront({
   src,
@@ -50,14 +52,15 @@ function CardFront({
       onMouseLeave={offHover}
       flexDirection="column"
       justifyContent="center"
-      className={hovered ? `card pokemonCard ${type[0]}` : 'card'}
-      // border={'2px solid'}
+      className={hovered ? 'card' : `card pokemonCard ${type[0]}`}
+      position="relative"
+      overflow="hidden"
     >
       <Flex
         className="card__content"
         flexDirection="column"
         justifyContent="center"
-        background={` linear-gradient(in lch,${finalColor[0]}, ${finalColor[1]})`}
+        background={`linear-gradient(in lch, ${finalColor[0]}, ${finalColor[1]})`}
       >
         <Flex
           className="card__header"
