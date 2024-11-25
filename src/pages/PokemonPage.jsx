@@ -49,7 +49,7 @@ function PokemonPage() {
       console.error(err.response.status); // ***
       console.error(err.response.headers); // ***
     } finally {
-      console.log(response);
+      // console.log(response);
     }
   };
 

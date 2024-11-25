@@ -1,57 +1,79 @@
 import { isInTeam, catchPokemon, releasePokemon } from '../../utils';
 import { motion } from 'framer-motion';
-import { useEffect, useMemo } from 'react';
-import '../../assets/styles/PokemonCard.css';
+import { useMemo, useEffect } from 'react';
 import { TbPokeballOff } from 'react-icons/tb';
 import { useOutletContext } from 'react-router-dom';
 import { Box, Image, Tooltip } from '@chakra-ui/react';
 import catch01 from '../../assets/images/pokeballs/catch1_100.png';
 import catch02 from '../../assets/images/pokeballs/catch2_100.png';
-import { useToastNotification } from '../../hooks/useToastNotification ';
+import { useToastNotification } from '../../hooks/useToastNotification';
 
-function CatchButton({ id }) {
-  const { myTeam, disabled, setDisabled } = useOutletContext();
-  // Memoize to check if the Pokémon is in the team
+function CatchReleaseButton({ id }) {
+  const { myTeam, setMyTeam } = useOutletContext();
   const isPokemonInTeam = useMemo(() => isInTeam(myTeam, id), [myTeam, id]);
   const { showToast } = useToastNotification();
 
+  const disabled = useMemo(
+    () => myTeam.length === 6 && !isPokemonInTeam,
+    [myTeam, isPokemonInTeam]
+  );
+
   const handleClick = () => {
+    if (disabled) return;
+
     if (isPokemonInTeam) {
       showToast('Pokemon Released', 'error');
-      releasePokemon(myTeam, id);
+      const updatedTeam = releasePokemon(myTeam, id);
+      setMyTeam(updatedTeam);
     } else {
-      showToast('Pokemon Caught', 'success');
-      catchPokemon(myTeam, id);
+      if (myTeam.length < 6) {
+        showToast('Pokemon Caught', 'success');
+        const updatedTeam = catchPokemon(myTeam, id);
+        setMyTeam(updatedTeam);
+      } else {
+        showToast('Team is full!', 'warning');
+      }
     }
   };
-  // Disable catch button if the team is full
-  useEffect(() => {
-    setDisabled(myTeam.length === 6 && !isPokemonInTeam);
-  }, [myTeam, isPokemonInTeam, setDisabled]);
+
+  const imageSrc = useMemo(() => {
+    if (disabled) return null; // No image in the disabled state
+    return isPokemonInTeam ? catch02 : catch01;
+  }, [disabled, isPokemonInTeam]);
+
+  const tooltipLabel = useMemo(() => {
+    if (disabled) return '';
+    return isPokemonInTeam ? 'Release' : 'Catch';
+  }, [disabled, isPokemonInTeam]);
 
   return (
     <Tooltip
-      aria-label={`Tooltip: ${isPokemonInTeam ? 'Release' : 'Catch'} Pokémon`}
-      label={isPokemonInTeam ? 'Release' : 'Catch'}
+      isDisabled={disabled}
+      aria-label={`Tooltip: ${tooltipLabel}`}
+      label={tooltipLabel}
       placement="top"
       fontSize="lg"
       hasArrow
       bg={isPokemonInTeam ? '#e53e3e' : '#3d7dca'}
     >
       <Box
-        w={'1.6rem'}
-        h={'1.6rem'}
-        className={`${isPokemonInTeam ? 'release' : 'catch'}`}
+        w="1.6rem"
+        h="1.6rem"
+        className={`${
+          disabled ? 'disabled' : isPokemonInTeam ? 'release' : 'catch'
+        }`}
+        onClick={handleClick}
       >
         {disabled ? (
           <TbPokeballOff size={30} className="disabled-icon" />
         ) : (
           <motion.div
-            whileHover={{ scale: 1.2, rotate: 180 }}
-            whileTap={{ scale: 1.2, rotate: 180, borderRadius: '100%' }}
-            onClick={handleClick}
+            whileHover={!disabled ? { scale: 1.2, rotate: 180 } : {}}
+            whileTap={
+              !disabled ? { scale: 1.2, rotate: 180, borderRadius: '100%' } : {}
+            }
           >
-            <Image src={isPokemonInTeam ? catch02 : catch01} alt="Catch Ball" />
+            <Image src={imageSrc} alt="Catch Ball" />
           </motion.div>
         )}
       </Box>
@@ -59,4 +81,4 @@ function CatchButton({ id }) {
   );
 }
 
-export default CatchButton;
+export default CatchReleaseButton;

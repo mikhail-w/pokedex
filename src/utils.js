@@ -44,37 +44,47 @@ export const bgs = {
 };
 
 export const releasePokemon = (myTeam, id) => {
-  // console.log('----------------------------------------------\n');
-  // console.log('***UTILS\n-----REMOVING POKEMON FROM myTeam');
-  let res = myTeam.filter(member => {
-    return member.card.id != id;
-  });
-  return res;
+  console.log(
+    '\n\n=================== INSIDE releasePokemon ===================\n'
+  );
+  console.log('** Current Team:', myTeam);
+  console.log('ID to Remove:', id);
+
+  const updatedTeam = myTeam.filter(member => member !== id);
+  console.log('Updated Team:', updatedTeam);
+  console.log(
+    '=================== EXIT releasePokemon ===================\n\n'
+  );
+
+  return updatedTeam;
 };
 
 export const catchPokemon = (myTeam, id) => {
-  console.log('\n\n=================== INSIDE UTIL ===================\n');
+  console.log(
+    '\n\n=================== INSIDE catchPokemon ===================\n'
+  );
+  console.log('** Current Team:', myTeam);
   console.log(`     ADDING POKEMON WITH ID ${id} TO myTeam`);
-  console.log('=================== EXIT UTIL =====================\n\n');
-  return [...myTeam, { id }];
+
+  const updatedTeam = [...myTeam, id];
+  console.log('Updated Team:', updatedTeam);
+  console.log(
+    '=================== EXIT catchPokemon =====================\n\n'
+  );
+
+  return updatedTeam;
 };
 
-export const isInTeam = (myTeam, card) => {
-  // console.log('\n\n=================== INSIDE UTIL ===================\n');
-  // console.log('** CHECK IF IN myTeam:', myTeam);
-  // console.log('Current POKEMON ID:', card.id);
+export const isInTeam = (myTeam, id) => {
+  console.log('\n\n=================== INSIDE isInTeam ===================\n');
+  console.log('** CHECK IF IN myTeam:', myTeam);
+  console.log('Current ID:', id);
 
-  let res = myTeam.filter(member => {
-    return member.card.id === card.id;
-  });
-  if (res.length == 1) {
-    // console.log(`POKEMON ID ${card.id} IS IN TEAM!!!`);
-    // console.log('=================== EXIT UTIL ===================\n\n');
-    return true;
-  }
-  // console.log(`POKEMON ID ${card.id} IS NOT IN TEAM!!!`);
-  // console.log('=================== EXIT UTIL ===================\n\n');
-  return false;
+  const isPresent = myTeam.includes(id);
+  console.log(`ID ${id} ${isPresent ? 'IS' : 'IS NOT'} IN TEAM!!!`);
+  console.log('=================== EXIT UTIL ===================\n\n');
+
+  return isPresent;
 };
 
 export const buildTeam = async teamResponse => {

@@ -28,7 +28,6 @@ function PokemonCard({ card, src, src2, name, type, id }) {
   const [isHovered, setIsHovered] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { myTeam, setMyTeam, disabled, setDisabled } = useOutletContext();
   const { pokeInfo, flavorText, evoNames, loading } = usePokemonInfo(card.id);
 
   // Determine background color based on Pokémon type

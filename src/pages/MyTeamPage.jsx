@@ -49,27 +49,27 @@ function MyTeamPage() {
         maxHeight={'60vh'}
       >
         {myTeam.length ? (
-          myTeam.map((member, idx) => (
-            // console.log("Member Card:",card)
+          myTeam.map((member, idx) =>
+            console.log('Member Card:', member)
 
-            <PokemonCard
-              key={idx}
-              index={idx}
-              card={member.card}
-              src={member.card.sprites.other[`official-artwork`].front_default}
-              src2={member.card.sprites.other.showdown.front_default}
-              name={member.card.name}
-              pokemon={pokemon}
-              type={getType(member.card.types)}
-              id={member.card.id}
-              isLoading={isLoading}
-              team={team}
-              disabled={disabled}
-              setDisabled={setDisabled}
-              myTeam={myTeam}
-              setIsCaught={setIsCaught}
-            />
-          ))
+            // <PokemonCard
+            //   key={idx}
+            //   index={idx}
+            //   card={member.card}
+            //   src={member.card.sprites.other[`official-artwork`].front_default}
+            //   src2={member.card.sprites.other.showdown.front_default}
+            //   name={member.card.name}
+            //   pokemon={pokemon}
+            //   type={getType(member.card.types)}
+            //   id={member.card.id}
+            //   isLoading={isLoading}
+            //   team={team}
+            //   disabled={disabled}
+            //   setDisabled={setDisabled}
+            //   myTeam={myTeam}
+            //   setIsCaught={setIsCaught}
+            // />
+          )
         ) : (
           <div className="not-caught-message container">
             <Image maxW={'400px'} src={noCatch} />
