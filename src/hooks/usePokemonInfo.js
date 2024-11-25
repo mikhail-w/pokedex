@@ -9,8 +9,12 @@ export function usePokemonInfo(cardId) {
   const [error, setError] = useState(null); // Track errors
 
   useEffect(() => {
-    // Exit early if no cardId is provided
-    if (!cardId) return;
+    if (cardId > 1000) {
+      // Exit early if no cardId is provided
+      setLoading(false);
+      setError('Card ID is required.');
+      return;
+    }
 
     const fetchPokemonInfo = async () => {
       setLoading(true);
@@ -41,15 +45,17 @@ export function usePokemonInfo(cardId) {
         while (evoData) {
           evoChain.push({
             species_name: evoData.species.name,
-            id: evoData.species.url.match(numberPattern)[0],
+            id: evoData.species.url.match(numberPattern)?.[0],
           });
           evoData = evoData.evolves_to[0]; // Move to the next evolution stage
         }
 
         setEvoNames(evoChain);
-      } catch (error) {
-        console.error('Error fetching Pokémon data:', error);
-        setError(error);
+      } catch (err) {
+        // console.error('Error fetching Pokémon data:', err);
+        // setError(
+        //   err?.response?.data?.message || err.message || 'An error occurred.'
+        // );
       } finally {
         setLoading(false);
       }

@@ -9,12 +9,7 @@ function HomePage() {
   const { setRandomChoice, setIsLoading, passed, setPassed } =
     useOutletContext();
   const navigate = useNavigate();
-  // console.log('-------- On Home Page, Current Random Choice:', randomChoice);
   function handleClick() {
-    // console.log('Home Page Get Pokemon Button Clicked', randomChoice);
-
-    // setIsLoading(true);
-    // setRandomChoice(getChoice(1025));
     return navigate(`/random/`);
   }
 
@@ -24,7 +19,6 @@ function HomePage() {
   return (
     <>
       <HomePageImages />
-      {/* <GenerateButton handleClick={handleClick} /> */}
       <Center>
         <Button
           pos={'fixed'}
