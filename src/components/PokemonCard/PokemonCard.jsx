@@ -23,10 +23,8 @@ import '../../assets/styles/PokemonCard.css';
 import { useOutletContext } from 'react-router-dom';
 import { usePokemonInfo } from '../../hooks/usePokemonInfo';
 import { useState, useEffect, useMemo, useCallback } from 'react';
-import { useToastNotification } from '../../hooks/useToastNotification ';
 
 function PokemonCard({ card, src, src2, name, type, id }) {
-  const { showToast } = useToastNotification();
   const [isFlipped, setIsFlipped] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
@@ -50,17 +48,6 @@ function PokemonCard({ card, src, src2, name, type, id }) {
   useEffect(() => {
     setDisabled(myTeam.length === 6 && !isPokemonInTeam);
   }, [myTeam, isPokemonInTeam, setDisabled]);
-
-  // Catch and Release handlers
-  const handleCatch = () => {
-    showToast('Pokemon Caught', 'success');
-    catchPokemon(myTeam, setMyTeam, card);
-  };
-
-  const handleRelease = () => {
-    showToast('Pokemon Released', 'error');
-    releasePokemon(myTeam, setMyTeam, card);
-  };
 
   return (
     <motion.div
@@ -135,15 +122,8 @@ function PokemonCard({ card, src, src2, name, type, id }) {
             handleMouseLeave={handleMouseLeave}
             onOpenModal={onOpen}
             backgroundColor={backgroundColor}
-          >
-            {/* Catch/Release Button */}
-            <CatchButton
-              isPokemonInTeam={isPokemonInTeam}
-              disabled={disabled}
-              onCatch={handleCatch}
-              onRelease={handleRelease}
-            />
-          </CardFront>
+            isPokemonInTeam={isPokemonInTeam}
+          ></CardFront>
 
           {/* Card Back */}
           <CardBack
@@ -154,7 +134,7 @@ function PokemonCard({ card, src, src2, name, type, id }) {
             offHover={handleMouseLeave}
             isHovered={isHovered}
             backgroundColor={backgroundColor}
-          />
+          ></CardBack>
         </ReactCardFlip>
       </Box>
     </motion.div>
