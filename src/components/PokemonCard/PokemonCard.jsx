@@ -30,8 +30,8 @@ function PokemonCard({ card, src, src2, name, type, id }) {
   const [evoNames, setEvoNames] = useState([]);
   const [pokeInfo, setPokeInfo] = useState([]);
 
-  console.log('POKE INFO:', pokeInfo);
-  console.log('CARD: ', card);
+  // console.log('POKE INFO:', pokeInfo);
+  // console.log('CARD: ', card);
 
   function handleClick() {
     axios.get(currentCardInfo).then(res => {

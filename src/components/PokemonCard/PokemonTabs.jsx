@@ -81,27 +81,55 @@ function PokemonTabs({ card, pokeInfo }) {
           </TabPanel>
 
           {/* BASE STATS TAB */}
-          <TabPanel>
-            {card?.stats?.length > 0 ? (
-              card.stats.map(stat => (
-                <Box key={stat.stat.name} className="subtitle-container">
-                  <p className="subtitle">{stat.stat.name}:</p>
-                  <p className="description">{stat.base_stat || 'N/A'}</p>
-                </Box>
-              ))
-            ) : (
-              <Text>No base stats available.</Text>
-            )}
+          <TabPanel className="content-stats">
+            {card.stats.map(stat => (
+              <div key={card.name + stat.stat.name} className="stat-container">
+                <div className="stat-titles-container">
+                  <h3 className="stat-name">{stat.stat.name}</h3>
+                  <h3 className="stat-value">{stat.base_stat}</h3>
+                </div>
+                <div className="stat-bar-container">
+                  <div className="stat-bar-bg"></div>
+                  <div
+                    className="stat-bar-parent"
+                    style={{
+                      width: stat.base_stat + '%',
+                      maxWidth: '100%',
+                    }}
+                  >
+                    <div
+                      className={`stat-bar-fill ${card.types[0].type.name}`}
+                    ></div>
+                  </div>
+                </div>
+              </div>
+            ))}
           </TabPanel>
 
           {/* MOVES TAB */}
           <TabPanel>
             {card?.moves?.length > 0 ? (
-              card.moves.slice(0, 4).map((move, index) => (
-                <Box key={index} className="subtitle-container">
-                  <p className="description">{move.move.name || 'N/A'}</p>
-                </Box>
-              ))
+              <Box display="flex" flexWrap="wrap" gap={4}>
+                {card.moves.slice(0, 4).map((move, index) => (
+                  <Box
+                    key={index}
+                    padding={2}
+                    borderWidth="1px"
+                    borderRadius="md"
+                    boxShadow="sm"
+                    bg="gray.100"
+                    _hover={{ bg: 'gray.200' }}
+                  >
+                    <Text
+                      className="description"
+                      fontSize="md"
+                      fontWeight="300"
+                    >
+                      {move.move.name || 'N/A'}
+                    </Text>
+                  </Box>
+                ))}
+              </Box>
             ) : (
               <Text>No moves available.</Text>
             )}
