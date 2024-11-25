@@ -13,6 +13,7 @@ function CardFront({
   onFlip,
   handleMouseEnter,
   handleMouseLeave,
+  handleClick,
   onOpenModal,
   isCaught,
   disabled,
@@ -63,7 +64,11 @@ function CardFront({
               </Text>
             </Box>
             {/* Info Icon */}
-            <InfoIcon onOpenModal={onOpenModal} />
+            <InfoIcon
+              onOpenModal={onOpenModal}
+              id={id}
+              handleClick={handleClick}
+            />
           </Flex>
 
           {/* POKEMON IMAGE */}

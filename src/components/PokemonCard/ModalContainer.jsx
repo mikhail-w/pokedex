@@ -1,12 +1,4 @@
 import { colors } from '../../utils';
-import PokemonTabs from './PokemonTabs';
-import { CgPokemon } from 'react-icons/cg';
-import '../../assets/styles/pokeDetail.css';
-import EvolutionChain from './EvolutionChain';
-import { FaArrowLeftLong } from 'react-icons/fa6';
-import { modalIcons } from '../../icons';
-import { IoArrowForwardCircleOutline } from 'react-icons/io5';
-import ball from '../../assets/images/pokeballs/pokeball.png';
 import {
   Box,
   Flex,
@@ -15,6 +7,15 @@ import {
   Image,
   ModalContent,
 } from '@chakra-ui/react';
+import FlavorText from './FlavorText';
+import PokemonTabs from './PokemonTabs';
+import { modalIcons } from '../../icons';
+import { CgPokemon } from 'react-icons/cg';
+import '../../assets/styles/pokeDetail.css';
+import EvolutionChain from './EvolutionChain';
+import { FaArrowLeftLong } from 'react-icons/fa6';
+import { IoArrowForwardCircleOutline } from 'react-icons/io5';
+import ball from '../../assets/images/pokeballs/pokeball.png';
 
 function ModalContainer({
   card,
@@ -26,7 +27,8 @@ function ModalContainer({
   onExpand,
   isExpanded,
   evoNames,
-  flavorText,
+  pokeInfo,
+  flavorTextArray,
   backgroundColor,
 }) {
   return (
@@ -109,7 +111,14 @@ function ModalContainer({
       <Box>
         {/* FLAVOR TEXT AND EVO CHAIN SECTION */}
         {isExpanded && (
-          <EvolutionChain evoNames={evoNames} flavorText={flavorText} />
+          <Flex
+            className="extended-section"
+            height="700px"
+            flexDirection="column"
+          >
+            <FlavorText flavorTextArray={flavorTextArray} />
+            <EvolutionChain evoNames={evoNames} />
+          </Flex>
         )}
       </Box>
     </ModalContent>
