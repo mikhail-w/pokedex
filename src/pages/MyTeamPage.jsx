@@ -1,28 +1,56 @@
 import { Center } from '@chakra-ui/react';
 import BackButton from '../components/BackButton';
-import { useOutletContext, useNavigate } from 'react-router-dom';
+import { useOutletContext } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 import noCatch from '../assets/images/pokeballs/ball-no-catch.png';
-import { Image, Button, Text } from '@chakra-ui/react';
+import { Image, Text } from '@chakra-ui/react';
 import '../assets/styles/MyTeamPage.css';
 import PokemonCard from '../components/PokemonCard/PokemonCard';
 import { getType } from '../utils';
+import Loading from '../components/Loading';
 
 function MyTeamPage() {
-  const {
-    team,
-    myTeam,
-    setMyTeam,
-    disabled,
-    setDisabled,
-    isCaught,
-    setIsCaught,
-    isLoading,
-    pokemon,
-  } = useOutletContext();
+  const { myTeam, setMyTeam, disabled, setDisabled, setIsCaught } =
+    useOutletContext();
 
-  const history = useNavigate();
+  const [pokemonData, setPokemonData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [animatingCard, setAnimatingCard] = useState(null); // Track the animating Pokémon card
 
-  // console.log('My TEAM Page: ', myTeam);
+  useEffect(() => {
+    const fetchPokemonData = async () => {
+      try {
+        setLoading(true);
+        const promises = myTeam.map(id =>
+          axios.get(`https://pokeapi.co/api/v2/pokemon/${id}`)
+        );
+        const responses = await Promise.all(promises);
+        setPokemonData(responses.map(response => response.data));
+      } catch (error) {
+        console.error('Error fetching Pokémon data:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (myTeam.length > 0) {
+      fetchPokemonData();
+    } else {
+      setPokemonData([]);
+    }
+  }, [myTeam]);
+
+  // Handle releasing a Pokémon
+  const releasePokemon = id => {
+    setAnimatingCard(id); // Trigger animation for the specific card
+    setTimeout(() => {
+      setMyTeam(prevTeam => prevTeam.filter(pokemonId => pokemonId !== id));
+      setPokemonData(prevData => prevData.filter(pokemon => pokemon.id !== id));
+      setAnimatingCard(null); // Reset animation tracking
+    }, 500); // Adjust timeout to match animation duration
+  };
+
   return (
     <>
       <Center marginTop={'20px'}>
@@ -36,7 +64,7 @@ function MyTeamPage() {
           fontSize={'2rem'}
           as="h3"
         >
-          My Pokemon Team
+          My Pokémon Team
         </Text>
       </Center>
       <Center
@@ -44,36 +72,30 @@ function MyTeamPage() {
         flexWrap={'wrap'}
         gap={'30px'}
         overflow={'scroll'}
-        // outline={'1px solid green'}
-        margin={'10px '}
+        margin={'10px'}
         maxHeight={'60vh'}
       >
-        {myTeam.length ? (
-          myTeam.map((member, idx) =>
-            console.log('Member Card:', member)
-
-            // <PokemonCard
-            //   key={idx}
-            //   index={idx}
-            //   card={member.card}
-            //   src={member.card.sprites.other[`official-artwork`].front_default}
-            //   src2={member.card.sprites.other.showdown.front_default}
-            //   name={member.card.name}
-            //   pokemon={pokemon}
-            //   type={getType(member.card.types)}
-            //   id={member.card.id}
-            //   isLoading={isLoading}
-            //   team={team}
-            //   disabled={disabled}
-            //   setDisabled={setDisabled}
-            //   myTeam={myTeam}
-            //   setIsCaught={setIsCaught}
-            // />
-          )
+        {loading ? (
+          <Loading />
+        ) : pokemonData.length > 0 ? (
+          pokemonData.map((pokemon, idx) => (
+            <PokemonCard
+              key={idx}
+              index={idx}
+              card={pokemon}
+              src={pokemon.sprites.other['official-artwork'].front_default}
+              src2={pokemon.sprites.other.showdown?.front_default} // Include `src2` for flipping functionality
+              name={pokemon.name}
+              type={getType(pokemon.types)}
+              id={pokemon.id}
+              animating={animatingCard === pokemon.id} // Pass animation state
+              onRelease={() => releasePokemon(pokemon.id)} // Pass release handler
+            />
+          ))
         ) : (
           <div className="not-caught-message container">
             <Image maxW={'400px'} src={noCatch} />
-            <h3>No Pokemon Caught Yet</h3>
+            <h3>No Pokémon Caught Yet</h3>
           </div>
         )}
       </Center>

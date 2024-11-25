@@ -44,45 +44,45 @@ export const bgs = {
 };
 
 export const releasePokemon = (myTeam, id) => {
-  console.log(
-    '\n\n=================== INSIDE releasePokemon ===================\n'
-  );
-  console.log('** Current Team:', myTeam);
-  console.log('ID to Remove:', id);
+  // console.log(
+  //   '\n\n=================== INSIDE releasePokemon ===================\n'
+  // );
+  // console.log('** Current Team:', myTeam);
+  // console.log('ID to Remove:', id);
 
   const updatedTeam = myTeam.filter(member => member !== id);
-  console.log('Updated Team:', updatedTeam);
-  console.log(
-    '=================== EXIT releasePokemon ===================\n\n'
-  );
+  // console.log('Updated Team:', updatedTeam);
+  // console.log(
+  //   '=================== EXIT releasePokemon ===================\n\n'
+  // );
 
   return updatedTeam;
 };
 
 export const catchPokemon = (myTeam, id) => {
-  console.log(
-    '\n\n=================== INSIDE catchPokemon ===================\n'
-  );
-  console.log('** Current Team:', myTeam);
-  console.log(`     ADDING POKEMON WITH ID ${id} TO myTeam`);
+  // console.log(
+  //   '\n\n=================== INSIDE catchPokemon ===================\n'
+  // );
+  // console.log('** Current Team:', myTeam);
+  // console.log(`     ADDING POKEMON WITH ID ${id} TO myTeam`);
 
   const updatedTeam = [...myTeam, id];
-  console.log('Updated Team:', updatedTeam);
-  console.log(
-    '=================== EXIT catchPokemon =====================\n\n'
-  );
+  // console.log('Updated Team:', updatedTeam);
+  // console.log(
+  //   '=================== EXIT catchPokemon =====================\n\n'
+  // );
 
   return updatedTeam;
 };
 
 export const isInTeam = (myTeam, id) => {
-  console.log('\n\n=================== INSIDE isInTeam ===================\n');
-  console.log('** CHECK IF IN myTeam:', myTeam);
-  console.log('Current ID:', id);
+  // console.log('\n\n=================== INSIDE isInTeam ===================\n');
+  // console.log('** CHECK IF IN myTeam:', myTeam);
+  // console.log('Current ID:', id);
 
   const isPresent = myTeam.includes(id);
-  console.log(`ID ${id} ${isPresent ? 'IS' : 'IS NOT'} IN TEAM!!!`);
-  console.log('=================== EXIT UTIL ===================\n\n');
+  // console.log(`ID ${id} ${isPresent ? 'IS' : 'IS NOT'} IN TEAM!!!`);
+  // console.log('=================== EXIT UTIL ===================\n\n');
 
   return isPresent;
 };
