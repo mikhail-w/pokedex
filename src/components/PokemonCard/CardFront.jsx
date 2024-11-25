@@ -169,7 +169,7 @@ function CardFront({
         <Center whiteSpace="nowrap" width="182px" height="26px">
           <Text
             className="pokemonName"
-            fontSize="clamp(10px, 1rem, 13px)"
+            fontSize={name.length > 15 ? '10px' : '15px'}
             wordBreak="break-word"
             lineHeight="26px"
           >

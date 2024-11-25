@@ -72,6 +72,7 @@
   text-align: center;
   text-transform: uppercase;
   font-weight: 300;
+  transition: font-size 0.2s ease-in-out;
 }
 
 .type-icon:hover {
