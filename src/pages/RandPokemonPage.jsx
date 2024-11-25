@@ -3,12 +3,12 @@ import MainPokemonTab from '../components/MainPokemonTab';
 import GenerateButton from '../components/GenerateButton';
 import { useOutletContext } from 'react-router-dom';
 import { useEffect, useState, useRef } from 'react';
-import { getChoice } from '../utils';
+import { getRandomID } from '../utils';
 
 function RandPokemonPage() {
   const [valid, setValid] = useState(false);
   const timerId = useRef(null);
-  const { setTeam, team, pokemon, setPokemon, randomChoice, setIsLoading } =
+  const { setTeam, team, pokemon, setPokemon, randomID, setIsLoading } =
     useOutletContext();
 
   const loadLocalStorageData = key => {
@@ -27,7 +27,7 @@ function RandPokemonPage() {
 
       // Fetch the main Pokémon
       const pokemonResponse = await axios.get(
-        `https://pokeapi.co/api/v2/pokemon/${randomChoice}`
+        `https://pokeapi.co/api/v2/pokemon/${randomID}`
       );
 
       const mainPokemon = pokemonResponse.data;
@@ -40,7 +40,7 @@ function RandPokemonPage() {
 
       const teamIndexes = [];
       while (teamIndexes.length < 5) {
-        const randomIndex = getChoice(teamResponse.data.pokemon.length);
+        const randomIndex = getRandomID(teamResponse.data.pokemon.length);
         if (!teamIndexes.includes(randomIndex)) {
           teamIndexes.push(randomIndex);
         }

@@ -3,7 +3,7 @@ import HomePageImages from '../components/HomePageImages';
 import { useNavigate } from 'react-router-dom';
 import { useOutletContext } from 'react-router-dom';
 import { Button, Center } from '@chakra-ui/react';
-import { getChoice } from '../utils';
+import { getRandomID } from '../utils';
 
 function HomePage() {
   const { setRandomChoice, setIsLoading, passed, setPassed } =

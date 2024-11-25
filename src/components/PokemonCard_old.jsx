@@ -258,8 +258,8 @@ function PokemonCard({ card, src, src2, name, type, id }) {
             maxHeight={'740px'}
             flexDirection={'row'}
           >
+            {/* RETURN ARROW BUTTON AND POKEBALL ICON */}
             <Box>
-              {/* RETURN ARROW BUTTON AND POKEBALL ICON */}
               <Flex
                 // outline={'2px solid red'}
                 w={'90%'}

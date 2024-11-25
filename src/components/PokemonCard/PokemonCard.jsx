@@ -28,7 +28,7 @@ function PokemonCard({ card, src, src2, name, type, id }) {
   const [isHovered, setIsHovered] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { pokeInfo, flavorText, evoNames, loading } = usePokemonInfo(card.id);
+  const { pokeInfo, evoNames, loading, flavorText } = usePokemonInfo(card.id);
 
   // Determine background color based on Pokémon type
   const backgroundColor = getBackgroundColors(type);
@@ -110,6 +110,7 @@ function PokemonCard({ card, src, src2, name, type, id }) {
             onFlip={handleFlip}
             handleMouseEnter={handleMouseEnter}
             handleMouseLeave={handleMouseLeave}
+            // handleClick={handleClick}
             onOpenModal={onOpen}
             backgroundColor={backgroundColor}
           ></CardFront>

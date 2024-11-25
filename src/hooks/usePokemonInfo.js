@@ -9,12 +9,12 @@ export function usePokemonInfo(cardId) {
   const [error, setError] = useState(null); // Track errors
 
   useEffect(() => {
-    if (cardId > 1000) {
-      // Exit early if no cardId is provided
-      setLoading(false);
-      setError('Card ID is required.');
-      return;
-    }
+    // if (cardId > 1000) {
+    //   // Exit early if no cardId is provided
+    //   setLoading(false);
+    //   setError('Card ID is required.');
+    //   return;
+    // }
 
     const fetchPokemonInfo = async () => {
       setLoading(true);

@@ -93,7 +93,7 @@ export const buildTeam = async teamResponse => {
   let teamMasterListSize = teamMasterList.length;
 
   for (let i = 0; i < 5; i++) {
-    let idx = getChoice(teamMasterListSize);
+    let idx = getRandomID(teamMasterListSize);
     let teamMember = teamMasterList[idx];
     let url = `https://pokeapi.co/api/v2/pokemon/${teamMember.pokemon.name}`;
     urls.push(url.toString());
@@ -108,7 +108,7 @@ export const buildTeam = async teamResponse => {
   });
 };
 
-export function getChoice(max) {
+export function getRandomID(max) {
   return Math.floor(Math.random() * max);
 }
 
