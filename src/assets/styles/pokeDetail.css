@@ -13,7 +13,7 @@
   background-repeat: no-repeat;
   background-size: cover;
   background-position: bottom -100px right -150px;
-  outline: 2px solid red;
+  /* outline: 2px solid red; */
 }
 
 .modal-content.extended {

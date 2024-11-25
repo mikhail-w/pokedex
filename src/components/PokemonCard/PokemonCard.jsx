@@ -61,7 +61,7 @@ function PokemonCard({ card, src, src2, name, type, id }) {
           !!evoData &&
           Object.prototype.hasOwnProperty.call(evoData, 'evolves_to')
         );
-        console.log('EVO CHAIN:', evoChain);
+        // console.log('EVO CHAIN:', evoChain);
 
         const evNames = [];
         evoChain.forEach(ele => evNames.push([ele.species_name, ele.id]));
@@ -70,7 +70,6 @@ function PokemonCard({ card, src, src2, name, type, id }) {
       });
     });
   }
-  console.log('Flavor Text:', flavorTextArray);
   return (
     <motion.div
       initial={{ y: -250 }}

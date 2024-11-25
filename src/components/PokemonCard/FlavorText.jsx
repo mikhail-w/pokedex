@@ -32,6 +32,9 @@ const FlavorText = ({ flavorTextArray }) => {
         mt="40px"
         fontFamily="Alleyn W01 Regular"
         textAlign="center"
+        height="100px" // Set a fixed height for the text box
+        overflow="hidden" // Hide overflow text
+        textOverflow="ellipsis" // Optional: Add ellipsis if needed
       >
         {currentText.map((flavorText, index) => (
           <span className="flavorText" key={index}>
@@ -39,7 +42,7 @@ const FlavorText = ({ flavorTextArray }) => {
           </span>
         ))}
       </Text>
-      <Flex mt="10px">
+      <Flex mt="20px">
         <ReactPaginate
           previousLabel={'prev'}
           nextLabel={'next'}

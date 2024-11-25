@@ -31,14 +31,16 @@
 .flavorText {
   margin-top: 10px;
   min-height: 120px;
-}
-
-.flavorText p {
   font-family: "Alleyn W01 Regular";
   font-size: 1.1rem;
   text-align: center;
 }
 
+/* .flavorText p {
+  font-family: "Alleyn W01 Regular";
+  font-size: 1.1rem;
+  text-align: center;
+} */
 .previousBttn, .nextBttn {
   background-color: initial;
   background-image: linear-gradient(-180deg, #00D775, #00BD68);

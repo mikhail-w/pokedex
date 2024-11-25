@@ -40,7 +40,7 @@ function ModalContainer({
       // justifyContent={'center'}
       justifyContent={'left'}
       borderRadius={'50px'}
-      outline={'2px solid blue'}
+      // outline={'2px solid blue'}
       overflow={'hidden'}
       maxHeight={'740px'}
       flexDirection={'row'}
