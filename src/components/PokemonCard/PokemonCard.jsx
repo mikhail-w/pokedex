@@ -15,7 +15,7 @@ function PokemonCard({ card, src, src2, name, type, id }) {
   const [isHovered, setIsHovered] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const pokeInfo = `https://pokeapi.co/api/v2/pokemon-species/${id}`;
+  const currentCardInfo = `https://pokeapi.co/api/v2/pokemon-species/${id}`;
   // const { pokeInfo, evoNames, flavorText } = usePokemonInfo(card.id);
 
   // Determine background color based on Pokémon type
@@ -28,9 +28,14 @@ function PokemonCard({ card, src, src2, name, type, id }) {
   const handleExpand = useCallback(() => setIsExpanded(prev => !prev), []);
   const [flavorTextArray, setFlavorText] = useState([]);
   const [evoNames, setEvoNames] = useState([]);
+  const [pokeInfo, setPokeInfo] = useState([]);
+
+  console.log('POKE INFO:', pokeInfo);
+  console.log('CARD: ', card);
 
   function handleClick() {
-    axios.get(pokeInfo).then(res => {
+    axios.get(currentCardInfo).then(res => {
+      setPokeInfo(res.data);
       setFlavorText(res.data.flavor_text_entries);
       axios.get(res.data.evolution_chain).then(evores => {
         evores.data;

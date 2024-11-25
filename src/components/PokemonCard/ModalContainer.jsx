@@ -104,7 +104,7 @@ function ModalContainer({
 
         {/* TAB INFO SECTION */}
         <Box>
-          <PokemonTabs card={card} />
+          <PokemonTabs card={card} pokeInfo={pokeInfo} />
         </Box>
       </Box>
       {/* EXPANDED SECTION */}

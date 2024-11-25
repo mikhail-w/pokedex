@@ -56,12 +56,6 @@ function PokemonTabs({ card, pokeInfo }) {
                     {card.weight ? `${card.weight}lbs` : 'N/A'}
                   </p>
                 </Box>
-              </>
-            ) : (
-              <Text>No data available for this Pokémon.</Text>
-            )}
-            {pokeInfo && (
-              <>
                 <Box className="subtitle-container">
                   <p className="subtitle">Growth Rate:</p>
                   <p className="description">
@@ -81,6 +75,8 @@ function PokemonTabs({ card, pokeInfo }) {
                   </p>
                 </Box>
               </>
+            ) : (
+              <Text>No data available for this Pokémon.</Text>
             )}
           </TabPanel>
 
