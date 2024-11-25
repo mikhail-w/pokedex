@@ -87,11 +87,11 @@ function CardFront({
           </Flex>
 
           {/* POKEMON IMAGE */}
-          <Center p="15px">
+          <Center p="1px" m={'8px'}>
             <MotionImage
               onClick={onFlip}
               src={src || '/images/default.png'}
-              whileHover={{ scale: 1.4 }}
+              whileHover={{ scale: 1.2 }}
               transition={{ duration: 0.3 }}
             />
           </Center>

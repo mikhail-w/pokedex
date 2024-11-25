@@ -1,11 +1,11 @@
 // components/CatchButton.js
 import { motion } from 'framer-motion';
-import { TbPokeballOff } from 'react-icons/tb';
 import '../../assets/styles/PokemonCard.css';
+import { TbPokeballOff } from 'react-icons/tb';
 import { Box, Image, Tooltip } from '@chakra-ui/react';
-import { useToastNotification } from '../../hooks/useToastNotification ';
 import catch01 from '../../assets/images/pokeballs/catch1_100.png';
 import catch02 from '../../assets/images/pokeballs/catch2_100.png';
+import { useToastNotification } from '../../hooks/useToastNotification ';
 
 function CatchButton({ isPokemonInTeam, disabled, onCatch, onRelease }) {
   const { showToast } = useToastNotification();

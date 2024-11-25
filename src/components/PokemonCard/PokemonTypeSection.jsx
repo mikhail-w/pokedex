@@ -4,7 +4,7 @@ import { Center, Tooltip, Image } from '@chakra-ui/react';
 
 const PokemonTypeSection = ({ type }) => {
   return (
-    <Center className="tip" padding="10px" marginBottom="10px" gap="10px">
+    <Center className="tip" mt={5} gap="10px">
       <Tooltip
         label={type[0]}
         placement="bottom"
