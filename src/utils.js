@@ -21,6 +21,7 @@ export const colors = {
   fairy: '#fdb9e9',
 };
 
+// Modal Overlay Background Colors
 export const bgs = {
   grass: 'rgba(120, 200, 80, 0.5)',
   poison: 'rgba(160, 64, 160, 0.5)',
@@ -42,38 +43,48 @@ export const bgs = {
   fairy: 'rgba(238, 153, 172, 0.5)',
 };
 
-export const releasePokemon = (myTeam, card) => {
-  // console.log('----------------------------------------------\n');
-  // console.log('***UTILS\n-----REMOVING POKEMON FROM myTeam');
-  let res = myTeam.filter(member => {
-    return member.card.id != card.id;
-  });
-  return res;
+export const releasePokemon = (myTeam, id) => {
+  // console.log(
+  //   '\n\n=================== INSIDE releasePokemon ===================\n'
+  // );
+  // console.log('** Current Team:', myTeam);
+  // console.log('ID to Remove:', id);
+
+  const updatedTeam = myTeam.filter(member => member !== id);
+  // console.log('Updated Team:', updatedTeam);
+  // console.log(
+  //   '=================== EXIT releasePokemon ===================\n\n'
+  // );
+
+  return updatedTeam;
 };
 
-export const catchPokemon = (myTeam, card) => {
-  // console.log('\n\n=================== INSIDE UTIL ===================\n');
-  // console.log(`-----ADDING POKEMON WITH ID ${card.id} TO myTeam`);
-  // console.log('=================== EXIT UTIL ===================\n\n');
-  return [...myTeam, { card }];
+export const catchPokemon = (myTeam, id) => {
+  // console.log(
+  //   '\n\n=================== INSIDE catchPokemon ===================\n'
+  // );
+  // console.log('** Current Team:', myTeam);
+  // console.log(`     ADDING POKEMON WITH ID ${id} TO myTeam`);
+
+  const updatedTeam = [...myTeam, id];
+  // console.log('Updated Team:', updatedTeam);
+  // console.log(
+  //   '=================== EXIT catchPokemon =====================\n\n'
+  // );
+
+  return updatedTeam;
 };
 
-export const isInTeam = (myTeam, card) => {
-  // console.log('\n\n=================== INSIDE UTIL ===================\n');
+export const isInTeam = (myTeam, id) => {
+  // console.log('\n\n=================== INSIDE isInTeam ===================\n');
   // console.log('** CHECK IF IN myTeam:', myTeam);
-  // console.log('Current POKEMON ID:', card.id);
+  // console.log('Current ID:', id);
 
-  let res = myTeam.filter(member => {
-    return member.card.id === card.id;
-  });
-  if (res.length == 1) {
-    // console.log(`POKEMON ID ${card.id} IS IN TEAM!!!`);
-    // console.log('=================== EXIT UTIL ===================\n\n');
-    return true;
-  }
-  // console.log(`POKEMON ID ${card.id} IS NOT IN TEAM!!!`);
+  const isPresent = myTeam.includes(id);
+  // console.log(`ID ${id} ${isPresent ? 'IS' : 'IS NOT'} IN TEAM!!!`);
   // console.log('=================== EXIT UTIL ===================\n\n');
-  return false;
+
+  return isPresent;
 };
 
 export const buildTeam = async teamResponse => {
@@ -82,7 +93,7 @@ export const buildTeam = async teamResponse => {
   let teamMasterListSize = teamMasterList.length;
 
   for (let i = 0; i < 5; i++) {
-    let idx = getChoice(teamMasterListSize);
+    let idx = getRandomID(teamMasterListSize);
     let teamMember = teamMasterList[idx];
     let url = `https://pokeapi.co/api/v2/pokemon/${teamMember.pokemon.name}`;
     urls.push(url.toString());
@@ -97,8 +108,7 @@ export const buildTeam = async teamResponse => {
   });
 };
 
-export function getChoice(max) {
-  // console.log('Inside Utils Get Choice Function');
+export function getRandomID(max) {
   return Math.floor(Math.random() * max);
 }
 
@@ -151,3 +161,10 @@ export function makeString(list) {
   }
   return newString;
 }
+
+export const getBackgroundColors = type => {
+  if (type.length === 2) {
+    return [colors[type[0]], colors[type[1]]];
+  }
+  return [colors[type[0]], colors[type[0]]];
+};

@@ -31,14 +31,16 @@
 .flavorText {
   margin-top: 10px;
   min-height: 120px;
-}
-
-.flavorText p {
   font-family: "Alleyn W01 Regular";
   font-size: 1.1rem;
   text-align: center;
 }
 
+/* .flavorText p {
+  font-family: "Alleyn W01 Regular";
+  font-size: 1.1rem;
+  text-align: center;
+} */
 .previousBttn, .nextBttn {
   background-color: initial;
   background-image: linear-gradient(-180deg, #00D775, #00BD68);
@@ -74,4 +76,14 @@
 
 .nextBttn:hover {
   background: #00bd68;
+}
+
+.paginationActive {
+  color: white;
+  background-color: #00bd68;
+  padding: 5px;
+  /* Teal color */
+  border-color: #00bd68;
+  border-radius: 150px;
+  font-weight: bold;
 }

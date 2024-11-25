@@ -1,3 +1,24 @@
+// Type Icons (PNG)
+import grass from './assets/images/type_icons/grass.png';
+import fire from './assets/images/type_icons/fire.png';
+import water from './assets/images/type_icons/water.png';
+import electric from './assets/images/type_icons/electric.png';
+import ground from './assets/images/type_icons/ground.png';
+import rock from './assets/images/type_icons/rock.png';
+import ghost from './assets/images/type_icons/ghost.png';
+import fairy from './assets/images/type_icons/fairy.png';
+import fighting from './assets/images/type_icons/fighting.png';
+import flying from './assets/images/type_icons/flying.png';
+import dragon from './assets/images/type_icons/dragon.png';
+import dark from './assets/images/type_icons/dark.png';
+import ice from './assets/images/type_icons/ice.png';
+import psychic from './assets/images/type_icons/psychic.png';
+import poison from './assets/images/type_icons/poison.png';
+import steel from './assets/images/type_icons/steel.png';
+import normal from './assets/images/type_icons/normal.png';
+import bug from './assets/images/type_icons/bug.png';
+
+// Modal Icons (SVG)
 import grassIcon from './assets/images/type_icons/grass.svg';
 import fireIcon from './assets/images/type_icons/fire.svg';
 import waterIcon from './assets/images/type_icons/water.svg';
@@ -17,57 +38,40 @@ import steelIcon from './assets/images/type_icons/steel.svg';
 import normalIcon from './assets/images/type_icons/normal.svg';
 import bugIcon from './assets/images/type_icons/bug.svg';
 
-import bug from '../src/assets/images/type_icons/bug.png';
-import dark from '../src/assets/images/type_icons/dark.png';
-import dragon from '../src/assets/images/type_icons/dragon.png';
-import electric from '../src/assets/images/type_icons/electric.png';
-import fairy from '../src/assets/images/type_icons/fairy.png';
-import fighting from '../src/assets/images/type_icons/fighting.png';
-import fire from '../src/assets/images/type_icons/fire.png';
-import flying from '../src/assets/images/type_icons/flying.png';
-import ghost from '../src/assets/images/type_icons/ghost.png';
-import grass from '../src/assets/images/type_icons/grass.png';
-import ground from '../src/assets/images/type_icons/ground.png';
-import ice from '../src/assets/images/type_icons/ice.png';
-import normal from '../src/assets/images/type_icons/normal.png';
-import poison from '../src/assets/images/type_icons/poison.png';
-import water from '../src/assets/images/type_icons/water.png';
-import steel from '../src/assets/images/type_icons/steel.png';
-import rock from '../src/assets/images/type_icons/rock.png';
-import psychic from '../src/assets/images/type_icons/psychic.png';
-
+// Mapping for PNG Icons
 export const typeIcons = {
-  grass: grass,
-  poison: poison,
-  normal: normal,
-  fire: fire,
-  water: water,
-  electric: electric,
-  ice: ice,
-  fighting: fighting,
-  ground: ground,
-  flying: flying,
-  psychic: psychic,
-  bug: bug,
-  rock: rock,
-  ghost: ghost,
-  dark: dark,
-  dragon: dragon,
-  steel: steel,
-  fairy: fairy,
+  grass,
+  fire,
+  water,
+  electric,
+  ground,
+  rock,
+  ghost,
+  fairy,
+  fighting,
+  flying,
+  dragon,
+  dark,
+  ice,
+  psychic,
+  poison,
+  steel,
+  normal,
+  bug,
 };
 
+// Mapping for SVG Icons
 export const modalIcons = {
   grass: grassIcon,
-  plant: grassIcon,
+  plant: grassIcon, // Alternative key for plant types
   water: waterIcon,
-  water1: waterIcon,
+  water1: waterIcon, // Additional keys for water-related types
   water2: waterIcon,
   water3: waterIcon,
   electric: electricIcon,
   ground: groundIcon,
   rock: rockIcon,
-  mineral: rockIcon,
+  mineral: rockIcon, // Alternative key for minerals
   fire: fireIcon,
   fairy: fairyIcon,
   fighting: fightingIcon,

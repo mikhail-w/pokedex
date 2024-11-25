@@ -11,7 +11,6 @@ import {
   ModalOverlay,
   ModalContent,
   ModalHeader,
-  ModalBody,
   useDisclosure,
   Tab,
   Tabs,
@@ -22,7 +21,6 @@ import {
   useToast,
 } from '@chakra-ui/react';
 import axios from 'axios';
-import { AnimatePresence } from 'framer-motion';
 import { motion } from 'framer-motion';
 import catch01 from '../assets/images/pokeballs/catch1_100.png';
 import catch02 from '../assets/images/pokeballs/catch2_100.png';
@@ -38,25 +36,13 @@ import '../assets/styles/PokemonCard.css';
 import '../assets/styles/pokeDetail.css';
 import '../assets/styles/pokemonCardStyles.css';
 import { typeIcons, modalIcons } from '../icons';
-import InfoTab from './InfoTab';
 import { isInTeam, catchPokemon, releasePokemon, bgs, colors } from '../utils';
 import { IoArrowForwardCircleOutline } from 'react-icons/io5';
 import { useOutletContext } from 'react-router-dom';
-import FlavorText from './FlavorText';
+import FlavorText from './PokemonCard/FlavorText';
 
 function PokemonCard({ card, src, src2, name, type, id }) {
-  const {
-    team,
-    setTeam,
-    myTeam,
-    setMyTeam,
-    disabled,
-    setDisabled,
-    isLoading,
-    setIsLoading,
-    pokemon,
-    setPokemon,
-  } = useOutletContext();
+  const { team, myTeam, setMyTeam, disabled, setDisabled } = useOutletContext();
   const idColor = useColorModeValue('black', '#ac4f51');
 
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -69,6 +55,8 @@ function PokemonCard({ card, src, src2, name, type, id }) {
 
   const [isExpanded, setIsExpanded] = useState(false);
 
+  const [evoNames, setEvoNames] = useState([]);
+
   const toast = useToast();
 
   const currentCardInfo = `https://pokeapi.co/api/v2/pokemon-species/${card.id}`;
@@ -77,21 +65,20 @@ function PokemonCard({ card, src, src2, name, type, id }) {
 
   const [flavorText, setFlavorText] = useState([]);
   const [textArray, setTextArray] = useState([]);
-  // const [evoData, setEvoData] = useState([]);
 
   // console.log('pokeInfo:', pokeInfo);
   // console.log('Flavor Text: ', pokeInfo.flavor_text_entries);
 
   const handleExpand = () => {
-    console.log('Expand Handled', isExpanded);
+    // console.log('Expand Handled', isExpanded);
     if (flavorText.length > 0) {
       let newFlavorTexts = flavorText.filter(function (el) {
         return el.language.name == 'en';
       });
       let result = newFlavorTexts.map(a => a.flavor_text);
       let uniq = [...new Set(result)];
-      console.log('Original Length:', result.length);
-      console.log('New Length:', uniq.length);
+      // console.log('Original Length:', result.length);
+      // console.log('New Length:', uniq.length);
 
       setTextArray(uniq);
       // console.log('English Flavor Text:', result);
@@ -138,59 +125,53 @@ function PokemonCard({ card, src, src2, name, type, id }) {
       setPokeInfo(res.data);
       setFlavorText(res.data.flavor_text_entries);
       setPokeInfoLoading(false);
-
-      // var evoChain = [];
-      // var evoData = axios.get(res.data.evolution_chain).then(evores => {
-      //   evores.data;
-      // });
+      var evoData = axios.get(res.data.evolution_chain).then(evores => {
+        evores.data;
+      });
+      // console.log('EVOData:', evoData.data);
       // setEvoData(res.data.chain);
-      // const evoResponse = res.data.evolution_chain;
 
-      // console.log('EVO Data:', evoResponse);
-      // console.log('EVO Data:', res.data.evolution_chain);
-      // do {
-      //   var evoDetails = evoData['evolution_details'][0];
+      const evoResponse = res.data.evolution_chain;
 
-      //   evoChain.push({
-      //     species_name: evoData.species.name,
-      //     min_level: !evoDetails ? 1 : evoDetails.min_level,
-      //     trigger_name: !evoDetails ? null : evoDetails.trigger.name,
-      //     item: !evoDetails ? null : evoDetails.item,
-      //   });
+      console.log('EVO Data:', evoResponse);
+      const ev = axios.get(evoResponse.url).then(evr => {
+        evr.data;
+        console.log('Response:', evr.data.chain.species);
 
-      //   evoData = evoData['evolves_to'][0];
-      // } while (
-      //   !!evoData &&
-      //   Object.prototype.hasOwnProperty.call(evoData, 'kevolves_toey')
-      // );
-      // console.log('Evo Chain:', evoChain);
+        let evoChain = [];
+        let evoData = evr.data.chain;
+        let numberPattern = /\d+/g;
+
+        do {
+          let evoDetails = evoData['evolution_details'][0];
+
+          evoChain.push({
+            species_name: evoData.species.name,
+            id: evoData.species.url.slice(-4).match(numberPattern)[0],
+            min_level: !evoDetails ? 1 : evoDetails.min_level,
+            trigger_name: !evoDetails ? null : evoDetails.trigger.name,
+            item: !evoDetails ? null : evoDetails.item,
+          });
+
+          evoData = evoData['evolves_to'][0];
+          // } while (!!evoData && evoData.hasOwnProperty('evolves_to'));
+        } while (
+          !!evoData &&
+          Object.prototype.hasOwnProperty.call(evoData, 'evolves_to')
+        );
+        console.log('EVO CHAIN:', evoChain);
+
+        const evNames = [];
+        evoChain.forEach(ele => evNames.push([ele.species_name, ele.id]));
+        console.log(evNames);
+        setEvoNames(evNames);
+      });
     });
+
     onOpen();
-    console.log(card);
+    // console.log(card);
     // console.log('Old Info:', pokeInfo);
-    // getEvoChain(evoResponse);
   }
-
-  // const getEvoChain = async evoResponse => {
-  //   console.log('Inside get EvoChain', evoResponse);
-  //   var evoChain = [];
-  //   // var evoData = response.data.chain;
-  //   const evoData = await axios.get(evoResponse.url);
-  //   console.log('EVO DATA:', evoData.data);
-
-  //   do {
-  //     var evoDetails = evoData['evolution_details'][0];
-
-  //     evoChain.push({
-  //       species_name: evoData.species.name,
-  //       min_level: !evoDetails ? 1 : evoDetails.min_level,
-  //       trigger_name: !evoDetails ? null : evoDetails.trigger.name,
-  //       item: !evoDetails ? null : evoDetails.item,
-  //     });
-
-  //     evoData = evoData['evolves_to'][0];
-  //   } while (!!evoData && evoData.hasOwnProperty('evolves_to'));
-  // };
 
   function handleMouseEnter() {
     setHovered(true);
@@ -277,8 +258,8 @@ function PokemonCard({ card, src, src2, name, type, id }) {
             maxHeight={'740px'}
             flexDirection={'row'}
           >
+            {/* RETURN ARROW BUTTON AND POKEBALL ICON */}
             <Box>
-              {/* RETURN ARROW BUTTON AND POKEBALL ICON */}
               <Flex
                 // outline={'2px solid red'}
                 w={'90%'}
@@ -501,11 +482,41 @@ function PokemonCard({ card, src, src2, name, type, id }) {
             <Flex
               className="extended-section"
               height={'700px'}
+              flexDir={'column'}
               // outline={'1px solid red'}
             >
               <Box className="flavorBoxContainer">
                 <FlavorText textArray={textArray} />
               </Box>
+              <Center className="evoTitle">Evolution Chain</Center>
+              <Flex justifyContent={'space-evenly'}>
+                {evoNames.map((p, idx) => (
+                  <>
+                    <Flex
+                      justifyContent={'center'}
+                      alignContent={'center'}
+                      alignItems={'center'}
+                      flexDirection={'column'}
+                    >
+                      <Flex
+                        className="evoImg"
+                        flexDirection={'column'}
+                        alignItems={'center'}
+                      >
+                        <Image
+                          // outline={'1px solid green'}
+
+                          width={'120px'}
+                          src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/${p[1]}.png`}
+                        />
+                        <Text className="pname" key={idx}>
+                          {p[0]}
+                        </Text>
+                      </Flex>
+                    </Flex>
+                  </>
+                ))}
+              </Flex>
             </Flex>
           </ModalContent>
         </Modal>
@@ -661,8 +672,22 @@ function PokemonCard({ card, src, src2, name, type, id }) {
                       src={src == null ? ball : src}
                     />
                   </Center>
-                  <Center whiteSpace={'nowrap'} className="pokemonName">
-                    {name}
+
+                  <Center
+                    whiteSpace="nowrap"
+                    className="pokemonName"
+                    // border="1px solid"
+                    width="182px" // Fixed width
+                    height="26px" // Fixed height
+                  >
+                    <Text
+                      fontSize="clamp(10px, 1rem, 13px)"
+                      wordBreak="break-word"
+                      lineHeight="26px"
+                      // whiteSpace="wrap"
+                    >
+                      {name}
+                    </Text>
                   </Center>
                   {/* POKEMON TYPE */}
                   <Center padding={'10px'} marginBottom={'10px'} gap={'10px'}>

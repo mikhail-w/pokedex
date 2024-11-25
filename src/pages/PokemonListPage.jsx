@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence, AnimateSharedLayout } from 'framer-motion';
 import axios from 'axios';
 //Import Components
-import PokemonCard from '../components/PokemonCard';
+import PokemonCard from '../components/PokemonCard/PokemonCard';
 import { Center, Button } from '@chakra-ui/react';
 
 //Import Utils
