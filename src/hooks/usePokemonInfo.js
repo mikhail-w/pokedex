@@ -52,10 +52,10 @@ export function usePokemonInfo(cardId) {
 
         setEvoNames(evoChain);
       } catch (err) {
-        // console.error('Error fetching Pokémon data:', err);
-        // setError(
-        //   err?.response?.data?.message || err.message || 'An error occurred.'
-        // );
+        console.error('Error fetching Pokémon data:', err);
+        setError(
+          err?.response?.data?.message || err.message || 'An error occurred.'
+        );
       } finally {
         setLoading(false);
       }

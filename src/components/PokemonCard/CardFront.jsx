@@ -8,11 +8,12 @@ import {
   useToast,
 } from '@chakra-ui/react';
 import { useState } from 'react';
+import { colors } from '../../utils';
 import { motion } from 'framer-motion';
-import { TbPokeballOff } from 'react-icons/tb';
-import { isInTeam, catchPokemon, releasePokemon, colors } from '../../utils';
-import info from '../../assets/images/type_icons/i.svg';
 import { typeIcons } from '../../icons';
+import { TbPokeballOff } from 'react-icons/tb';
+import PokemonTypeSection from './PokemonTypeSection';
+import info from '../../assets/images/type_icons/i.svg';
 import catch01 from '../../assets/images/pokeballs/catch1_100.png';
 import catch02 from '../../assets/images/pokeballs/catch2_100.png';
 
@@ -177,44 +178,7 @@ function CardFront({
         </Center>
 
         {/* Pokémon Type */}
-        <Center className="tip" padding="10px" marginBottom="10px" gap="10px">
-          <Tooltip
-            label={type[0]}
-            placement="bottom"
-            textTransform="uppercase"
-            fontSize="sm"
-            color="black"
-            hasArrow
-            arrowSize={15}
-            bg={colors[type[0]]}
-          >
-            <Image
-              className="type-icon"
-              width="40px"
-              height="40px"
-              src={typeIcons[type[0]]}
-            />
-          </Tooltip>
-          {type[1] && (
-            <Tooltip
-              label={type[1]}
-              textTransform="uppercase"
-              placement="bottom"
-              fontSize="sm"
-              color="black"
-              hasArrow
-              arrowSize={15}
-              bg={colors[type[1]]}
-            >
-              <Image
-                className="type-icon"
-                width="40px"
-                height="40px"
-                src={typeIcons[type[1]]}
-              />
-            </Tooltip>
-          )}
-        </Center>
+        <PokemonTypeSection type={type} />
       </Flex>
     </Flex>
   );

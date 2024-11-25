@@ -1,4 +1,10 @@
-import { useState, useEffect, useMemo, useCallback } from 'react';
+import {
+  bgs,
+  isInTeam,
+  catchPokemon,
+  releasePokemon,
+  getBackgroundColors,
+} from '../../utils';
 import {
   Box,
   Modal,
@@ -7,35 +13,26 @@ import {
   useDisclosure,
   Spinner,
 } from '@chakra-ui/react';
-import { useOutletContext } from 'react-router-dom';
-import { motion } from 'framer-motion';
-import ReactCardFlip from 'react-card-flip';
-import { TbPokeballOff } from 'react-icons/tb';
-
-import { usePokemonInfo } from '../../hooks/usePokemonInfo';
-import { useToastNotification } from '../../hooks/useToastNotification ';
-import {
-  bgs,
-  isInTeam,
-  catchPokemon,
-  releasePokemon,
-  getBackgroundColors,
-} from '../../utils';
-
-import CardFront from './CardFront';
 import CardBack from './CardBack';
+import CardFront from './CardFront';
+import { motion } from 'framer-motion';
+import CatchButton from './CatchButton';
 import ModalContent from './ModalContent';
-import CatchButton from './CatchButton'; // New CatchButton component
+import ReactCardFlip from 'react-card-flip';
 import '../../assets/styles/PokemonCard.css';
+import { useOutletContext } from 'react-router-dom';
+import { usePokemonInfo } from '../../hooks/usePokemonInfo';
+import { useState, useEffect, useMemo, useCallback } from 'react';
+import { useToastNotification } from '../../hooks/useToastNotification ';
 
 function PokemonCard({ card, src, src2, name, type, id }) {
-  const { myTeam, setMyTeam, disabled, setDisabled } = useOutletContext();
+  const { showToast } = useToastNotification();
   const [isFlipped, setIsFlipped] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
-  const { pokeInfo, flavorText, evoNames, loading } = usePokemonInfo(card.id);
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { showToast } = useToastNotification(); // Simplified toast logic
+  const { myTeam, setMyTeam, disabled, setDisabled } = useOutletContext();
+  const { pokeInfo, flavorText, evoNames, loading } = usePokemonInfo(card.id);
 
   // Memoize to check if the Pokémon is in the team
   const isPokemonInTeam = useMemo(() => isInTeam(myTeam, card), [myTeam, card]);
