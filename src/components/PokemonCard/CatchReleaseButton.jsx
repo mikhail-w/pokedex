@@ -1,6 +1,6 @@
 import { isInTeam, catchPokemon, releasePokemon } from '../../utils';
 import { motion } from 'framer-motion';
-import { useMemo, useEffect } from 'react';
+import { useMemo } from 'react';
 import { TbPokeballOff } from 'react-icons/tb';
 import { useOutletContext } from 'react-router-dom';
 import { Box, Image, Tooltip } from '@chakra-ui/react';
@@ -37,24 +37,22 @@ function CatchReleaseButton({ id }) {
   };
 
   const imageSrc = useMemo(() => {
-    if (disabled) return null; // No image in the disabled state
     return isPokemonInTeam ? catch02 : catch01;
-  }, [disabled, isPokemonInTeam]);
+  }, [isPokemonInTeam]);
 
   const tooltipLabel = useMemo(() => {
-    if (disabled) return '';
+    if (disabled) return 'Disabled';
     return isPokemonInTeam ? 'Release' : 'Catch';
   }, [disabled, isPokemonInTeam]);
 
   return (
     <Tooltip
-      isDisabled={disabled}
       aria-label={`Tooltip: ${tooltipLabel}`}
       label={tooltipLabel}
       placement="top"
       fontSize="lg"
       hasArrow
-      bg={isPokemonInTeam ? '#e53e3e' : '#3d7dca'}
+      bg={disabled ? '#718096' : isPokemonInTeam ? '#e53e3e' : '#3d7dca'}
     >
       <Box
         w="1.6rem"
@@ -62,7 +60,7 @@ function CatchReleaseButton({ id }) {
         className={`${
           disabled ? 'disabled' : isPokemonInTeam ? 'release' : 'catch'
         }`}
-        onClick={handleClick}
+        onClick={disabled ? undefined : handleClick}
       >
         {disabled ? (
           <TbPokeballOff size={30} className="disabled-icon" />
