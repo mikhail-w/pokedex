@@ -10,6 +10,7 @@ export const useToastNotification = () => {
       status,
       duration: 3000,
       isClosable: true,
+      position: 'bottom-right',
     });
   };
 

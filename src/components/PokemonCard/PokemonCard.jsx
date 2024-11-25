@@ -1,34 +1,20 @@
-import {
-  bgs,
-  isInTeam,
-  catchPokemon,
-  releasePokemon,
-  getBackgroundColors,
-} from '../../utils';
-import {
-  Box,
-  Modal,
-  ModalOverlay,
-  ModalContent as ChakraModalContent,
-  useDisclosure,
-  Spinner,
-} from '@chakra-ui/react';
+import { bgs, getBackgroundColors } from '../../utils';
+import { Box, Modal, ModalOverlay, useDisclosure } from '@chakra-ui/react';
 import CardBack from './CardBack';
 import CardFront from './CardFront';
 import { motion } from 'framer-motion';
-import ModalContent from './ModalContent';
 import ReactCardFlip from 'react-card-flip';
 import '../../assets/styles/PokemonCard.css';
-import { useOutletContext } from 'react-router-dom';
+import ModalContainer from './ModalContainer';
+import { useState, useCallback } from 'react';
 import { usePokemonInfo } from '../../hooks/usePokemonInfo';
-import { useState, useMemo, useCallback } from 'react';
 
 function PokemonCard({ card, src, src2, name, type, id }) {
   const [isFlipped, setIsFlipped] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { pokeInfo, evoNames, loading, flavorText } = usePokemonInfo(card.id);
+  const { pokeInfo, evoNames, flavorText } = usePokemonInfo(card.id);
 
   // Determine background color based on Pokémon type
   const backgroundColor = getBackgroundColors(type);
@@ -61,42 +47,21 @@ function PokemonCard({ card, src, src2, name, type, id }) {
             bgColor={`${bgs[`${type[0]}`]}`}
             backdropFilter="blur(10px) hue-rotate(90deg)"
           />
-          <ChakraModalContent
-            w="90%"
-            className={isExpanded ? 'modal-content extended' : 'modal-content'}
-            background={`linear-gradient(in lch, ${backgroundColor[0]}, ${backgroundColor[1]})`}
-            alignItems="center"
-            justifyContent="left"
-            borderRadius="50px"
-            overflow="hidden"
-            maxHeight="740px"
-            flexDirection="row"
-          >
-            {loading ? (
-              <Box
-                display="flex"
-                justifyContent="center"
-                alignItems="center"
-                height="100%"
-              >
-                <Spinner size="xl" color="blue.500" />
-              </Box>
-            ) : (
-              <ModalContent
-                card={card}
-                name={name}
-                id={id}
-                src={src}
-                type={type}
-                onClose={onClose}
-                onExpand={handleExpand}
-                isExpanded={isExpanded}
-                pokeInfo={pokeInfo}
-                flavorText={flavorText}
-                evoNames={evoNames}
-              />
-            )}
-          </ChakraModalContent>
+
+          <ModalContainer
+            card={card}
+            name={name}
+            id={id}
+            src={src}
+            type={type}
+            onClose={onClose}
+            onExpand={handleExpand}
+            isExpanded={isExpanded}
+            pokeInfo={pokeInfo}
+            flavorText={flavorText}
+            evoNames={evoNames}
+            backgroundColor={backgroundColor}
+          />
         </Modal>
 
         {/* Card Front and Back */}

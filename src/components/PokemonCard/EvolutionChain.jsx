@@ -1,10 +1,19 @@
-import { Flex, Image, Text, Box, Center } from '@chakra-ui/react';
-import FlavorText from '../FlavorText';
+import FlavorText from './FlavorText';
 import '../../assets/styles/pokeDetail.css';
+import { Flex, Image, Text, Box, Center } from '@chakra-ui/react';
 
 function EvolutionChain({ evoNames, textArray }) {
-  // Validate evoNames
-  if (!Array.isArray(evoNames) || evoNames.length === 0) {
+  // Validate evoNames structure
+  const isValidEvoNames =
+    Array.isArray(evoNames) &&
+    evoNames.every(
+      item =>
+        item &&
+        typeof item.species_name === 'string' &&
+        typeof item.id === 'string'
+    );
+
+  if (!isValidEvoNames) {
     console.error('Invalid or empty evoNames:', evoNames);
     return (
       <Flex
@@ -14,7 +23,7 @@ function EvolutionChain({ evoNames, textArray }) {
         justifyContent="center"
         alignItems="center"
       >
-        <Text>Evolution chain data is unavailable.</Text>
+        <Text>Evolution chain data is unavailable or malformed.</Text>
       </Flex>
     );
   }
@@ -23,7 +32,7 @@ function EvolutionChain({ evoNames, textArray }) {
     <Flex className="extended-section" height="700px" flexDirection="column">
       {/* Flavor text section */}
       <Box className="flavorBoxContainer">
-        <FlavorText textArray={textArray} />
+        {/* <FlavorText textArray={textArray} /> */}
       </Box>
 
       {/* Evolution chain title */}
@@ -31,7 +40,7 @@ function EvolutionChain({ evoNames, textArray }) {
 
       {/* Evolution chain images and names */}
       <Flex justifyContent="space-evenly">
-        {evoNames.map(([name, id], index) => (
+        {evoNames.map(({ species_name, id }, index) => (
           <Flex
             key={index}
             justifyContent="center"
@@ -43,9 +52,9 @@ function EvolutionChain({ evoNames, textArray }) {
               <Image
                 width="120px"
                 src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/${id}.png`}
-                alt={`${name} sprite`}
+                alt={`${species_name} sprite`}
               />
-              <Text className="pname">{name}</Text>
+              <Text className="pname">{species_name}</Text>
             </Flex>
           </Flex>
         ))}

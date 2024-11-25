@@ -39,7 +39,7 @@ import { typeIcons, modalIcons } from '../icons';
 import { isInTeam, catchPokemon, releasePokemon, bgs, colors } from '../utils';
 import { IoArrowForwardCircleOutline } from 'react-icons/io5';
 import { useOutletContext } from 'react-router-dom';
-import FlavorText from './FlavorText';
+import FlavorText from './PokemonCard/FlavorText';
 
 function PokemonCard({ card, src, src2, name, type, id }) {
   const { team, myTeam, setMyTeam, disabled, setDisabled } = useOutletContext();
