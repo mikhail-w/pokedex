@@ -25,7 +25,12 @@ const FlavorText = ({ flavorTextArray }) => {
   );
 
   return (
-    <Center flexDirection="column" margin="20px">
+    <Center
+      flexDirection="column"
+      margin="20px"
+      // outline={'2px solid'}
+      maxW={'560'}
+    >
       {/* Render the text without nesting <div> inside <Text> */}
       <Text
         className="text"

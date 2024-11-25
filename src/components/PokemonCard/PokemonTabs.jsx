@@ -22,7 +22,7 @@ function PokemonTabs({ card, pokeInfo }) {
       size="sm"
       w="100%"
       maxH={200}
-      overflow={'scroll'}
+      // overflow={'scroll'}
     >
       <TabList position="sticky" top="0" zIndex="1" bg="white">
         <Tab>About</Tab>
@@ -33,11 +33,14 @@ function PokemonTabs({ card, pokeInfo }) {
       <Divider />
       <Box
         maxHeight="400px" // Adjust this height as needed
-        overflowY="auto"
+        // overflowY="auto"
       >
         <TabPanels>
           {/* ABOUT TAB */}
-          <TabPanel>
+          <TabPanel
+            className="about-container content-stats"
+            overflow={'scroll'}
+          >
             {card ? (
               <>
                 <Box className="subtitle-container">
@@ -138,21 +141,31 @@ function PokemonTabs({ card, pokeInfo }) {
           {/* SPRITES TAB */}
           <TabPanel>
             {card?.sprites ? (
-              <Flex justifyContent="center" gap="20px">
-                <Image
-                  src={card.sprites.front_default || 'default_front.png'}
-                  alt="Front Default"
-                  width="100px"
-                />
-                <Image
-                  src={card.sprites.back_default || 'default_back.png'}
-                  alt="Back Default"
-                  width="100px"
-                />
+              <Flex
+                justifyContent="flex-start"
+                alignItems="center"
+                gap="20px"
+                wrap="nowrap"
+                overflowX="auto"
+                padding="10px"
+                width="100%"
+              >
+                {Object.entries(card.sprites)
+                  .filter(
+                    ([_, url]) =>
+                      typeof url === 'string' && url.endsWith('.png')
+                  ) // Ensure only valid image URLs
+                  .map(([key, url]) => (
+                    <Image
+                      key={key}
+                      src={url}
+                      alt=""
+                      width="100px"
+                      height="auto"
+                    />
+                  ))}
               </Flex>
-            ) : (
-              <Text>No sprites available.</Text>
-            )}
+            ) : null}
           </TabPanel>
         </TabPanels>
       </Box>

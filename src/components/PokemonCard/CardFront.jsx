@@ -48,7 +48,12 @@ function CardFront({
           background={`linear-gradient(in lch, ${backgroundColor[0]}, ${backgroundColor[1]})`}
         >
           {/* HEADER SECTION */}
-          <Flex justifyContent="space-between" alignItems="center" pt="0.5rem">
+          <Flex
+            justifyContent="space-between"
+            alignItems="center"
+            // pt="0.5rem"
+            // outline={'2px solid'}
+          >
             {/* Catch/Release Button */}
             <Box>
               <CatchReleaseButton id={id} />
