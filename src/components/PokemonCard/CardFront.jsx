@@ -1,11 +1,9 @@
 import { useState } from 'react';
 import InfoIcon from './InfoIcon ';
 import { motion } from 'framer-motion';
-import CatchButton from './CatchButton';
+import CatchReleaseButton from './CatchReleaseButton';
 import PokemonTypeSection from './PokemonTypeSection';
-import { catchPokemon, releasePokemon } from '../../utils';
 import { Flex, Image, Text, Box, Center } from '@chakra-ui/react';
-import { useToastNotification } from '../../hooks/useToastNotification ';
 
 function CardFront({
   src,
@@ -18,24 +16,11 @@ function CardFront({
   onOpenModal,
   isCaught,
   disabled,
-  isPokemonInTeam,
-  handleCatchPokemon,
-  handleReleasePokemon,
   backgroundColor,
 }) {
   const MotionImage = motion(Image);
-  const { showToast } = useToastNotification();
   const [hovered, setHovered] = useState(false);
-  // Catch and Release handlers
-  const handleCatch = () => {
-    showToast('Pokemon Caught', 'success');
-    catchPokemon(myTeam, setMyTeam, card);
-  };
 
-  const handleRelease = () => {
-    showToast('Pokemon Released', 'error');
-    releasePokemon(myTeam, setMyTeam, card);
-  };
   return (
     <>
       {/* FRONT CARD CONTAINER */}
@@ -65,12 +50,7 @@ function CardFront({
           <Flex justifyContent="space-between" alignItems="center" pt="0.5rem">
             {/* Catch/Release Button */}
             <Box>
-              <CatchButton
-                isPokemonInTeam={isPokemonInTeam}
-                disabled={disabled}
-                onCatch={handleCatch}
-                onRelease={handleRelease}
-              />
+              <CatchReleaseButton id={id} />
             </Box>
             {/* Pokémon ID */}
             <Box>

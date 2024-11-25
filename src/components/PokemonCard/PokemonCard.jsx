@@ -16,13 +16,12 @@ import {
 import CardBack from './CardBack';
 import CardFront from './CardFront';
 import { motion } from 'framer-motion';
-import CatchButton from './CatchButton';
 import ModalContent from './ModalContent';
 import ReactCardFlip from 'react-card-flip';
 import '../../assets/styles/PokemonCard.css';
 import { useOutletContext } from 'react-router-dom';
 import { usePokemonInfo } from '../../hooks/usePokemonInfo';
-import { useState, useEffect, useMemo, useCallback } from 'react';
+import { useState, useMemo, useCallback } from 'react';
 
 function PokemonCard({ card, src, src2, name, type, id }) {
   const [isFlipped, setIsFlipped] = useState(false);
@@ -32,9 +31,6 @@ function PokemonCard({ card, src, src2, name, type, id }) {
   const { myTeam, setMyTeam, disabled, setDisabled } = useOutletContext();
   const { pokeInfo, flavorText, evoNames, loading } = usePokemonInfo(card.id);
 
-  // Memoize to check if the Pokémon is in the team
-  const isPokemonInTeam = useMemo(() => isInTeam(myTeam, card), [myTeam, card]);
-
   // Determine background color based on Pokémon type
   const backgroundColor = getBackgroundColors(type);
 
@@ -43,11 +39,6 @@ function PokemonCard({ card, src, src2, name, type, id }) {
   const handleMouseEnter = useCallback(() => setIsHovered(true), []);
   const handleMouseLeave = useCallback(() => setIsHovered(false), []);
   const handleExpand = useCallback(() => setIsExpanded(prev => !prev), []);
-
-  // Disable catch button if the team is full
-  useEffect(() => {
-    setDisabled(myTeam.length === 6 && !isPokemonInTeam);
-  }, [myTeam, isPokemonInTeam, setDisabled]);
 
   return (
     <motion.div
@@ -122,7 +113,6 @@ function PokemonCard({ card, src, src2, name, type, id }) {
             handleMouseLeave={handleMouseLeave}
             onOpenModal={onOpen}
             backgroundColor={backgroundColor}
-            isPokemonInTeam={isPokemonInTeam}
           ></CardFront>
 
           {/* Card Back */}

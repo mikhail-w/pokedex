@@ -43,20 +43,20 @@ export const bgs = {
   fairy: 'rgba(238, 153, 172, 0.5)',
 };
 
-export const releasePokemon = (myTeam, card) => {
+export const releasePokemon = (myTeam, id) => {
   // console.log('----------------------------------------------\n');
   // console.log('***UTILS\n-----REMOVING POKEMON FROM myTeam');
   let res = myTeam.filter(member => {
-    return member.card.id != card.id;
+    return member.card.id != id;
   });
   return res;
 };
 
-export const catchPokemon = (myTeam, card) => {
-  // console.log('\n\n=================== INSIDE UTIL ===================\n');
-  // console.log(`-----ADDING POKEMON WITH ID ${card.id} TO myTeam`);
-  // console.log('=================== EXIT UTIL ===================\n\n');
-  return [...myTeam, { card }];
+export const catchPokemon = (myTeam, id) => {
+  console.log('\n\n=================== INSIDE UTIL ===================\n');
+  console.log(`     ADDING POKEMON WITH ID ${id} TO myTeam`);
+  console.log('=================== EXIT UTIL =====================\n\n');
+  return [...myTeam, { id }];
 };
 
 export const isInTeam = (myTeam, card) => {

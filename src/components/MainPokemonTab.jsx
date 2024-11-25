@@ -1,5 +1,3 @@
-import React, { Suspense } from 'react';
-import { useOutletContext } from 'react-router-dom';
 import {
   Tabs,
   TabList,
@@ -10,15 +8,16 @@ import {
   Image,
   Flex,
 } from '@chakra-ui/react';
-import { CgPokemon } from 'react-icons/cg';
+import InfoTab from './InfoTab';
+import Loading from './Loading';
+import { getType } from '../utils';
 import { MdGif } from 'react-icons/md';
 import { FaInfo } from 'react-icons/fa';
-
-import Loading from './Loading';
+import { Suspense } from 'react';
+import { CgPokemon } from 'react-icons/cg';
 import MainPokemonName from './MainPokemonName';
-import InfoTab from './InfoTab';
-import LazyPokemonCard from './PokemonCard/PokemonCard'; // Assuming LazyPokemonCard is default exported.
-import { getType } from '../utils';
+import { useOutletContext } from 'react-router-dom';
+import LazyPokemonCard from './PokemonCard/PokemonCard';
 import ball from '../assets/images/pokeballs/pokeball.png';
 import groupImg from '../assets/images/pokeballs/group.png';
 
@@ -35,7 +34,7 @@ function PokemonImage({ src }) {
 }
 
 function MainPokemonTab() {
-  const { team, myTeam, setMyTeam, disabled, setDisabled, isLoading, pokemon } =
+  const { team, myTeam, disabled, setDisabled, isLoading, pokemon } =
     useOutletContext();
 
   if (isLoading) return <Loading />;

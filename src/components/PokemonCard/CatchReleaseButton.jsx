@@ -1,24 +1,33 @@
-// components/CatchButton.js
+import { isInTeam, catchPokemon, releasePokemon } from '../../utils';
 import { motion } from 'framer-motion';
+import { useEffect, useMemo } from 'react';
 import '../../assets/styles/PokemonCard.css';
 import { TbPokeballOff } from 'react-icons/tb';
+import { useOutletContext } from 'react-router-dom';
 import { Box, Image, Tooltip } from '@chakra-ui/react';
 import catch01 from '../../assets/images/pokeballs/catch1_100.png';
 import catch02 from '../../assets/images/pokeballs/catch2_100.png';
 import { useToastNotification } from '../../hooks/useToastNotification ';
 
-function CatchButton({ isPokemonInTeam, disabled, onCatch, onRelease }) {
+function CatchButton({ id }) {
+  const { myTeam, disabled, setDisabled } = useOutletContext();
+  // Memoize to check if the Pokémon is in the team
+  const isPokemonInTeam = useMemo(() => isInTeam(myTeam, id), [myTeam, id]);
   const { showToast } = useToastNotification();
 
   const handleClick = () => {
     if (isPokemonInTeam) {
       showToast('Pokemon Released', 'error');
-      onRelease();
+      releasePokemon(myTeam, id);
     } else {
       showToast('Pokemon Caught', 'success');
-      onCatch();
+      catchPokemon(myTeam, id);
     }
   };
+  // Disable catch button if the team is full
+  useEffect(() => {
+    setDisabled(myTeam.length === 6 && !isPokemonInTeam);
+  }, [myTeam, isPokemonInTeam, setDisabled]);
 
   return (
     <Tooltip
