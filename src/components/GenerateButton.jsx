@@ -3,9 +3,9 @@ import { getRandomID } from '../utils';
 import { Button, useColorModeValue, Center } from '@chakra-ui/react';
 
 function GenerateButton({ getRandomPokemon }) {
-  const { randomID, setRandomChoice, setIsLoading } = useOutletContext();
+  const { randomID, setrandomID, setIsLoading } = useOutletContext();
   function handleClick() {
-    setRandomChoice(getRandomID(1025));
+    setrandomID(getRandomID(1025));
     setIsLoading(true);
     getRandomPokemon();
   }
