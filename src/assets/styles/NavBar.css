@@ -1,6 +1,8 @@
 .navBar {
   font-family: "Alleyn W01 Regular";
-  min-width: 412px;
+  /* min-width: 412px; */
+  width: 100%;
+  overflow-x: hidden
 }
 
 .logo-title {

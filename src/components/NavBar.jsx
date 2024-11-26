@@ -25,6 +25,7 @@ import {
   InputGroup,
   InputLeftElement,
   InputRightAddon,
+  useMediaQuery,
 } from '@chakra-ui/react';
 
 function NavBar({ myTeam, isLoading }) {
@@ -49,6 +50,37 @@ function NavBar({ myTeam, isLoading }) {
   const bgColor = useColorModeValue('gray.100', 'gray.900');
   const searchButtonColor = useColorModeValue('#396bba', '#e53e3e');
 
+  const [isMobile] = useMediaQuery('(max-width: 768px)');
+
+  const SearchBar = (
+    <Box maxW="250px" ml={2} onClick={e => e.stopPropagation()}>
+      <InputGroup borderRadius={50} size="sm">
+        <InputLeftElement />
+        <Input
+          type="text"
+          placeholder="Search Pokemon..."
+          border="1px solid #949494"
+          onChange={e => setSearch(e.target.value)}
+          ref={inputRef}
+          value={search}
+          onKeyPress={handleKeyPress}
+        />
+        <InputRightAddon p={0} border="none">
+          <Button
+            size="sm"
+            onClick={handleSubmit}
+            borderLeftRadius={0}
+            border="1px solid #949494"
+            colorScheme="red"
+            bg={searchButtonColor}
+          >
+            Search
+          </Button>
+        </InputRightAddon>
+      </InputGroup>
+    </Box>
+  );
+
   return (
     <Box className="navBar" bg={bgColor} px={4}>
       <Flex h={16} alignItems="center" justifyContent="space-between">
@@ -63,33 +95,8 @@ function NavBar({ myTeam, isLoading }) {
         {/* Right Section */}
         <Flex alignItems="center">
           <Stack direction="row" spacing={7}>
-            {/* Search Bar */}
-            <Box maxW="250px" ml={2}>
-              <InputGroup borderRadius={50} size="sm">
-                <InputLeftElement />
-                <Input
-                  type="text"
-                  placeholder="Search Pokemon..."
-                  border="1px solid #949494"
-                  onChange={e => setSearch(e.target.value)}
-                  ref={inputRef}
-                  value={search}
-                  onKeyPress={handleKeyPress}
-                />
-                <InputRightAddon p={0} border="none">
-                  <Button
-                    size="sm"
-                    onClick={handleSubmit}
-                    borderLeftRadius={0}
-                    border="1px solid #949494"
-                    colorScheme="red"
-                    bg={searchButtonColor}
-                  >
-                    Search
-                  </Button>
-                </InputRightAddon>
-              </InputGroup>
-            </Box>
+            {/* Conditionally Render Search Bar */}
+            {!isMobile && SearchBar}
 
             {/* Theme Toggle */}
             <Button onClick={toggleColorMode}>
@@ -116,6 +123,12 @@ function NavBar({ myTeam, isLoading }) {
                   <p>Menu</p>
                 </Center>
                 <MenuDivider />
+                {isMobile && (
+                  <>
+                    <MenuItem>{SearchBar}</MenuItem>
+                    <MenuDivider />
+                  </>
+                )}
                 <CustomMenuItem to="/">Home</CustomMenuItem>
                 <CustomMenuItem to="/random/">
                   Get Random Pokemon
