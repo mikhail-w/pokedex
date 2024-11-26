@@ -7,6 +7,7 @@ import {
   Center,
   Image,
   Flex,
+  useBreakpointValue,
 } from '@chakra-ui/react';
 import InfoTab from './InfoTab';
 import Loading from './Loading';
@@ -37,6 +38,13 @@ function MainPokemonTab() {
   const { team, myTeam, disabled, setDisabled, isLoading, pokemon } =
     useOutletContext();
 
+  // Dynamically set TabPanels height based on screen size
+  const tabPanelsHeight = useBreakpointValue({
+    base: '550px', // Small screens
+    md: '600px', // Medium screens
+    lg: '700px', // Large screens
+  });
+
   if (isLoading) return <Loading />;
 
   const pokemonArt = pokemon.sprites.other[`official-artwork`]?.front_default;
@@ -44,7 +52,7 @@ function MainPokemonTab() {
 
   return (
     <Tabs align="center" variant="enclosed" size="lg">
-      <TabPanels height="650px">
+      <TabPanels height={tabPanelsHeight}>
         <TabPanel>
           <MainPokemonName />
           <TabContent>
@@ -80,7 +88,7 @@ function MainPokemonTab() {
             pt="60px"
             justifyContent="center"
             maxW="100vw"
-            height="550px"
+            height="450px"
             gap="25px"
             overflow="auto"
           >
@@ -107,21 +115,26 @@ function MainPokemonTab() {
         </TabPanel>
       </TabPanels>
 
-      <TabList>
+      <TabList justifyContent="space-evenly" maxWidth={500}>
         <Tab>
-          <CgPokemon color="#ef5350" size="2.5em" />
+          <CgPokemon color="#ef5350" size="2em" />
         </Tab>
         <Tab>
-          <CgPokemon color="#ffcc00" size="2.5em" />
+          <CgPokemon color="#ffcc00" size="2em" />
         </Tab>
         <Tab>
-          <MdGif color="#396bba" size="2.5em" />
+          <MdGif color="#396bba" size="2em" />
         </Tab>
         <Tab>
-          <FaInfo color="#188038" size="2.5em" />
+          <FaInfo color="#188038" size="2em" />
         </Tab>
         <Tab>
-          <Image src={groupImg} alt="Group image" />
+          <Image
+            src={groupImg}
+            alt="Group image"
+            boxSize="2em"
+            objectFit="contain"
+          />
         </Tab>
       </TabList>
     </Tabs>

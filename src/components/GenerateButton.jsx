@@ -13,7 +13,7 @@ function GenerateButton({ getRandomPokemon }) {
     <Center marginTop={'60vh'}>
       <Button
         pos={'fixed'}
-        bottom={'70px'}
+        bottom={'10px'}
         onClick={handleClick}
         marginTop={'60px'}
         colorScheme="red"
