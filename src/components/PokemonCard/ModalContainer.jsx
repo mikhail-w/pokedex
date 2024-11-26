@@ -38,7 +38,8 @@ function ModalContainer({
       background={` linear-gradient(in lch,${backgroundColor[0]}, ${backgroundColor[1]})`}
       alignItems={'center'}
       // justifyContent={'center'}
-      justifyContent={'left'}
+      justifyContent="flex-start"
+      // justifyContent={'left'}
       borderRadius={'50px'}
       // outline={'2px solid blue'}
       overflow={'hidden'}

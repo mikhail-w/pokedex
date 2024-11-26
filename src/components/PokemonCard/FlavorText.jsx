@@ -8,10 +8,16 @@ const FlavorText = ({ flavorTextArray }) => {
 
   const linesPerPage = 1;
 
-  // Filter for English flavor text and paginate
-  const filteredTextArray = flavorTextArray.filter(
-    item => item.language.name === 'en'
-  );
+  // Filter for English flavor text and remove duplicates
+  const filteredTextArray = Array.from(
+    new Set(
+      flavorTextArray
+        .filter(item => item.language.name === 'en')
+        .map(item => item.flavor_text)
+    )
+  ).map(uniqueFlavorText => {
+    return flavorTextArray.find(item => item.flavor_text === uniqueFlavorText);
+  });
 
   const pageCount = Math.ceil(filteredTextArray.length / linesPerPage);
 
@@ -25,21 +31,15 @@ const FlavorText = ({ flavorTextArray }) => {
   );
 
   return (
-    <Center
-      flexDirection="column"
-      margin="20px"
-      // outline={'2px solid'}
-      maxW={'560'}
-    >
-      {/* Render the text without nesting <div> inside <Text> */}
+    <Center flexDirection="column" margin="20px" maxW={'560'}>
       <Text
         className="text"
         mt="40px"
         fontFamily="Alleyn W01 Regular"
         textAlign="center"
-        height="100px" // Set a fixed height for the text box
-        overflow="hidden" // Hide overflow text
-        textOverflow="ellipsis" // Optional: Add ellipsis if needed
+        height="100px"
+        overflow="hidden"
+        textOverflow="ellipsis"
       >
         {currentText.map((flavorText, index) => (
           <span className="flavorText" key={index}>
