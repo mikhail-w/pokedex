@@ -20,9 +20,8 @@ function PokemonTabs({ card, pokeInfo }) {
       variant="soft-rounded"
       colorScheme="green"
       size="sm"
-      w="450px"
-      maxH={200}
-      // overflow={'scroll'}
+      w={{ base: '100%', md: '450px' }}
+      maxH={{ base: 'auto', md: 200 }}
     >
       <TabList position="sticky" top="0" zIndex="1" bg="white">
         <Tab>About</Tab>
@@ -32,81 +31,183 @@ function PokemonTabs({ card, pokeInfo }) {
       </TabList>
       <Divider />
       <Box
-        maxHeight="400px" // Adjust this height as needed
-        // overflowY="auto"
+        maxHeight={{ base: 'auto', md: '400px' }}
+        overflowY={{ base: 'visible', md: 'auto' }}
       >
-        <TabPanels>
+        <TabPanels height={'170px'} overflow={'scroll'}>
           {/* ABOUT TAB */}
-          <TabPanel
-            className="about-container content-stats"
-            overflow={'scroll'}
-          >
+          <TabPanel>
             {card ? (
               <>
-                <Box className="subtitle-container">
-                  <p className="subtitle">Base Experience:</p>
-                  <p className="description">{card.base_experience || 'N/A'}</p>
+                <Box
+                  display={'flex'}
+                  padding={('8px', '0')}
+                  justifyContent={'left'}
+                  // outline={'2px solid'}
+                  marginBottom={'10px'}
+                >
+                  <Text
+                    className="subtitle"
+                    fontSize={{ base: 'xs', md: 'md' }} // Adjust font size for mobile
+                    fontWeight="bold"
+                  >
+                    Base Experience:
+                  </Text>
+                  <Text
+                    className="description"
+                    fontSize={{ base: 'xs', md: 'md' }} // Adjust font size for mobile
+                  >
+                    {card.base_experience || 'N/A'}
+                  </Text>
                 </Box>
-                <Box className="subtitle-container">
-                  <p className="subtitle">Height:</p>
-                  <p className="description">
+                <Box
+                  display={'flex'}
+                  padding={('8px', '0')}
+                  marginBottom={'10px'}
+                >
+                  <Text
+                    className="subtitle"
+                    fontSize={{ base: 'xs', md: 'md' }}
+                    fontWeight="bold"
+                  >
+                    Height:
+                  </Text>
+                  <Text
+                    className="description"
+                    fontSize={{ base: 'xs', md: 'md' }}
+                  >
                     {card.height ? `${card.height / 10} m` : 'N/A'}
-                  </p>
+                  </Text>
                 </Box>
-                <Box className="subtitle-container">
-                  <p className="subtitle">Weight:</p>
-                  <p className="description">
+                <Box
+                  display={'flex'}
+                  padding={('8px', '0')}
+                  marginBottom={'10px'}
+                >
+                  <Text
+                    className="subtitle"
+                    fontSize={{ base: 'xs', md: 'md' }}
+                    fontWeight="bold"
+                  >
+                    Weight:
+                  </Text>
+                  <Text
+                    className="description"
+                    fontSize={{ base: 'xs', md: 'md' }}
+                  >
                     {card.weight ? `${card.weight} lbs` : 'N/A'}
-                  </p>
+                  </Text>
                 </Box>
-                <Box className="subtitle-container">
-                  <p className="subtitle">Growth Rate:</p>
-                  <p className="description">
+                <Box
+                  display={'flex'}
+                  padding={('8px', '0')}
+                  marginBottom={'10px'}
+                >
+                  <Text
+                    className="subtitle"
+                    fontSize={{ base: 'xs', md: 'md' }}
+                    fontWeight="bold"
+                  >
+                    Growth Rate:
+                  </Text>
+                  <Text
+                    className="description"
+                    fontSize={{ base: 'xs', md: 'md' }}
+                  >
                     {pokeInfo.growth_rate?.name || 'N/A'}
-                  </p>
+                  </Text>
                 </Box>
-                <Box className="subtitle-container">
-                  <p className="subtitle">Capture Rate:</p>
-                  <p className="description">
+                <Box
+                  display={'flex'}
+                  padding={('8px', '0')}
+                  marginBottom={'10px'}
+                >
+                  <Text
+                    className="subtitle"
+                    fontSize={{ base: 'xs', md: 'md' }}
+                    fontWeight="bold"
+                  >
+                    Capture Rate:
+                  </Text>
+                  <Text
+                    className="description"
+                    fontSize={{ base: 'xs', md: 'md' }}
+                  >
                     {pokeInfo.capture_rate || 'N/A'}
-                  </p>
+                  </Text>
                 </Box>
-                <Box className="subtitle-container">
-                  <p className="subtitle">Generation:</p>
-                  <p className="description">
+                <Box
+                  display={'flex'}
+                  padding={('8px', '0')}
+                  marginBottom={'10px'}
+                >
+                  <Text
+                    className="subtitle"
+                    fontSize={{ base: 'xs', md: 'md' }}
+                    fontWeight="bold"
+                  >
+                    Generation:
+                  </Text>
+                  <Text
+                    className="description"
+                    fontSize={{ base: 'xs', md: 'md' }}
+                  >
                     {pokeInfo.generation?.name || 'N/A'}
-                  </p>
+                  </Text>
                 </Box>
               </>
             ) : (
-              <Text>No data available for this Pokémon.</Text>
+              <Text fontSize={{ base: 'xs', md: 'md' }}>
+                No data available for this Pokémon.
+              </Text>
             )}
           </TabPanel>
 
           {/* BASE STATS TAB */}
-          <TabPanel className="content-stats">
-            {card.stats.map(stat => (
-              <div key={card.name + stat.stat.name} className="stat-container">
-                <div className="stat-titles-container">
-                  <h3 className="stat-name">{stat.stat.name}</h3>
-                  <h3 className="stat-value">{stat.base_stat}</h3>
-                </div>
-                <div className="stat-bar-container">
-                  <div className="stat-bar-bg"></div>
-                  <div
-                    className="stat-bar-parent"
-                    style={{
-                      width: stat.base_stat + '%',
-                      maxWidth: '100%',
-                    }}
-                  >
-                    <div
-                      className={`stat-bar-fill ${card.types[0].type.name}`}
-                    ></div>
-                  </div>
-                </div>
-              </div>
-            ))}
+          <TabPanel
+            display={'block'}
+            width={'100%'}
+            maxHeight={'170px'}
+            overflow={'scroll'}
+          >
+            <Flex direction="column" wrap="wrap" gap={4}>
+              {card.stats.map(stat => (
+                <Flex
+                  key={card.name + stat.stat.name}
+                  width={'100%'}
+                  justifyContent={'space-between'}
+                  alignItems={{ base: 'left', md: 'center' }}
+                  flexDirection={{ base: 'column', md: 'row' }}
+                >
+                  <Flex marginRight={{ base: '0', md: '10px' }}>
+                    <h3 className="stat-name">{stat.stat.name}</h3>
+                  </Flex>
+                  <Flex>
+                    <Text className="stat-value" marginRight={'10px'}>
+                      {stat.base_stat}
+                    </Text>
+                    <Box
+                      marginTop={{ base: '10px', md: '0px' }}
+                      className="stat-bar-container"
+                      width={{ base: '100%', md: '80%' }}
+                    >
+                      <div className="stat-bar-bg"></div>
+                      <div
+                        className="stat-bar-parent"
+                        style={{
+                          width: stat.base_stat + '%',
+                          maxWidth: '100%',
+                        }}
+                      >
+                        <div
+                          className={`stat-bar-fill ${card.types[0].type.name}`}
+                        ></div>
+                      </div>
+                    </Box>
+                  </Flex>
+                </Flex>
+              ))}
+            </Flex>
           </TabPanel>
 
           {/* MOVES TAB */}
@@ -142,11 +243,10 @@ function PokemonTabs({ card, pokeInfo }) {
           <TabPanel>
             {card?.sprites ? (
               <Flex
-                // justifyContent="flex-start"
                 alignItems="center"
                 gap="20px"
                 wrap="nowrap"
-                overflowX="scroll"
+                overflowX="auto"
                 padding="10px"
                 width="100%"
               >
@@ -154,7 +254,7 @@ function PokemonTabs({ card, pokeInfo }) {
                   .filter(
                     ([_, url]) =>
                       typeof url === 'string' && url.endsWith('.png')
-                  ) // Ensure only valid image URLs
+                  )
                   .map(([key, url]) => (
                     <Image
                       key={key}

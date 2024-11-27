@@ -142,9 +142,9 @@ function ModalContainer({
           )}
         </Flex>
         {/* TAB INFO SECTION */}
-        <Box outline={'2px solid'} w="100%" maxWidth={'450px'}>
-          <PokemonTabs card={card} pokeInfo={pokeInfo} />
-        </Box>
+        {/* <Box w="100%" maxWidth={'450px'}> */}
+        <PokemonTabs card={card} pokeInfo={pokeInfo} />
+        {/* </Box> */}
       </Box>
       {/* EXPANDED SECTION */}
       <Box>
