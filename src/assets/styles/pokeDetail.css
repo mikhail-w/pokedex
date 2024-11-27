@@ -163,11 +163,12 @@
 }
 
 .stat-bar-container {
-  width: 40%;
+  width: 100%;
   height: 4px;
   margin-right: 10px;
   border-radius: 10px;
   position: relative;
+  overflow: visible;
 }
 
 .stat-bar-parent {

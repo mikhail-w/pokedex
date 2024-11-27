@@ -21,20 +21,20 @@ function PokemonTabs({ card, pokeInfo }) {
       colorScheme="green"
       size="sm"
       w={{ base: '100%', md: '450px' }}
-      maxH={{ base: 'auto', md: 200 }}
+      // maxH={{ base: 'auto', md: 200 }}
     >
       <TabList position="sticky" top="0" zIndex="1" bg="white">
-        <Tab>About</Tab>
-        <Tab>Base Stats</Tab>
-        <Tab>Moves</Tab>
-        <Tab>Sprites</Tab>
+        <Tab fontSize={{ base: 'xs', md: 'md' }}>About</Tab>
+        <Tab fontSize={{ base: 'xs', md: 'md' }}>Stats</Tab>
+        <Tab fontSize={{ base: 'xs', md: 'md' }}>Moves</Tab>
+        <Tab fontSize={{ base: 'xs', md: 'md' }}>Sprites</Tab>
       </TabList>
       <Divider />
       <Box
         maxHeight={{ base: 'auto', md: '400px' }}
         overflowY={{ base: 'visible', md: 'auto' }}
       >
-        <TabPanels height={'170px'} overflow={'scroll'}>
+        <TabPanels height={'170px'} overflow={'scroll'} paddingBottom={'20px'}>
           {/* ABOUT TAB */}
           <TabPanel>
             {card ? (
@@ -43,7 +43,6 @@ function PokemonTabs({ card, pokeInfo }) {
                   display={'flex'}
                   padding={('8px', '0')}
                   justifyContent={'left'}
-                  // outline={'2px solid'}
                   marginBottom={'10px'}
                 >
                   <Text
@@ -175,21 +174,23 @@ function PokemonTabs({ card, pokeInfo }) {
                 <Flex
                   key={card.name + stat.stat.name}
                   width={'100%'}
-                  justifyContent={'space-between'}
+                  justifyContent={'left'}
                   alignItems={{ base: 'left', md: 'center' }}
                   flexDirection={{ base: 'column', md: 'row' }}
+                  ginRight={{ base: '0', md: '10px' }}
                 >
                   <Flex marginRight={{ base: '0', md: '10px' }}>
                     <h3 className="stat-name">{stat.stat.name}</h3>
                   </Flex>
-                  <Flex>
+
+                  <Flex width={'100%'}>
                     <Text className="stat-value" marginRight={'10px'}>
                       {stat.base_stat}
                     </Text>
                     <Box
-                      marginTop={{ base: '10px', md: '0px' }}
+                      marginTop="10px"
                       className="stat-bar-container"
-                      width={{ base: '100%', md: '80%' }}
+                      width={{ base: '100%', md: '40%' }}
                     >
                       <div className="stat-bar-bg"></div>
                       <div
@@ -226,7 +227,7 @@ function PokemonTabs({ card, pokeInfo }) {
                   >
                     <Text
                       className="description"
-                      fontSize="md"
+                      fontSize={{ base: 'xs', md: 'md' }}
                       fontWeight="300"
                     >
                       {move.move.name || 'N/A'}

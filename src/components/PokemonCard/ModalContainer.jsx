@@ -57,12 +57,12 @@ function ModalContainer({
       background={`linear-gradient(in lch, ${backgroundColor[0]}, ${backgroundColor[1]})`}
       alignItems={'center'}
       borderRadius={'50px'}
-      overflow={'scroll'}
+      overflow={'hidden'}
       maxHeight={isMobile ? '90vh' : 'fit-content'}
       flexDirection={isMobile ? 'column' : 'row'}
     >
       {/* NORMAL SECTION */}
-      <Box w="100%" maxWidth={'450px'}>
+      <Box w="100%" maxWidth={'450px'} marginTop={'10px'}>
         {/* BACK ARROW AND POKEBALL LOGO */}
         <Flex
           w="90%"
@@ -92,7 +92,7 @@ function ModalContainer({
             </Text>
           </Flex>
           {/* POKEMON TYPE SECTION */}
-          <Flex justifyContent="center" flexWrap="wrap">
+          <Flex justifyContent="left" flexWrap="wrap">
             {type.map((t, index) => (
               <Flex
                 key={index}
@@ -142,9 +142,9 @@ function ModalContainer({
           )}
         </Flex>
         {/* TAB INFO SECTION */}
-        {/* <Box w="100%" maxWidth={'450px'}> */}
-        <PokemonTabs card={card} pokeInfo={pokeInfo} />
-        {/* </Box> */}
+        <Box height={'230px'}>
+          <PokemonTabs card={card} pokeInfo={pokeInfo} />
+        </Box>
       </Box>
       {/* EXPANDED SECTION */}
       <Box>
