@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import ReactPaginate from 'react-paginate';
 import '../../assets/styles/FlavorText.css';
-import { Center, Flex, Text } from '@chakra-ui/react';
+import { Center, Flex, Text, Box } from '@chakra-ui/react';
 
 const FlavorText = ({ flavorTextArray }) => {
   const [pageNumber, setPageNumber] = useState(0);
@@ -31,15 +31,22 @@ const FlavorText = ({ flavorTextArray }) => {
   );
 
   return (
-    <Center flexDirection="column" margin="20px" maxW={'560'}>
+    <Center
+      flexDirection="column"
+      px={{ base: '10px', md: '20px' }}
+      mt="20px"
+      maxW="100%"
+    >
       <Text
         className="text"
-        mt="40px"
+        mt={{ base: '20px', md: '40px' }}
         fontFamily="Alleyn W01 Regular"
         textAlign="center"
-        height="100px"
+        height={{ base: 'auto', md: '100px' }}
         overflow="hidden"
         textOverflow="ellipsis"
+        fontSize={{ base: '10px', md: '16px' }}
+        lineHeight={{ base: '20px', md: '24px' }}
       >
         {currentText.map((flavorText, index) => (
           <span className="flavorText" key={index}>
@@ -47,7 +54,7 @@ const FlavorText = ({ flavorTextArray }) => {
           </span>
         ))}
       </Text>
-      <Flex mt="20px">
+      <Box mt={{ base: '10px', md: '20px' }} width="100%">
         <ReactPaginate
           previousLabel={'prev'}
           nextLabel={'next'}
@@ -58,8 +65,10 @@ const FlavorText = ({ flavorTextArray }) => {
           nextLinkClassName="nextBttn"
           disabledClassName="paginationDisabled"
           activeClassName="paginationActive"
+          breakLabel="..."
+          breakClassName="breakBttn"
         />
-      </Flex>
+      </Box>
     </Center>
   );
 };
