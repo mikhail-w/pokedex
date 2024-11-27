@@ -8,7 +8,7 @@ import catch01 from '../../assets/images/pokeballs/catch1_100.png';
 import catch02 from '../../assets/images/pokeballs/catch2_100.png';
 import { useToastNotification } from '../../hooks/useToastNotification';
 
-function CatchReleaseButton({ id }) {
+function CatchReleaseButton({ id, name }) {
   const { myTeam, setMyTeam } = useOutletContext();
   const isPokemonInTeam = useMemo(() => isInTeam(myTeam, id), [myTeam, id]);
   const { showToast } = useToastNotification();
@@ -22,12 +22,18 @@ function CatchReleaseButton({ id }) {
     if (disabled) return;
 
     if (isPokemonInTeam) {
-      showToast('Pokemon Released', 'error');
+      showToast(
+        `Pokemon ${name.charAt(0).toUpperCase() + name.slice(1)} Released`,
+        'error'
+      );
       const updatedTeam = releasePokemon(myTeam, id);
       setMyTeam(updatedTeam);
     } else {
       if (myTeam.length < 6) {
-        showToast('Pokemon Caught', 'success');
+        showToast(
+          `Pokemon ${name.charAt(0).toUpperCase() + name.slice(1)} Caught`,
+          'success'
+        );
         const updatedTeam = catchPokemon(myTeam, id);
         setMyTeam(updatedTeam);
       } else {

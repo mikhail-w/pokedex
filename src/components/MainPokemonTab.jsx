@@ -52,7 +52,8 @@ function MainPokemonTab() {
 
   return (
     <Tabs align="center" variant="enclosed" size="lg">
-      <TabPanels height={tabPanelsHeight}>
+      {/* <TabPanels height={tabPanelsHeight}> */}
+      <TabPanels>
         <TabPanel>
           <MainPokemonName />
           <TabContent>
@@ -88,7 +89,7 @@ function MainPokemonTab() {
             pt="60px"
             justifyContent="center"
             maxW="100vw"
-            height="450px"
+            height="420px"
             gap="25px"
             overflow="auto"
           >
@@ -114,29 +115,36 @@ function MainPokemonTab() {
           </Flex>
         </TabPanel>
       </TabPanels>
-
-      <TabList justifyContent="space-evenly" maxWidth={500}>
-        <Tab>
-          <CgPokemon color="#ef5350" size="2em" />
-        </Tab>
-        <Tab>
-          <CgPokemon color="#ffcc00" size="2em" />
-        </Tab>
-        <Tab>
-          <MdGif color="#396bba" size="2em" />
-        </Tab>
-        <Tab>
-          <FaInfo color="#188038" size="2em" />
-        </Tab>
-        <Tab>
-          <Image
-            src={groupImg}
-            alt="Group image"
-            boxSize="2em"
-            objectFit="contain"
-          />
-        </Tab>
-      </TabList>
+      <Center>
+        <TabList
+          justifyContent="space-evenly"
+          maxWidth={500}
+          // outline={'2px solid'}
+          pos={'fixed'}
+          bottom={'200px'}
+        >
+          <Tab>
+            <CgPokemon color="#ef5350" size="2em" />
+          </Tab>
+          <Tab>
+            <CgPokemon color="#ffcc00" size="2em" />
+          </Tab>
+          <Tab>
+            <MdGif color="#396bba" size="2em" />
+          </Tab>
+          <Tab>
+            <FaInfo color="#188038" size="2em" />
+          </Tab>
+          <Tab>
+            <Image
+              src={groupImg}
+              alt="Group image"
+              boxSize="2em"
+              objectFit="contain"
+            />
+          </Tab>
+        </TabList>
+      </Center>
     </Tabs>
   );
 }

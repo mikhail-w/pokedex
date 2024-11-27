@@ -10,10 +10,10 @@ function GenerateButton({ getRandomPokemon }) {
     getRandomPokemon();
   }
   return (
-    <Center marginTop={'60vh'}>
+    <Center>
       <Button
         pos={'fixed'}
-        bottom={'10px'}
+        bottom={'30px'}
         onClick={handleClick}
         marginTop={'60px'}
         colorScheme="red"

@@ -56,7 +56,7 @@ function CardFront({
           >
             {/* Catch/Release Button */}
             <Box>
-              <CatchReleaseButton id={id} />
+              <CatchReleaseButton id={id} name={name} />
             </Box>
             {/* Pokémon ID */}
             <Box>
