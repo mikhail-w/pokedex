@@ -31,19 +31,20 @@ function TabContent({ children, height = '550px' }) {
 }
 
 function PokemonImage({ src }) {
-  return <Image maxW="90%" maxH="90%" src={src || ball} alt="Pokemon image" />;
+  return (
+    <Image
+      maxW="90%"
+      maxH="90%"
+      src={src || ball}
+      alt="Pokemon image"
+      // pb={'30px'}
+    />
+  );
 }
 
 function MainPokemonTab() {
   const { team, myTeam, disabled, setDisabled, isLoading, pokemon } =
     useOutletContext();
-
-  // Dynamically set TabPanels height based on screen size
-  const tabPanelsHeight = useBreakpointValue({
-    base: '550px', // Small screens
-    md: '600px', // Medium screens
-    lg: '700px', // Large screens
-  });
 
   if (isLoading) return <Loading />;
 
@@ -51,9 +52,10 @@ function MainPokemonTab() {
   const pokemonShowdown = pokemon.sprites.other.showdown?.front_default;
 
   return (
-    <Tabs align="center" variant="enclosed" size="lg">
-      {/* <TabPanels height={tabPanelsHeight}> */}
-      <TabPanels>
+    <Tabs align="center" variant="enclosed" size={['sm', 'md', 'lg']}>
+      <TabPanels
+        mt={['0px', '0px', '20px']} // Adjust margin-top for mobile screens
+      >
         <TabPanel>
           <MainPokemonName />
           <TabContent>
@@ -71,7 +73,11 @@ function MainPokemonTab() {
         <TabPanel>
           <MainPokemonName />
           <TabContent>
-            <PokemonImage src={pokemonShowdown} />
+            <Image
+              src={pokemonShowdown || ball}
+              boxSize="200px"
+              objectFit="contain"
+            />
           </TabContent>
         </TabPanel>
 
@@ -86,12 +92,14 @@ function MainPokemonTab() {
           <MainPokemonName pokemonName={pokemon.name} isTeam="true" />
           <Flex
             flexWrap="wrap"
-            pt="60px"
+            pt={['20px', '40px', '60px']}
+            pb={['20px', '40px', '60px']}
             justifyContent="center"
-            maxW="100vw"
-            height="420px"
-            gap="25px"
-            overflow="auto"
+            maxW="100%"
+            height="auto"
+            maxHeight={['calc(100vh - 360px)', '430px']}
+            gap={['15px', '20px', '25px']}
+            overflowY="auto"
           >
             {team.map((card, idx) => (
               <Suspense key={idx} fallback={<Loading />}>
@@ -115,13 +123,15 @@ function MainPokemonTab() {
           </Flex>
         </TabPanel>
       </TabPanels>
+
       <Center>
         <TabList
           justifyContent="space-evenly"
-          maxWidth={500}
-          // outline={'2px solid'}
-          pos={'fixed'}
-          bottom={'200px'}
+          maxWidth="100%"
+          pos="fixed"
+          bottom={['120px', '120px', '200px']}
+          px={['10px', '20px']}
+          whiteSpace="nowrap"
         >
           <Tab>
             <CgPokemon color="#ef5350" size="2em" />

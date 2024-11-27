@@ -71,7 +71,7 @@ function MyTeamPage() {
         padding={'50px'}
         flexWrap={'wrap'}
         gap={'30px'}
-        overflow={'scroll'}
+        overflow={'auto'}
         margin={'10px'}
         maxHeight={'60vh'}
       >

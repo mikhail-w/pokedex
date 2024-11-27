@@ -20,7 +20,7 @@ function PokemonTabs({ card, pokeInfo }) {
       variant="soft-rounded"
       colorScheme="green"
       size="sm"
-      w="100%"
+      w="450px"
       maxH={200}
       // overflow={'scroll'}
     >
@@ -50,13 +50,13 @@ function PokemonTabs({ card, pokeInfo }) {
                 <Box className="subtitle-container">
                   <p className="subtitle">Height:</p>
                   <p className="description">
-                    {card.height ? `${card.height}m` : 'N/A'}
+                    {card.height ? `${card.height} m` : 'N/A'}
                   </p>
                 </Box>
                 <Box className="subtitle-container">
                   <p className="subtitle">Weight:</p>
                   <p className="description">
-                    {card.weight ? `${card.weight}lbs` : 'N/A'}
+                    {card.weight ? `${card.weight} lbs` : 'N/A'}
                   </p>
                 </Box>
                 <Box className="subtitle-container">
@@ -142,11 +142,11 @@ function PokemonTabs({ card, pokeInfo }) {
           <TabPanel>
             {card?.sprites ? (
               <Flex
-                justifyContent="flex-start"
+                // justifyContent="flex-start"
                 alignItems="center"
                 gap="20px"
                 wrap="nowrap"
-                overflowX="auto"
+                overflowX="scroll"
                 padding="10px"
                 width="100%"
               >

@@ -1,42 +1,41 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence, AnimateSharedLayout } from 'framer-motion';
-import axios from 'axios';
-//Import Components
+import React, { useState, useEffect } from 'react';
+import { Center, Button, Text } from '@chakra-ui/react';
 import PokemonCard from '../components/PokemonCard/PokemonCard';
-import { Center, Button } from '@chakra-ui/react';
-
-//Import Utils
-import { useLocation } from 'react-router-dom';
-import { useOutletContext, useParams } from 'react-router-dom';
-//Import Styles
 import { getType } from '../utils';
-import { Text } from '@chakra-ui/react';
 
 function PokemonListPage() {
   const [allPokemons, setAllPokemons] = useState([]);
   const [loadMore, setLoadMore] = useState(
     'https://pokeapi.co/api/v2/pokemon?limit=20'
   );
-  const { team, myTeam, setMyTeam, disabled, setDisabled, isLoading } =
-    useOutletContext();
+  const [isLoading, setIsLoading] = useState(false);
 
   const getAllPokemons = async () => {
-    const res = await fetch(loadMore);
-    const data = await res.json();
+    if (isLoading) return; // Prevent multiple calls at once
+    setIsLoading(true);
+    try {
+      const res = await fetch(loadMore);
+      const data = await res.json();
 
-    setLoadMore(data.next);
+      setLoadMore(data.next);
 
-    function createPokemonObject(results) {
-      results.forEach(async pokemon => {
+      const pokemonDataPromises = data.results.map(async pokemon => {
         const res = await fetch(
           `https://pokeapi.co/api/v2/pokemon/${pokemon.name}`
         );
-        const data = await res.json();
-        setAllPokemons(currentList => [...currentList, data]);
-        // await allPokemons.sort((a, b) => a.id - b.id);
+        return await res.json();
       });
+
+      const pokemonData = await Promise.all(pokemonDataPromises);
+
+      setAllPokemons(prevList =>
+        [...prevList, ...pokemonData].sort((a, b) => a.id - b.id)
+      );
+    } catch (error) {
+      console.error('Error fetching Pokémon:', error);
+    } finally {
+      setIsLoading(false);
     }
-    createPokemonObject(data.results);
   };
 
   useEffect(() => {
@@ -64,18 +63,15 @@ function PokemonListPage() {
         flexWrap={'wrap'}
         gap={'30px'}
         overflow={'scroll'}
-        // outline={'1px solid green'}
-        margin={'10px '}
+        margin={'10px'}
         maxHeight={'70vh'}
       >
-        {allPokemons.map((p, idx) => (
-          // console.log(p)
-          // <Text key={idx}>{p.name}</Text>
+        {allPokemons.map(p => (
           <PokemonCard
-            key={p.name}
+            key={p.id}
             card={p}
             src={p.sprites.other[`official-artwork`].front_default}
-            src2={p.sprites.other.showdown.front_default}
+            src2={p.sprites.other.showdown?.front_default || ''}
             name={p.name}
             pokemon={p}
             type={getType(p.types)}
@@ -87,7 +83,8 @@ function PokemonListPage() {
         <Button
           margin={'50px'}
           colorScheme="red"
-          onClick={() => getAllPokemons()}
+          onClick={getAllPokemons}
+          isLoading={isLoading}
         >
           Load more
         </Button>
