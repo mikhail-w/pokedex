@@ -1,3 +1,4 @@
+import React, { useEffect, useState } from 'react';
 import { colors } from '../../utils';
 import {
   Box,
@@ -14,7 +15,10 @@ import { CgPokemon } from 'react-icons/cg';
 import '../../assets/styles/pokeDetail.css';
 import EvolutionChain from './EvolutionChain';
 import { FaArrowLeftLong } from 'react-icons/fa6';
-import { IoArrowForwardCircleOutline } from 'react-icons/io5';
+import {
+  IoArrowForwardCircleOutline,
+  IoArrowDownCircleOutline,
+} from 'react-icons/io5';
 import ball from '../../assets/images/pokeballs/pokeball.png';
 
 function ModalContainer({
@@ -31,28 +35,40 @@ function ModalContainer({
   flavorTextArray,
   backgroundColor,
 }) {
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+
+  // Update isMobile state on window resize
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth <= 768);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   return (
     <ModalContent
       w={'90%'}
-      className={isExpanded ? 'modal-content extended' : 'modal-content'}
-      background={` linear-gradient(in lch,${backgroundColor[0]}, ${backgroundColor[1]})`}
+      className={
+        isExpanded
+          ? isMobile
+            ? 'modal-content extended-column'
+            : 'modal-content extended-row'
+          : 'modal-content'
+      }
+      background={`linear-gradient(in lch, ${backgroundColor[0]}, ${backgroundColor[1]})`}
       alignItems={'center'}
-      // justifyContent={'center'}
-      justifyContent="flex-start"
-      // justifyContent={'left'}
       borderRadius={'50px'}
-      // outline={'2px solid blue'}
-      overflow={'hidden'}
-      maxHeight={'740px'}
-      flexDirection={'row'}
+      overflow={'hidden'} // Hide overflow initially
+      maxHeight={isMobile ? '90vh' : 'fit-content'}
+      flexDirection={isMobile ? 'column' : 'row'}
     >
       {/* NORMAL SECTION */}
-      <Box>
+      <Box w="100%">
         {/* BACK ARROW AND POKEBALL LOGO */}
         <Flex
           w="90%"
-          margin="60px 30px 30px 30px"
+          margin="20px auto"
           justifyContent="space-between"
+          alignItems="center"
         >
           <FaArrowLeftLong
             className="modal-return"
@@ -62,20 +78,30 @@ function ModalContainer({
           <CgPokemon size="1.8rem" />
         </Flex>
         {/* MODAL HEADER SECTION */}
-        <ModalHeader textTransform="capitalize" w="100%">
-          {/* NAME AND ID SECTION*/}
-          <Flex justifyContent="space-between" marginBottom="20px">
-            <Text className="modal-title">{name}</Text>
-            <Text>#{String(id).padStart(3, '0')}</Text>
+        <ModalHeader textTransform="capitalize" w="100%" textAlign="center">
+          {/* NAME AND ID SECTION */}
+          <Flex justifyContent="space-between" marginBottom="10px">
+            <Text
+              className="modal-title"
+              fontSize={isMobile ? '1.5rem' : '2rem'}
+            >
+              {name}
+            </Text>
+            <Text fontSize={isMobile ? '1rem' : '1.5rem'}>
+              #{String(id).padStart(3, '0')}
+            </Text>
           </Flex>
-          {/* POKEMON TYPE SECTION*/}
-          <Flex>
+          {/* POKEMON TYPE SECTION */}
+          <Flex justifyContent="center" flexWrap="wrap">
             {type.map((t, index) => (
               <Flex
                 key={index}
                 className="pokeDetail-type-tab"
                 bg={colors[t]}
                 marginLeft={index === 0 ? '0px' : '10px'}
+                alignItems="center"
+                padding="5px"
+                borderRadius="8px"
               >
                 <Image w="20px" h="20px" src={modalIcons[t]} />
                 <Text paddingLeft="5px">{t}</Text>
@@ -85,43 +111,54 @@ function ModalContainer({
         </ModalHeader>
         {/* POKEMON IMAGE AND MODAL EXPAND BUTTON SECTION */}
         <Flex
-          w="450px"
-          h="250px"
+          w="100%"
           justifyContent="center"
           marginBottom="20px"
           position="relative"
         >
-          <Image src={src == null ? ball : src} />
-          <IoArrowForwardCircleOutline
-            onClick={onExpand}
-            size="4.5em"
-            className={
-              isExpanded
-                ? 'isExtended extend-modal'
-                : 'extend-modal notExtended'
-            }
-          />
+          <Image src={src == null ? ball : src} maxW="300px" />
+          {isMobile ? (
+            <IoArrowDownCircleOutline
+              onClick={onExpand}
+              size="3em"
+              className="extend-modal"
+              style={{
+                position: 'absolute',
+                bottom: '-20px',
+                cursor: 'pointer',
+              }}
+            />
+          ) : (
+            <IoArrowForwardCircleOutline
+              onClick={onExpand}
+              size="3em"
+              className="extend-modal"
+              style={{
+                position: 'absolute',
+                bottom: '-20px',
+                cursor: 'pointer',
+              }}
+            />
+          )}
         </Flex>
-
         {/* TAB INFO SECTION */}
         <Box>
           <PokemonTabs card={card} pokeInfo={pokeInfo} />
         </Box>
       </Box>
       {/* EXPANDED SECTION */}
-      <Box>
-        {/* FLAVOR TEXT AND EVO CHAIN SECTION */}
-        {isExpanded && (
-          <Flex
-            className="extended-section"
-            height="700px"
-            flexDirection="column"
-          >
-            <FlavorText flavorTextArray={flavorTextArray} />
-            <EvolutionChain evoNames={evoNames} />
-          </Flex>
-        )}
-      </Box>
+      {isExpanded && (
+        <Box
+          className="extended-section"
+          maxHeight={isMobile ? '60vh' : 'auto'}
+          overflowY="auto" // Add scrolling for expanded content
+          padding="20px"
+          w="100%"
+        >
+          <FlavorText flavorTextArray={flavorTextArray} />
+          <EvolutionChain evoNames={evoNames} />
+        </Box>
+      )}
     </ModalContent>
   );
 }

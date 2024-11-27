@@ -4,8 +4,16 @@
 
 .modal-content {
   max-width: fit-content;
-  transition-property: max-width;
-  transition-duration: 2000ms;
+  max-height: fit-content;
+  transition: max-width 2s, max-height 2s;
+}
+
+.modal-content.extended-row {
+  max-width: 1050px;
+}
+
+.modal-content.extended-column {
+  max-height: 1550px;
 }
 
 .extended-section {
@@ -16,11 +24,10 @@
   /* outline: 2px solid red; */
 }
 
-.modal-content.extended {
-  max-width: 1050px;
+/* .modal-content.extended {
+  max-height: 1050px;
   transition-duration: 2000ms;
-}
-
+} */
 .extend-modal {
   position: absolute;
   right: 10px;
