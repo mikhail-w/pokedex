@@ -13,7 +13,8 @@
 }
 
 .modal-content.extended-column {
-  max-height: 1550px;
+  max-height: 90vh;
+  overflow-y: auto;
 }
 
 .extended-section {
@@ -53,7 +54,7 @@
 .isExtended {
   color: #ac4f51;
   transform: rotate(180deg);
-  /* transition: transform 1s linear; */
+  transition: transform 1s linear;
 }
 
 .flavorBoxContainer {

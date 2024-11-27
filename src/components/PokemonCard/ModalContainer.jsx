@@ -124,30 +124,26 @@ function ModalContainer({
             <IoArrowDownCircleOutline
               onClick={onExpand}
               size="3em"
-              className="extend-modal"
-              style={{
-                position: 'absolute',
-                bottom: '-20px',
-                cursor: 'pointer',
-              }}
+              className={
+                isExpanded
+                  ? 'isExtended extend-modal'
+                  : 'extend-modal notExtended'
+              }
             />
           ) : (
             <IoArrowForwardCircleOutline
               onClick={onExpand}
               size="3em"
-              className="extend-modal"
-              style={{
-                position: 'absolute',
-                bottom: '-20px',
-                cursor: 'pointer',
-              }}
+              className={
+                isExpanded
+                  ? 'isExtended extend-modal'
+                  : 'extend-modal notExtended'
+              }
             />
           )}
         </Flex>
         {/* TAB INFO SECTION */}
-        <Box height={'230px'}>
-          <PokemonTabs card={card} pokeInfo={pokeInfo} />
-        </Box>
+        <PokemonTabs card={card} pokeInfo={pokeInfo} />
       </Box>
       {/* EXPANDED SECTION */}
       <Box>

@@ -21,7 +21,7 @@ function PokemonTabs({ card, pokeInfo }) {
       colorScheme="green"
       size="sm"
       w={{ base: '100%', md: '450px' }}
-      // maxH={{ base: 'auto', md: 200 }}
+      borderRadius={'50px'}
     >
       <TabList position="sticky" top="0" zIndex="1" bg="white">
         <Tab fontSize={{ base: 'xs', md: 'md' }}>About</Tab>
