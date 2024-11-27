@@ -35,7 +35,8 @@ const FlavorText = ({ flavorTextArray }) => {
       flexDirection="column"
       px={{ base: '10px', md: '20px' }}
       mt="20px"
-      maxW="100%"
+      maxW="90%"
+      outline={'2px solid'}
     >
       <Text
         className="text"
