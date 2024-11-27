@@ -1,11 +1,9 @@
 import { useOutletContext } from 'react-router-dom';
-import { getRandomID } from '../utils';
 import { Button, useColorModeValue, Center } from '@chakra-ui/react';
 
 function GenerateButton({ getRandomPokemon }) {
-  const { randomID, setrandomID, setIsLoading } = useOutletContext();
+  const { setIsLoading } = useOutletContext();
   function handleClick() {
-    setrandomID(getRandomID(1025));
     setIsLoading(true);
     getRandomPokemon();
   }

@@ -8,23 +8,13 @@ import { getRandomID } from '../utils';
 function RandPokemonPage() {
   const [valid, setValid] = useState(false);
   const timerId = useRef(null);
-  const { setTeam, team, pokemon, setPokemon, randomID, setIsLoading } =
+  const { setTeam, setPokemon, randomID, setrandomID, setIsLoading } =
     useOutletContext();
-
-  const loadLocalStorageData = key => {
-    try {
-      const data = window.localStorage.getItem(key);
-      return data ? JSON.parse(data) : null;
-    } catch (err) {
-      console.error(`Failed to parse localStorage data for ${key}`, err);
-      return null;
-    }
-  };
 
   const getRandomPokemon = async () => {
     try {
       setIsLoading(true);
-
+      setrandomID(getRandomID(1025));
       // Fetch the main Pokémon
       const pokemonResponse = await axios.get(
         `https://pokeapi.co/api/v2/pokemon/${randomID}`
@@ -72,22 +62,8 @@ function RandPokemonPage() {
   };
 
   useEffect(() => {
-    // Load Pokémon and team data from localStorage
-    const pokemonData = loadLocalStorageData('MAIN_POKEMON');
-    const teamData = loadLocalStorageData('MAIN_POKEMON_TEAM');
-
-    if (pokemonData) setPokemon(pokemonData);
-    if (teamData) setTeam(teamData);
-
     // Fetch new Pokémon data on component mount
     getRandomPokemon();
-
-    return () => {
-      // Save data to localStorage and clear timeout on unmount
-      window.localStorage.setItem('MAIN_POKEMON', JSON.stringify(pokemon));
-      window.localStorage.setItem('MAIN_POKEMON_TEAM', JSON.stringify(team));
-      clearTimeout(timerId.current);
-    };
   }, []); // Empty dependency to ensure this runs only once
 
   return (
