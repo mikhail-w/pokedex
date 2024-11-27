@@ -8,3 +8,12 @@
 .pokemon-name, .pokemon-type {
   text-transform: capitalize;
 }
+
+.title {
+  font-weight: bold;
+  white-space: nowrap;
+}
+
+.info-value {
+  word-wrap: break-word;
+}

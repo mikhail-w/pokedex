@@ -35,11 +35,11 @@ function ModalContainer({
   flavorTextArray,
   backgroundColor,
 }) {
-  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 900);
 
   // Update isMobile state on window resize
   useEffect(() => {
-    const handleResize = () => setIsMobile(window.innerWidth <= 768);
+    const handleResize = () => setIsMobile(window.innerWidth <= 900);
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
@@ -57,12 +57,12 @@ function ModalContainer({
       background={`linear-gradient(in lch, ${backgroundColor[0]}, ${backgroundColor[1]})`}
       alignItems={'center'}
       borderRadius={'50px'}
-      overflow={'hidden'} // Hide overflow initially
+      overflow={'scroll'}
       maxHeight={isMobile ? '90vh' : 'fit-content'}
       flexDirection={isMobile ? 'column' : 'row'}
     >
       {/* NORMAL SECTION */}
-      <Box w="100%">
+      <Box w="100%" maxWidth={'450px'}>
         {/* BACK ARROW AND POKEBALL LOGO */}
         <Flex
           w="90%"
@@ -142,23 +142,25 @@ function ModalContainer({
           )}
         </Flex>
         {/* TAB INFO SECTION */}
-        <Box>
+        <Box outline={'2px solid'} w="100%" maxWidth={'450px'}>
           <PokemonTabs card={card} pokeInfo={pokeInfo} />
         </Box>
       </Box>
       {/* EXPANDED SECTION */}
-      {isExpanded && (
-        <Box
-          className="extended-section"
-          maxHeight={isMobile ? '60vh' : 'auto'}
-          overflowY="auto" // Add scrolling for expanded content
-          padding="20px"
-          w="100%"
-        >
-          <FlavorText flavorTextArray={flavorTextArray} />
-          <EvolutionChain evoNames={evoNames} />
-        </Box>
-      )}
+      <Box>
+        {isExpanded && (
+          <Flex
+            className="extended-section"
+            height={'700px'}
+            overflowY="auto"
+            flexDirection="column"
+            w="100%"
+          >
+            <FlavorText flavorTextArray={flavorTextArray} />
+            <EvolutionChain evoNames={evoNames} />
+          </Flex>
+        )}
+      </Box>
     </ModalContent>
   );
 }
