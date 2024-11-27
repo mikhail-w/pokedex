@@ -129,7 +129,7 @@ function MainPokemonTab() {
           justifyContent="space-evenly"
           maxWidth="100%"
           pos="fixed"
-          bottom={['120px', '120px', '200px']}
+          bottom={'120px'}
           px={['10px', '20px']}
           whiteSpace="nowrap"
         >
