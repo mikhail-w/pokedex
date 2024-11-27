@@ -13,7 +13,7 @@ function BackButton() {
     <Center>
       <Button
         pos="fixed"
-        bottom="100px"
+        bottom="30px"
         onClick={handleClick}
         marginTop="60px"
         colorScheme="red"

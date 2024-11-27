@@ -50,7 +50,7 @@ function PokemonTabs({ card, pokeInfo }) {
                 <Box className="subtitle-container">
                   <p className="subtitle">Height:</p>
                   <p className="description">
-                    {card.height ? `${card.height} m` : 'N/A'}
+                    {card.height ? `${card.height / 10} m` : 'N/A'}
                   </p>
                 </Box>
                 <Box className="subtitle-container">
