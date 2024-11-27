@@ -190,7 +190,7 @@ function PokemonTabs({ card, pokeInfo }) {
                     <Box
                       marginTop="10px"
                       className="stat-bar-container"
-                      width={{ base: '100%', md: '40%' }}
+                      width={{ base: '100%', md: '90%' }}
                     >
                       <div className="stat-bar-bg"></div>
                       <div
