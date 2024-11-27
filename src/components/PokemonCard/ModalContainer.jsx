@@ -116,7 +116,10 @@ function ModalContainer({
           marginBottom="20px"
           position="relative"
         >
-          <Image src={src == null ? ball : src} maxW="300px" />
+          <Image
+            src={src == null ? ball : src}
+            maxW={{ base: '200px', md: '300px' }}
+          />
           {isMobile ? (
             <IoArrowDownCircleOutline
               onClick={onExpand}
