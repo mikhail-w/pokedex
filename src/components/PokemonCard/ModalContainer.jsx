@@ -8,6 +8,10 @@ import {
   Image,
   ModalContent,
 } from '@chakra-ui/react';
+import {
+  IoArrowForwardCircleOutline,
+  IoArrowDownCircleOutline,
+} from 'react-icons/io5';
 import FlavorText from './FlavorText';
 import PokemonTabs from './PokemonTabs';
 import { modalIcons } from '../../icons';
@@ -15,10 +19,7 @@ import { CgPokemon } from 'react-icons/cg';
 import '../../assets/styles/pokeDetail.css';
 import EvolutionChain from './EvolutionChain';
 import { FaArrowLeftLong } from 'react-icons/fa6';
-import {
-  IoArrowForwardCircleOutline,
-  IoArrowDownCircleOutline,
-} from 'react-icons/io5';
+import CatchReleaseButton from './CatchReleaseButton';
 import ball from '../../assets/images/pokeballs/pokeball.png';
 
 function ModalContainer({
@@ -86,21 +87,36 @@ function ModalContainer({
             onClick={onClose}
             size="1.8rem"
           />
-          <CgPokemon size="1.8rem" />
+          {/* <CgPokemon size="1.8rem" /> */}
+          <CatchReleaseButton id={id} name={name} />
         </Flex>
         {/* MODAL HEADER SECTION */}
         <ModalHeader textTransform="capitalize" w="100%" textAlign="center">
           {/* NAME AND ID SECTION */}
-          <Flex justifyContent="space-between" marginBottom="10px">
+          <Flex
+            // outline={'2px solid'}
+            position={'relative'}
+            justifyContent="space-between"
+            marginBottom="10px"
+          >
             <Text
               className="modal-title"
               fontSize={isMobile ? '1.5rem' : '2rem'}
             >
               {name}
             </Text>
-            <Text fontSize={isMobile ? '1rem' : '1.5rem'}>
+            {/* <Text fontSize={isMobile ? '1rem' : '1.5rem'}>
               #{String(id).padStart(3, '0')}
-            </Text>
+            </Text> */}
+            <Box
+              position={'absolute'}
+              left={'300px'}
+              top={'50px'}
+              // outline={'2px solid'}
+              className="background-watermark"
+            >
+              #{String(id).padStart(3, '0')}
+            </Box>
           </Flex>
           {/* POKEMON TYPE SECTION */}
           <Flex justifyContent="left" flexWrap="wrap">

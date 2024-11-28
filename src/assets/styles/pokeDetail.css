@@ -8,6 +8,16 @@
   transition: max-width 2s, max-height 2s;
 }
 
+.background-watermark {
+  transform: translate(-50%, -50%);
+  font-size: 100px;
+  font-weight: bold;
+  color: rgba(255, 255, 255, 0.2);
+  z-index: 0;
+  pointer-events: none;
+  user-select: none;
+}
+
 .modal-content.extended-row {
   max-width: 1050px;
 }
