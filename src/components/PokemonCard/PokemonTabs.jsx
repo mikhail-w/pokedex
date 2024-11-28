@@ -177,7 +177,7 @@ function PokemonTabs({ card, pokeInfo }) {
                   justifyContent={'left'}
                   alignItems={{ base: 'left', md: 'center' }}
                   flexDirection={{ base: 'column', md: 'row' }}
-                  ginRight={{ base: '0', md: '10px' }}
+                  marginRight={{ base: '0', md: '10px' }}
                 >
                   <Flex marginRight={{ base: '0', md: '10px' }}>
                     <h3 className="stat-name">{stat.stat.name}</h3>

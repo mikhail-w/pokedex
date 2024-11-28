@@ -41,8 +41,19 @@ function ModalContainer({
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth <= 900);
     window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
+
+    // Prevent background scrolling when modal is open
+    if (isExpanded) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      document.body.style.overflow = 'auto';
+    };
+  }, [isExpanded]);
 
   return (
     <ModalContent
@@ -57,7 +68,7 @@ function ModalContainer({
       background={`linear-gradient(in lch, ${backgroundColor[0]}, ${backgroundColor[1]})`}
       alignItems={'center'}
       borderRadius={'50px'}
-      overflow={'hidden'}
+      overflow="hidden"
       maxHeight={isMobile ? '90vh' : 'fit-content'}
       flexDirection={isMobile ? 'column' : 'row'}
     >
@@ -146,20 +157,20 @@ function ModalContainer({
         <PokemonTabs card={card} pokeInfo={pokeInfo} />
       </Box>
       {/* EXPANDED SECTION */}
-      <Box>
-        {isExpanded && (
-          <Flex
-            className="extended-section"
-            height={'700px'}
-            overflowY="auto"
-            flexDirection="column"
-            w="100%"
-          >
-            <FlavorText flavorTextArray={flavorTextArray} />
-            <EvolutionChain evoNames={evoNames} />
-          </Flex>
-        )}
-      </Box>
+      {isExpanded && (
+        <Flex
+          className="extended-section"
+          flexDirection="column"
+          outline={'2px solid'}
+          padding={'20px'}
+          alignItems={'center'}
+          height={isMobile ? 'calc(90vh - 100px)' : '700px'} // Adjust for mobile mode
+          overflowY="auto" // Enable scrolling
+        >
+          <FlavorText flavorTextArray={flavorTextArray} />
+          <EvolutionChain evoNames={evoNames} />
+        </Flex>
+      )}
     </ModalContent>
   );
 }

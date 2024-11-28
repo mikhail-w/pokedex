@@ -33,7 +33,7 @@ const FlavorText = ({ flavorTextArray }) => {
   return (
     <Center
       flexDirection="column"
-      px={{ base: '10px', md: '20px' }}
+      // px={{ base: '10px', md: '10px' }}
       mt="20px"
       maxW="90%"
       outline={'2px solid'}
