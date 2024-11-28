@@ -37,7 +37,7 @@ function PokemonImage({ src }) {
       maxH="90%"
       src={src || ball}
       alt="Pokemon image"
-      // pb={'30px'}
+      pb={'30px'}
     />
   );
 }
