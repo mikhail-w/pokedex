@@ -5,33 +5,37 @@ import { ArrowForwardIcon } from '@chakra-ui/icons';
 function EvolutionChain({ evoNames }) {
   return (
     <>
-      {/* Flavor text section */}
-      <Box className="flavorBoxContainer">
-        {/* <FlavorText textArray={textArray} /> */}
-      </Box>
-
       {/* Evolution chain title */}
       <Center className="evoTitle">Evolution Chain</Center>
 
       {/* Evolution chain images and names */}
-      <Flex justifyContent="center" alignItems="center" gap="10px">
+      <Flex
+        justifyContent="center"
+        alignItems="center"
+        gap="10px"
+        flexWrap="wrap" // Allows wrapping for smaller screens
+      >
         {evoNames.map(([species_name, id], index) => (
           <Flex key={index} alignItems="center">
             {/* Evolution Image and Name */}
             <Flex flexDirection="column" alignItems="center">
               <Image
-                width="120px"
+                width={{ base: '60px', md: '120px' }} // Responsive width
                 src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/${id}.png`}
                 alt={`${species_name} sprite`}
               />
-              <Text className="pname">{species_name}</Text>
+              <Text className="pname" fontSize={{ base: 'sm', md: 'md' }}>
+                {' '}
+                {/* Adjust font size */}
+                {species_name}
+              </Text>
             </Flex>
 
             {/* Arrow Icon for Transition */}
             {index < evoNames.length - 1 && (
               <Center mx={3}>
                 <ArrowForwardIcon
-                  boxSize={8}
+                  boxSize={{ base: 4, md: 8 }} // Responsive size
                   color="gray.700"
                   aria-label="evolution transition"
                 />
