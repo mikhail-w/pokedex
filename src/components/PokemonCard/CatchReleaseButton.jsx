@@ -1,6 +1,6 @@
 import { isInTeam, catchPokemon, releasePokemon } from '../../utils';
 import { motion } from 'framer-motion';
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { TbPokeballOff } from 'react-icons/tb';
 import { useOutletContext } from 'react-router-dom';
 import { Box, Image, Tooltip } from '@chakra-ui/react';
@@ -51,6 +51,8 @@ function CatchReleaseButton({ id, name }) {
     return isPokemonInTeam ? 'Release Pokemon' : 'Catch Pokemon';
   }, [disabled, isPokemonInTeam]);
 
+  const [isTooltipOpen, setIsTooltipOpen] = useState(false);
+
   return (
     <Tooltip
       label={tooltipLabel}
@@ -58,6 +60,7 @@ function CatchReleaseButton({ id, name }) {
       fontSize="lg"
       hasArrow
       bg={disabled ? '#718096' : isPokemonInTeam ? '#e53e3e' : '#3d7dca'}
+      isOpen={isTooltipOpen}
     >
       <Box
         w="1.6rem"
@@ -66,6 +69,8 @@ function CatchReleaseButton({ id, name }) {
           disabled ? 'disabled' : isPokemonInTeam ? 'release' : 'catch'
         }`}
         onClick={disabled ? undefined : handleClick}
+        onMouseEnter={() => setIsTooltipOpen(true)} // Show on hover
+        onMouseLeave={() => setIsTooltipOpen(false)} // Hide on hover out
       >
         {disabled ? (
           <TbPokeballOff size={30} className="disabled-icon" />

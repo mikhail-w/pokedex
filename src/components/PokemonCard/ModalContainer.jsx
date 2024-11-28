@@ -75,7 +75,7 @@ function ModalContainer({
     >
       {/* NORMAL SECTION */}
       <Box w="100%" maxWidth={'450px'} marginTop={'10px'}>
-        {/* BACK ARROW AND POKEBALL LOGO */}
+        {/* BACK ARROW AND CATCH RELEASE ICON */}
         <Flex
           w="90%"
           margin="20px auto"
@@ -152,19 +152,35 @@ function ModalContainer({
           <Flex justifyContent="left" flexWrap="wrap">
             {type.map((t, index) => (
               <Flex
+                cursor={'pointer'}
                 key={index}
                 className="pokeDetail-type-tab"
                 bg={colors[t]}
                 marginLeft={index === 0 ? '0px' : '10px'}
                 alignItems="center"
-                padding="5px"
-                borderRadius="8px"
+                padding="8px 12px" // Increased padding for better spacing
+                borderRadius="12px" // More rounded corners
+                boxShadow="0 4px 6px rgba(0, 0, 0, 0.2)" // Add a subtle shadow
+                transition="transform 0.2s, box-shadow 0.2s" // Add hover animation
+                _hover={{
+                  transform: 'scale(1.05)', // Slight zoom effect on hover
+                  boxShadow: '0 6px 8px rgba(0, 0, 0, 0.3)', // Enhanced shadow on hover
+                }}
                 style={{
-                  filter: 'saturate(2.5) brightness(1.2)', // Increase saturation and brightness
+                  filter: 'saturate(2.5) brightness(1.1)', // Slightly increased brightness
                 }}
               >
-                <Image w="20px" h="20px" src={modalIcons[t]} />
-                <Text paddingLeft="5px">{t}</Text>
+                <Image w="24px" h="24px" src={modalIcons[t]} />{' '}
+                {/* Larger icon */}
+                <Text
+                  paddingLeft="8px" // Increased padding between icon and text
+                  fontWeight="bold" // Bold text for emphasis
+                  fontSize="14px" // Adjust font size
+                  color="white" // Consistent text color
+                  textShadow="0px 1px 2px rgba(0, 0, 0, 0.8)" // Softer text shadow
+                >
+                  {t}
+                </Text>
               </Flex>
             ))}
           </Flex>
