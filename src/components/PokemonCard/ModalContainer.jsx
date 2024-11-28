@@ -100,7 +100,7 @@ function ModalContainer({
             <Text
               className="modal-title"
               fontSize={
-                String(name).length > 10
+                String(name).length > 13
                   ? isMobile
                     ? '.7rem'
                     : '1rem'
