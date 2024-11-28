@@ -5,7 +5,6 @@ import pokedex from '../assets/images/pokemon/pokedex.png';
 import pokeball3 from '../assets/images/pokeballs/pokeball3.png';
 import ballOutline2 from '../assets/images/pokeballs/balloutline2.png';
 import ballOutline3 from '../assets/images/pokeballs/balloutline3.svg';
-import rm from '../assets/images/rm.png';
 import { Center, useColorModeValue, Box } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 

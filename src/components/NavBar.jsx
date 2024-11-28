@@ -27,13 +27,12 @@ import {
   InputRightAddon,
   useMediaQuery,
 } from '@chakra-ui/react';
+
 function NavBar({ myTeam, isLoading }) {
   const { colorMode, toggleColorMode } = useColorMode();
   const inputRef = useRef();
   const [search, setSearch] = useState('');
   const navigate = useNavigate();
-  const [isMobile] = useMediaQuery('(max-width: 768px)');
-  const menuRef = useRef();
 
   const handleSubmit = e => {
     e.preventDefault();
@@ -41,9 +40,6 @@ function NavBar({ myTeam, isLoading }) {
     if (pokemonName) {
       setSearch('');
       navigate(`/pokemon/${pokemonName}`);
-      if (menuRef.current) {
-        menuRef.current.closeMenu(); // Close the menu after search
-      }
     }
   };
 
@@ -53,6 +49,8 @@ function NavBar({ myTeam, isLoading }) {
 
   const bgColor = useColorModeValue('gray.100', 'gray.900');
   const searchButtonColor = useColorModeValue('#396bba', '#e53e3e');
+
+  const [isMobile] = useMediaQuery('(max-width: 768px)');
 
   const SearchBar = (
     <Box maxW="250px" ml={2} onClick={e => e.stopPropagation()}>
@@ -107,46 +105,39 @@ function NavBar({ myTeam, isLoading }) {
 
             {/* User Menu */}
             <Menu>
-              {({ onClose }) => {
-                menuRef.current = { closeMenu: onClose };
-                return (
+              <MenuButton
+                as={Button}
+                rounded="full"
+                variant="link"
+                cursor="pointer"
+                minW={0}
+                mr={2}
+              >
+                <Avatar size="sm" src={pokeball} />
+              </MenuButton>
+              <MenuList alignItems="center">
+                <Center>
+                  <Avatar src={pokeball} />
+                </Center>
+                <Center>
+                  <p>Menu</p>
+                </Center>
+                <MenuDivider />
+                {isMobile && (
                   <>
-                    <MenuButton
-                      as={Button}
-                      rounded="full"
-                      variant="link"
-                      cursor="pointer"
-                      minW={0}
-                      mr={2}
-                    >
-                      <Avatar size="sm" src={pokeball} />
-                    </MenuButton>
-                    <MenuList alignItems="center">
-                      <Center>
-                        <Avatar src={pokeball} />
-                      </Center>
-                      <Center>
-                        <p>Menu</p>
-                      </Center>
-                      <MenuDivider />
-                      {isMobile && (
-                        <>
-                          <MenuItem>{SearchBar}</MenuItem>
-                          <MenuDivider />
-                        </>
-                      )}
-                      <CustomMenuItem to="/">Home</CustomMenuItem>
-                      <CustomMenuItem to="/random/">
-                        Get Random Pokemon
-                      </CustomMenuItem>
-                      <CustomMenuItem to="/list/">Pokemon List</CustomMenuItem>
-                      <CustomMenuItem to="/team">
-                        My Team #{myTeam.length}
-                      </CustomMenuItem>
-                    </MenuList>
+                    <MenuItem>{SearchBar}</MenuItem>
+                    <MenuDivider />
                   </>
-                );
-              }}
+                )}
+                <CustomMenuItem to="/">Home</CustomMenuItem>
+                <CustomMenuItem to="/random/">
+                  Get Random Pokemon
+                </CustomMenuItem>
+                <CustomMenuItem to="/list/">Pokemon List</CustomMenuItem>
+                <CustomMenuItem to="/team">
+                  My Team #{myTeam.length}
+                </CustomMenuItem>
+              </MenuList>
             </Menu>
           </Stack>
         </Flex>
