@@ -70,7 +70,7 @@ function ModalContainer({
       alignItems={'center'}
       borderRadius={'50px'}
       overflow="hidden"
-      maxHeight={isMobile ? '90vh' : 'fit-content'}
+      maxHeight={isMobile ? '80vh' : 'fit-content'}
       flexDirection={isMobile ? 'column' : 'row'}
     >
       {/* NORMAL SECTION */}
@@ -87,14 +87,12 @@ function ModalContainer({
             onClick={onClose}
             size="1.8rem"
           />
-          {/* <CgPokemon size="1.8rem" /> */}
           <CatchReleaseButton id={id} name={name} />
         </Flex>
         {/* MODAL HEADER SECTION */}
         <ModalHeader textTransform="capitalize" w="100%" textAlign="center">
           {/* NAME AND ID SECTION */}
           <Flex
-            // outline={'2px solid'}
             position={'relative'}
             justifyContent="space-between"
             marginBottom="10px"
@@ -105,17 +103,41 @@ function ModalContainer({
             >
               {name}
             </Text>
-            {/* <Text fontSize={isMobile ? '1rem' : '1.5rem'}>
-              #{String(id).padStart(3, '0')}
-            </Text> */}
             <Box
-              position={'absolute'}
-              left={'300px'}
-              top={'50px'}
-              // outline={'2px solid'}
+              position="absolute"
+              left={
+                String(id).length > 3
+                  ? isMobile
+                    ? '250px'
+                    : '340px'
+                  : isMobile
+                  ? '220px'
+                  : '300px'
+              }
+              top={
+                String(id).length > 3
+                  ? isMobile
+                    ? '20px'
+                    : '30px'
+                  : isMobile
+                  ? '10px'
+                  : '20px'
+              }
               className="background-watermark"
             >
-              #{String(id).padStart(3, '0')}
+              <Text
+                fontSize={
+                  String(id).length > 3
+                    ? isMobile
+                      ? '1.7rem'
+                      : '2.5rem'
+                    : isMobile
+                    ? '3rem'
+                    : '4.5rem'
+                }
+              >
+                #{String(id).padStart(3, '0')}
+              </Text>
             </Box>
           </Flex>
           {/* POKEMON TYPE SECTION */}
@@ -178,7 +200,6 @@ function ModalContainer({
           <Flex
             className="extended-section"
             height={'700px'}
-            // overflowY="auto"
             flexDirection="column"
             w="100%"
             alignItems={'center'}

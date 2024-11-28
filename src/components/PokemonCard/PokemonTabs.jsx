@@ -22,8 +22,15 @@ function PokemonTabs({ card, pokeInfo }) {
       size="sm"
       w={{ base: '100%', md: '450px' }}
       borderRadius={'50px'}
+      height="100px"
     >
-      <TabList position="sticky" top="0" zIndex="1" bg="white">
+      <TabList
+        position="sticky"
+        top="0"
+        zIndex="1"
+        bg="white"
+        paddingBottom={'5px'}
+      >
         <Tab fontSize={{ base: 'xs', md: 'md' }}>About</Tab>
         <Tab fontSize={{ base: 'xs', md: 'md' }}>Stats</Tab>
         <Tab fontSize={{ base: 'xs', md: 'md' }}>Moves</Tab>
@@ -34,7 +41,7 @@ function PokemonTabs({ card, pokeInfo }) {
         maxHeight={{ base: 'auto', md: '400px' }}
         overflowY={{ base: 'visible', md: 'auto' }}
       >
-        <TabPanels height={'170px'} overflow={'scroll'} paddingBottom={'20px'}>
+        <TabPanels height={'150px'} overflow={'scroll'} paddingBottom={'20px'}>
           {/* ABOUT TAB */}
           <TabPanel>
             {card ? (
@@ -248,8 +255,11 @@ function PokemonTabs({ card, pokeInfo }) {
                 gap="20px"
                 wrap="nowrap"
                 overflowX="auto"
+                overflowY="hidden"
                 padding="10px"
                 width="100%"
+                height="auto"
+                maxHeight="100px"
               >
                 {Object.entries(card.sprites)
                   .filter(
@@ -262,7 +272,8 @@ function PokemonTabs({ card, pokeInfo }) {
                       src={url}
                       alt=""
                       width="100px"
-                      height="auto"
+                      height="90px" // Set fixed height for images
+                      objectFit="contain" // Prevent image overflow or distortion
                     />
                   ))}
               </Flex>

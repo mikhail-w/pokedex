@@ -47,13 +47,12 @@ function CatchReleaseButton({ id, name }) {
   }, [isPokemonInTeam]);
 
   const tooltipLabel = useMemo(() => {
-    if (disabled) return 'Disabled';
-    return isPokemonInTeam ? 'Release' : 'Catch';
+    if (disabled) return 'Team is full!';
+    return isPokemonInTeam ? 'Release Pokemon' : 'Catch Pokemon';
   }, [disabled, isPokemonInTeam]);
 
   return (
     <Tooltip
-      aria-label={`Tooltip: ${tooltipLabel}`}
       label={tooltipLabel}
       placement="top"
       fontSize="lg"

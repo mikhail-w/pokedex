@@ -31,8 +31,7 @@
   background-image: url(../images/pokeballs/ballopacity.png);
   background-repeat: no-repeat;
   background-size: cover;
-  /* background-position: bottom -100px right -150px; */
-  /* outline: 2px solid red; */
+  background-position: bottom -100px right -150px;
 }
 
 /* .modal-content.extended {
