@@ -23,6 +23,7 @@ import {
   InputGroup,
   InputLeftElement,
   InputRightAddon,
+  useDisclosure,
 } from '@chakra-ui/react';
 
 function NavBar({ myTeam }) {
@@ -30,6 +31,7 @@ function NavBar({ myTeam }) {
   const inputRef = useRef();
   const [search, setSearch] = useState('');
   const navigate = useNavigate();
+  const { isOpen, onOpen, onClose } = useDisclosure(); // Control menu state
 
   const handleSubmit = e => {
     e.preventDefault();
@@ -37,11 +39,14 @@ function NavBar({ myTeam }) {
     if (pokemonName) {
       setSearch('');
       navigate(`/pokemon/${pokemonName}`);
+      onClose(); // Close the menu
     }
   };
 
   const handleKeyDown = e => {
-    if (e.key === 'Enter') handleSubmit(e); // Updated from onKeyPress to onKeyDown
+    if (e.key === 'Enter') {
+      handleSubmit(e);
+    }
   };
 
   const bgColor = colorMode === 'light' ? 'gray.100' : 'gray.900';
@@ -58,7 +63,7 @@ function NavBar({ myTeam }) {
           onChange={e => setSearch(e.target.value)}
           ref={inputRef}
           value={search}
-          onKeyDown={handleKeyDown} // Updated from onKeyPress
+          onKeyDown={handleKeyDown}
         />
         <InputRightAddon p={0} border="none">
           <Button
@@ -97,7 +102,7 @@ function NavBar({ myTeam }) {
               {colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
             </Button>
             {/* User Menu */}
-            <Menu>
+            <Menu isOpen={isOpen} onClose={onClose}>
               <MenuButton
                 as={Button}
                 rounded="full"
@@ -105,6 +110,7 @@ function NavBar({ myTeam }) {
                 cursor="pointer"
                 minW={0}
                 mr={2}
+                onClick={onOpen}
               >
                 <Avatar size="sm" src={pokeball} />
               </MenuButton>

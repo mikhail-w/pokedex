@@ -159,6 +159,9 @@ function ModalContainer({
                 alignItems="center"
                 padding="5px"
                 borderRadius="8px"
+                style={{
+                  filter: 'saturate(2.5) brightness(1.2)', // Increase saturation and brightness
+                }}
               >
                 <Image w="20px" h="20px" src={modalIcons[t]} />
                 <Text paddingLeft="5px">{t}</Text>
