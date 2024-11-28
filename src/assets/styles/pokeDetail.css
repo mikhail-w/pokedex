@@ -13,6 +13,7 @@
   font-size: 100px;
   font-weight: bold;
   color: rgba(255, 255, 255, 0.2);
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
   z-index: 0;
   pointer-events: none;
   user-select: none;
@@ -34,10 +35,6 @@
   background-position: bottom -100px right -150px;
 }
 
-/* .modal-content.extended {
-  max-height: 1050px;
-  transition-duration: 2000ms;
-} */
 .extend-modal {
   position: absolute;
   right: 10px;
@@ -118,11 +115,6 @@
   font-family: 'Alleyn W01 Regular';
   text-transform: uppercase;
   text-decoration: underline;
-}
-
-.evoImg:hover {
-  /* scale: 1.5; */
-  /* transition-duration: 200ms; */
 }
 
 .pname {
