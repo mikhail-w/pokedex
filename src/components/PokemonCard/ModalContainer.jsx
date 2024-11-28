@@ -99,7 +99,15 @@ function ModalContainer({
           >
             <Text
               className="modal-title"
-              fontSize={isMobile ? '1.5rem' : '2rem'}
+              fontSize={
+                String(name).length > 10
+                  ? isMobile
+                    ? '1rem'
+                    : '1.5rem'
+                  : isMobile
+                  ? '1.5rem'
+                  : '2rem'
+              }
             >
               {name}
             </Text>
