@@ -16,7 +16,6 @@ import {
   MenuList,
   MenuItem,
   MenuDivider,
-  useColorModeValue,
   Stack,
   useColorMode,
   Center,
@@ -24,7 +23,6 @@ import {
   InputGroup,
   InputLeftElement,
   InputRightAddon,
-  useMediaQuery,
 } from '@chakra-ui/react';
 
 function NavBar({ myTeam }) {
@@ -42,13 +40,12 @@ function NavBar({ myTeam }) {
     }
   };
 
-  const handleKeyPress = e => {
-    if (e.key === 'Enter') handleSubmit(e);
+  const handleKeyDown = e => {
+    if (e.key === 'Enter') handleSubmit(e); // Updated from onKeyPress to onKeyDown
   };
 
-  const bgColor = useColorModeValue('gray.100', 'gray.900');
-  const searchButtonColor = useColorModeValue('#396bba', '#e53e3e');
-  const [isMobile] = useMediaQuery('(max-width: 768px)');
+  const bgColor = colorMode === 'light' ? 'gray.100' : 'gray.900';
+  const searchButtonColor = colorMode === 'light' ? '#396bba' : '#e53e3e';
 
   const SearchBar = (
     <Box maxW="250px" ml={2}>
@@ -61,7 +58,7 @@ function NavBar({ myTeam }) {
           onChange={e => setSearch(e.target.value)}
           ref={inputRef}
           value={search}
-          onKeyPress={handleKeyPress}
+          onKeyDown={handleKeyDown} // Updated from onKeyPress
         />
         <InputRightAddon p={0} border="none">
           <Button
@@ -93,13 +90,12 @@ function NavBar({ myTeam }) {
         {/* Right Section */}
         <Flex alignItems="center">
           <Stack direction="row" spacing={7}>
-            {!isMobile && SearchBar}
-
+            <Box display={{ base: 'none', md: 'block' }}>{SearchBar}</Box>{' '}
+            {/* Responsive Chakra UI Display */}
             {/* Theme Toggle */}
             <Button onClick={toggleColorMode}>
               {colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
             </Button>
-
             {/* User Menu */}
             <Menu>
               <MenuButton
@@ -120,12 +116,10 @@ function NavBar({ myTeam }) {
                   <p>Menu</p>
                 </Center>
                 <MenuDivider />
-                {isMobile && (
-                  <>
-                    <Box p={2}>{SearchBar}</Box>
-                    <MenuDivider />
-                  </>
-                )}
+                <Box display={{ base: 'block', md: 'none' }} p={2}>
+                  {SearchBar}
+                </Box>
+                <MenuDivider />
                 <CustomMenuItem to="/">Home</CustomMenuItem>
                 <CustomMenuItem to="/random/">
                   Get Random Pokemon

@@ -25,8 +25,6 @@ function InfoTab() {
     >
       <TableContainer>
         <Table size="sm" mt="20" fontSize={['xs', 'sm']}>
-          {' '}
-          {/* Adjust font size */}
           <Tbody>
             <Tr>
               <Td

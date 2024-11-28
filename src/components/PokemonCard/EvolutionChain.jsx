@@ -12,7 +12,7 @@ function EvolutionChain({ evoNames }) {
       <Flex
         justifyContent="center"
         alignItems="center"
-        gap="10px"
+        gap="5px"
         flexWrap="wrap" // Allows wrapping for smaller screens
       >
         {evoNames.map(([species_name, id], index) => (
@@ -20,7 +20,7 @@ function EvolutionChain({ evoNames }) {
             {/* Evolution Image and Name */}
             <Flex flexDirection="column" alignItems="center">
               <Image
-                width={{ base: '60px', md: '120px' }} // Responsive width
+                width={{ base: '50px', md: '120px' }} // Responsive width
                 src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/${id}.png`}
                 alt={`${species_name} sprite`}
               />
@@ -35,7 +35,7 @@ function EvolutionChain({ evoNames }) {
             {index < evoNames.length - 1 && (
               <Center mx={3}>
                 <ArrowForwardIcon
-                  boxSize={{ base: 4, md: 8 }} // Responsive size
+                  boxSize={{ base: 3, md: 8 }} // Responsive size
                   color="gray.700"
                   aria-label="evolution transition"
                 />
