@@ -151,9 +151,10 @@ function ModalContainer({
           <Flex
             className="extended-section"
             height={'700px'}
-            overflowY="auto"
+            // overflowY="auto"
             flexDirection="column"
             w="100%"
+            alignItems={'center'}
           >
             <FlavorText flavorTextArray={flavorTextArray} />
             <EvolutionChain evoNames={evoNames} />

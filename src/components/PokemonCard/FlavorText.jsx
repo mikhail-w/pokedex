@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import ReactPaginate from 'react-paginate';
 import '../../assets/styles/FlavorText.css';
-import { Center, Flex, Text, Box } from '@chakra-ui/react';
+import { Center, Flex, Text, Box, useMediaQuery } from '@chakra-ui/react';
 
 const FlavorText = ({ flavorTextArray }) => {
   const [pageNumber, setPageNumber] = useState(0);
+  const [isMobile] = useMediaQuery('(max-width: 900px)'); // Media query for mobile mode
 
   const linesPerPage = 1;
 
@@ -31,22 +32,15 @@ const FlavorText = ({ flavorTextArray }) => {
   );
 
   return (
-    <Center
-      flexDirection="column"
-      px={{ base: '10px', md: '20px' }}
-      mt="20px"
-      maxW="90%"
-      outline={'2px solid'}
-    >
+    <Center flexDirection="column" mt="20px" maxW="90%">
       <Text
-        className="text"
-        mt={{ base: '20px', md: '40px' }}
+        margin={{ base: '30px', md: '40px' }}
         fontFamily="Alleyn W01 Regular"
         textAlign="center"
-        height={{ base: 'auto', md: '100px' }}
+        height={{ base: '100px', md: '100px' }}
         overflow="hidden"
         textOverflow="ellipsis"
-        fontSize={{ base: '10px', md: '16px' }}
+        fontSize={{ base: '17px', md: '20px' }}
         lineHeight={{ base: '20px', md: '24px' }}
       >
         {currentText.map((flavorText, index) => (
@@ -55,7 +49,8 @@ const FlavorText = ({ flavorTextArray }) => {
           </span>
         ))}
       </Text>
-      <Box mt={{ base: '10px', md: '20px' }} width="100%">
+
+      <Center mt={{ base: '10px', md: '20px' }} width="100%">
         <ReactPaginate
           previousLabel={'prev'}
           nextLabel={'next'}
@@ -66,10 +61,12 @@ const FlavorText = ({ flavorTextArray }) => {
           nextLinkClassName="nextBttn"
           disabledClassName="paginationDisabled"
           activeClassName="paginationActive"
-          breakLabel="..."
+          breakLabel={isMobile ? null : '...'}
           breakClassName="breakBttn"
+          pageClassName={isMobile ? 'hiddenPage' : 'paginationPage'}
+          pageLinkClassName={isMobile ? 'hiddenLink' : 'pageLink'}
         />
-      </Box>
+      </Center>
     </Center>
   );
 };

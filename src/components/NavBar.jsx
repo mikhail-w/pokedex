@@ -1,7 +1,6 @@
 'use client';
 import '../assets/styles/NavBar.css';
 import pokeball from '../assets/images/pokeballs/pokeball.png';
-import Loading from './Loading';
 
 import { MoonIcon, SunIcon } from '@chakra-ui/icons';
 import { useRef, useState } from 'react';
@@ -28,7 +27,7 @@ import {
   useMediaQuery,
 } from '@chakra-ui/react';
 
-function NavBar({ myTeam, isLoading }) {
+function NavBar({ myTeam }) {
   const { colorMode, toggleColorMode } = useColorMode();
   const inputRef = useRef();
   const [search, setSearch] = useState('');
@@ -49,11 +48,10 @@ function NavBar({ myTeam, isLoading }) {
 
   const bgColor = useColorModeValue('gray.100', 'gray.900');
   const searchButtonColor = useColorModeValue('#396bba', '#e53e3e');
-
   const [isMobile] = useMediaQuery('(max-width: 768px)');
 
   const SearchBar = (
-    <Box maxW="250px" ml={2} onClick={e => e.stopPropagation()}>
+    <Box maxW="250px" ml={2}>
       <InputGroup borderRadius={50} size="sm">
         <InputLeftElement />
         <Input
@@ -95,7 +93,6 @@ function NavBar({ myTeam, isLoading }) {
         {/* Right Section */}
         <Flex alignItems="center">
           <Stack direction="row" spacing={7}>
-            {/* Conditionally Render Search Bar */}
             {!isMobile && SearchBar}
 
             {/* Theme Toggle */}
@@ -125,7 +122,7 @@ function NavBar({ myTeam, isLoading }) {
                 <MenuDivider />
                 {isMobile && (
                   <>
-                    <MenuItem>{SearchBar}</MenuItem>
+                    <Box p={2}>{SearchBar}</Box>
                     <MenuDivider />
                   </>
                 )}
