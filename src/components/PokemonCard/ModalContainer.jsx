@@ -102,8 +102,8 @@ function ModalContainer({
               fontSize={
                 String(name).length > 10
                   ? isMobile
-                    ? '1rem'
-                    : '1.5rem'
+                    ? '.7rem'
+                    : '1rem'
                   : isMobile
                   ? '1.5rem'
                   : '2rem'
