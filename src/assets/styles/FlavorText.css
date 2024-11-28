@@ -20,12 +20,12 @@
   cursor: pointer;
 }
 
-.flavorText {
-  margin-top: 10px;
-  min-height: 120px;
-  font-family: "Alleyn W01 Regular";
-  /* font-size: 1.1rem; */
-  text-align: center;
+.hiddenPage {
+  display: none;
+}
+
+.hiddenLink {
+  display: none;
 }
 
 .previousBttn, .nextBttn {

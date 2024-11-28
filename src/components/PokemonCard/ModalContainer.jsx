@@ -157,20 +157,21 @@ function ModalContainer({
         <PokemonTabs card={card} pokeInfo={pokeInfo} />
       </Box>
       {/* EXPANDED SECTION */}
-      {isExpanded && (
-        <Flex
-          className="extended-section"
-          flexDirection="column"
-          outline={'2px solid'}
-          padding={'20px'}
-          alignItems={'center'}
-          height={isMobile ? 'calc(90vh - 100px)' : '700px'} // Adjust for mobile mode
-          overflowY="auto" // Enable scrolling
-        >
-          <FlavorText flavorTextArray={flavorTextArray} />
-          <EvolutionChain evoNames={evoNames} />
-        </Flex>
-      )}
+      <Box>
+        {isExpanded && (
+          <Flex
+            className="extended-section"
+            height={'700px'}
+            // overflowY="auto"
+            flexDirection="column"
+            w="100%"
+            alignItems={'center'}
+          >
+            <FlavorText flavorTextArray={flavorTextArray} />
+            <EvolutionChain evoNames={evoNames} />
+          </Flex>
+        )}
+      </Box>
     </ModalContent>
   );
 }
