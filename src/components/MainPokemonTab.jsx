@@ -88,7 +88,7 @@ function MainPokemonTab() {
           </TabContent>
         </TabPanel>
 
-        <TabPanel>
+        <TabPanel paddingBottom={'20px'}>
           <MainPokemonName pokemonName={pokemon.name} isTeam="true" />
           <Flex
             flexWrap="wrap"
@@ -97,7 +97,7 @@ function MainPokemonTab() {
             justifyContent="center"
             maxW="100%"
             height="auto"
-            maxHeight={['calc(100vh - 335px)', '430px']}
+            maxHeight={['calc(100vh - 315px)', '430px']}
             gap={['35px', '20px', '35px']}
             overflowY="auto"
           >
@@ -132,6 +132,7 @@ function MainPokemonTab() {
           bottom={'120px'}
           px={['10px', '20px']}
           whiteSpace="nowrap"
+          // marginTop={'15px'}
         >
           <Tab>
             <CgPokemon color="#ef5350" size="2em" />
