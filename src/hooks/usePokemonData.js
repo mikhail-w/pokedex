@@ -1,5 +1,8 @@
 import { useState } from 'react';
-import axios from 'axios';
+import {
+  getPokemonSpecies,
+  getEvolutionChain,
+} from '../services/pokemonService';
 
 const usePokemonData = () => {
   const [pokeInfo, setPokeInfo] = useState(null);
@@ -18,22 +21,20 @@ const usePokemonData = () => {
     setError(null);
 
     try {
-      // Fetch Pokémon species data
-      const speciesUrl = `https://pokeapi.co/api/v2/pokemon-species/${pokemonId}`;
-      const speciesResponse = await axios.get(speciesUrl);
-
-      const speciesData = speciesResponse.data;
+      // Fetch Pokémon species data using pokemonService.js
+      const speciesData = await getPokemonSpecies(pokemonId);
 
       // Update basic Pokémon information and flavor text
       setPokeInfo(speciesData);
       setFlavorText(speciesData.flavor_text_entries);
 
-      // Fetch evolution chain data
-      const evolutionChainUrl = speciesData.evolution_chain.url;
-      const evolutionResponse = await axios.get(evolutionChainUrl);
+      // Fetch evolution chain data using pokemonService.js
+      const evolutionChainData = await getEvolutionChain(
+        speciesData.evolution_chain.url
+      );
 
       const evoChain = [];
-      let evoData = evolutionResponse.data.chain;
+      let evoData = evolutionChainData.chain;
 
       const numberPattern = /\d+/g;
 

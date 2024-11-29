@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { getType } from '../utils';
 import '../assets/styles/PokemonPage.css';
 import Loading from '../components/Loading';
@@ -6,6 +5,7 @@ import BackButton from '../components/BackButton';
 import { useEffect, useState, useRef } from 'react';
 import { Center, Image, Text } from '@chakra-ui/react';
 import { useOutletContext, useParams } from 'react-router-dom';
+import { getPokemonDataById } from '../services/pokemonService';
 import PokemonCard from '../components/PokemonCard/PokemonCard';
 import openBall from '../assets/images/pokeballs/open-ball.png';
 
@@ -24,35 +24,30 @@ function PokemonPage() {
   } = useOutletContext();
   const [valid, setValid] = useState(false);
   const { name } = useParams();
-  let response;
 
   const getPokemon = async () => {
     try {
       setIsLoading(true);
-      response = await axios.get(
-        `https://pokeapi.co/api/v2/pokemon/${name.toLowerCase()}`
-      );
-      setPokemon(response.data);
-      timerId.current = setTimeout(() => {
-        setIsLoading(false);
-      }, 1000);
+      const data = await getPokemonDataById(name.toLowerCase());
+      setPokemon(data);
       setValid(true);
     } catch (err) {
+      console.error('Error fetching Pokémon data:', err);
+      setValid(false);
+    } finally {
       timerId.current = setTimeout(() => {
         setIsLoading(false);
       }, 1000);
-      setValid(false);
-      console.error('Error response:');
-      console.error(err.response.data); // ***
-      console.error(err.response.status); // ***
-      console.error(err.response.headers); // ***
-    } finally {
-      // console.log(response);
     }
   };
 
   useEffect(() => {
     getPokemon();
+    return () => {
+      if (timerId.current) {
+        clearTimeout(timerId.current);
+      }
+    };
   }, [name]);
 
   return (
@@ -84,7 +79,7 @@ function PokemonPage() {
         <Center flexDirection={'column'} className="not-found" id="root">
           <Image src={openBall} />
           <Text>
-            No pokemon with name or id <span>'{name}'</span> exists!
+            No Pokémon with name or id <span>'{name}'</span> exists!
           </Text>
         </Center>
       )}

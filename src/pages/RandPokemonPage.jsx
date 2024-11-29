@@ -1,9 +1,12 @@
-import axios from 'axios';
 import { getRandomID } from '../utils';
 import { useEffect, useState, useRef } from 'react';
 import { useOutletContext } from 'react-router-dom';
 import MainPokemonTab from '../components/MainPokemonTab';
 import GenerateButton from '../components/GenerateButton';
+import {
+  getPokemonDataById,
+  getPokemonByType,
+} from '../services/pokemonService';
 
 function RandPokemonPage() {
   const [valid, setValid] = useState(false);
@@ -15,34 +18,29 @@ function RandPokemonPage() {
     try {
       setIsLoading(true);
       setrandomID(getRandomID(1025));
-      // Fetch the main Pokémon
-      const pokemonResponse = await axios.get(
-        `https://pokeapi.co/api/v2/pokemon/${randomID}`
-      );
 
-      const mainPokemon = pokemonResponse.data;
+      // Fetch the main Pokémon using pokemonService.js
+      const mainPokemon = await getPokemonDataById(randomID);
       setPokemon(mainPokemon);
       window.localStorage.setItem('MAIN_POKEMON', JSON.stringify(mainPokemon));
 
-      // Fetch Pokémon team
+      // Fetch Pokémon team by type using pokemonService.js
       const teamTypeURL = mainPokemon.types[0].type.url;
-      const teamResponse = await axios.get(teamTypeURL);
+      const teamDataResponse = await getPokemonByType(teamTypeURL);
 
       const teamIndexes = [];
       while (teamIndexes.length < 5) {
-        const randomIndex = getRandomID(teamResponse.data.pokemon.length);
+        const randomIndex = getRandomID(teamDataResponse.pokemon.length);
         if (!teamIndexes.includes(randomIndex)) {
           teamIndexes.push(randomIndex);
         }
       }
 
-      const teamURLs = teamIndexes.map(
-        i =>
-          `https://pokeapi.co/api/v2/pokemon/${teamResponse.data.pokemon[i].pokemon.name}`
-      );
-
       const teamData = await Promise.all(
-        teamURLs.map(async url => (await axios.get(url)).data)
+        teamIndexes.map(
+          async i =>
+            await getPokemonDataById(teamDataResponse.pokemon[i].pokemon.name)
+        )
       );
 
       setTeam(teamData);
@@ -64,6 +62,11 @@ function RandPokemonPage() {
   useEffect(() => {
     // Fetch new Pokémon data on component mount
     getRandomPokemon();
+    return () => {
+      if (timerId.current) {
+        clearTimeout(timerId.current);
+      }
+    };
   }, []); // Empty dependency to ensure this runs only once
 
   return (

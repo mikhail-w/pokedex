@@ -2,13 +2,13 @@ import { Center } from '@chakra-ui/react';
 import BackButton from '../components/BackButton';
 import { useOutletContext } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import axios from 'axios';
 import noCatch from '../assets/images/pokeballs/ball-no-catch.png';
 import { Image, Text } from '@chakra-ui/react';
 import '../assets/styles/MyTeamPage.css';
 import PokemonCard from '../components/PokemonCard/PokemonCard';
 import { getType } from '../utils';
 import Loading from '../components/Loading';
+import { getPokemonDataById } from '../services/pokemonService';
 
 function MyTeamPage() {
   const { myTeam, setMyTeam } = useOutletContext();
@@ -21,11 +21,9 @@ function MyTeamPage() {
     const fetchPokemonData = async () => {
       try {
         setLoading(true);
-        const promises = myTeam.map(id =>
-          axios.get(`https://pokeapi.co/api/v2/pokemon/${id}`)
-        );
+        const promises = myTeam.map(id => getPokemonDataById(id));
         const responses = await Promise.all(promises);
-        setPokemonData(responses.map(response => response.data));
+        setPokemonData(responses);
       } catch (error) {
         console.error('Error fetching Pokémon data:', error);
       } finally {
