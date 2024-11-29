@@ -17,29 +17,26 @@ function PokemonCard({ card, src, src2, name, type, id }) {
   const [isHovered, setIsHovered] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const currentCardInfo = `https://pokeapi.co/api/v2/pokemon-species/${id}`;
-
-  // Determine background color based on Pokémon type
   const backgroundColor = getBackgroundColors(type);
+
+  const [flavorTextArray, setFlavorText] = useState([]);
+  const [evoNames, setEvoNames] = useState([]);
+  const [pokeInfo, setPokeInfo] = useState([]);
 
   // Flip card handlers
   const handleFlip = useCallback(() => setIsFlipped(prev => !prev), []);
   const handleMouseEnter = useCallback(() => setIsHovered(true), []);
   const handleMouseLeave = useCallback(() => setIsHovered(false), []);
   const handleExpand = useCallback(() => setIsExpanded(prev => !prev), []);
-  const [flavorTextArray, setFlavorText] = useState([]);
-  const [evoNames, setEvoNames] = useState([]);
-  const [pokeInfo, setPokeInfo] = useState([]);
-
-  // console.log('POKE INFO:', pokeInfo);
-  // console.log('CARD: ', card);
 
   const handleClick = async () => {
     try {
-      const speciesData = await getPokemonSpecies(currentCardInfo);
+      // Fetch Pokémon species data
+      const speciesData = await getPokemonSpecies(id); // Pass the Pokémon ID directly
       setPokeInfo(speciesData);
       setFlavorText(speciesData.flavor_text_entries);
 
+      // Fetch evolution chain data
       const evolutionData = await getEvolutionChain(
         speciesData.evolution_chain.url
       );
@@ -71,6 +68,7 @@ function PokemonCard({ card, src, src2, name, type, id }) {
       console.error('Error in handleClick:', error);
     }
   };
+
   return (
     <motion.div
       initial={{ y: -250 }}
@@ -124,7 +122,7 @@ function PokemonCard({ card, src, src2, name, type, id }) {
             handleClick={handleClick}
             onOpenModal={onOpen}
             backgroundColor={backgroundColor}
-          ></CardFront>
+          />
 
           {/* Card Back */}
           <CardBack
@@ -135,7 +133,7 @@ function PokemonCard({ card, src, src2, name, type, id }) {
             offHover={handleMouseLeave}
             isHovered={isHovered}
             backgroundColor={backgroundColor}
-          ></CardBack>
+          />
         </ReactCardFlip>
       </Box>
     </motion.div>

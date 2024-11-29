@@ -5,7 +5,7 @@ import BackButton from '../components/BackButton';
 import { useEffect, useState, useRef } from 'react';
 import { Center, Image, Text } from '@chakra-ui/react';
 import { useOutletContext, useParams } from 'react-router-dom';
-import { getPokemonDataById } from '../services/pokemonService';
+import { getPokemonById } from '../services/pokemonService';
 import PokemonCard from '../components/PokemonCard/PokemonCard';
 import openBall from '../assets/images/pokeballs/open-ball.png';
 
@@ -28,7 +28,7 @@ function PokemonPage() {
   const getPokemon = async () => {
     try {
       setIsLoading(true);
-      const data = await getPokemonDataById(name.toLowerCase());
+      const data = await getPokemonById(name.toLowerCase());
       setPokemon(data);
       setValid(true);
     } catch (err) {

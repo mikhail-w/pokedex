@@ -1,12 +1,9 @@
+import { getPokemonById, getPokemonByType } from '../services/pokemonService';
 import { getRandomID } from '../utils';
 import { useEffect, useState, useRef } from 'react';
 import { useOutletContext } from 'react-router-dom';
 import MainPokemonTab from '../components/MainPokemonTab';
 import GenerateButton from '../components/GenerateButton';
-import {
-  getPokemonDataById,
-  getPokemonByType,
-} from '../services/pokemonService';
 
 function RandPokemonPage() {
   const [valid, setValid] = useState(false);
@@ -20,7 +17,7 @@ function RandPokemonPage() {
       setrandomID(getRandomID(1025));
 
       // Fetch the main Pokémon using pokemonService.js
-      const mainPokemon = await getPokemonDataById(randomID);
+      const mainPokemon = await getPokemonById(randomID);
       setPokemon(mainPokemon);
       window.localStorage.setItem('MAIN_POKEMON', JSON.stringify(mainPokemon));
 
@@ -39,7 +36,7 @@ function RandPokemonPage() {
       const teamData = await Promise.all(
         teamIndexes.map(
           async i =>
-            await getPokemonDataById(teamDataResponse.pokemon[i].pokemon.name)
+            await getPokemonById(teamDataResponse.pokemon[i].pokemon.name)
         )
       );
 

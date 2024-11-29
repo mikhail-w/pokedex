@@ -24,3 +24,8 @@ export const getPokemonTeam = async typeUrl => {
   const response = await apiClient.get(typeUrl);
   return response.data;
 };
+
+export const getPokemonByType = async typeUrl => {
+  const response = await apiClient.get(typeUrl);
+  return response.data;
+};

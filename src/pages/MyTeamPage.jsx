@@ -8,7 +8,7 @@ import '../assets/styles/MyTeamPage.css';
 import PokemonCard from '../components/PokemonCard/PokemonCard';
 import { getType } from '../utils';
 import Loading from '../components/Loading';
-import { getPokemonDataById } from '../services/pokemonService';
+import { getPokemonById } from '../services/pokemonService';
 
 function MyTeamPage() {
   const { myTeam, setMyTeam } = useOutletContext();
@@ -21,7 +21,7 @@ function MyTeamPage() {
     const fetchPokemonData = async () => {
       try {
         setLoading(true);
-        const promises = myTeam.map(id => getPokemonDataById(id));
+        const promises = myTeam.map(id => getPokemonById(id));
         const responses = await Promise.all(promises);
         setPokemonData(responses);
       } catch (error) {
