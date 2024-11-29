@@ -97,7 +97,7 @@ function MainPokemonTab() {
             justifyContent="center"
             maxW="100%"
             height="auto"
-            maxHeight={['calc(100vh - 320px)', '430px']}
+            maxHeight={['calc(100vh - 335px)', '430px']}
             gap={['35px', '20px', '35px']}
             overflowY="auto"
           >
