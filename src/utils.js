@@ -87,27 +87,6 @@ export const isInTeam = (myTeam, id) => {
   return isPresent;
 };
 
-export const buildTeam = async teamResponse => {
-  let urls = [];
-  const teamMasterList = teamResponse.data.pokemon;
-  let teamMasterListSize = teamMasterList.length;
-
-  for (let i = 0; i < 5; i++) {
-    let idx = getRandomID(teamMasterListSize);
-    let teamMember = teamMasterList[idx];
-    let url = `https://pokeapi.co/api/v2/pokemon/${teamMember.pokemon.name}`;
-    urls.push(url.toString());
-  }
-
-  await Promise.all(
-    urls.map(async url => {
-      return (await axios.get(url)).data;
-    })
-  ).then(values => {
-    return values;
-  });
-};
-
 export function getRandomID(max) {
   return Math.floor(Math.random() * max);
 }

@@ -11,8 +11,7 @@ import { getType } from '../utils';
 import Loading from '../components/Loading';
 
 function MyTeamPage() {
-  const { myTeam, setMyTeam, disabled, setDisabled, setIsCaught } =
-    useOutletContext();
+  const { myTeam, setMyTeam } = useOutletContext();
 
   const [pokemonData, setPokemonData] = useState([]);
   const [loading, setLoading] = useState(true);

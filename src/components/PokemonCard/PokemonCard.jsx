@@ -7,7 +7,6 @@ import ModalContainer from './ModalContainer';
 import { useState, useCallback } from 'react';
 import { bgs, getBackgroundColors } from '../../utils';
 import { Box, Modal, ModalOverlay, useDisclosure } from '@chakra-ui/react';
-// import { usePokemonInfo } from '../../hooks/usePokemonInfo';
 import axios from 'axios';
 
 function PokemonCard({ card, src, src2, name, type, id }) {
@@ -16,7 +15,6 @@ function PokemonCard({ card, src, src2, name, type, id }) {
   const [isExpanded, setIsExpanded] = useState(false);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const currentCardInfo = `https://pokeapi.co/api/v2/pokemon-species/${id}`;
-  // const { pokeInfo, evoNames, flavorText } = usePokemonInfo(card.id);
 
   // Determine background color based on Pokémon type
   const backgroundColor = getBackgroundColors(type);

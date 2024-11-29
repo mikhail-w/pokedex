@@ -1,7 +1,6 @@
 import { Box, Tooltip, Image } from '@chakra-ui/react';
 import { motion } from 'framer-motion';
 import info from '../../assets/images/type_icons/i.svg';
-import axios from 'axios';
 
 function InfoIcon({ handleClick, onOpenModal, id }) {
   const MotionBox = motion(Box);

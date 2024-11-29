@@ -1,21 +1,19 @@
-import { useEffect, useState, useRef } from 'react';
-import { useOutletContext, useParams } from 'react-router-dom';
 import axios from 'axios';
-import BackButton from '../components/BackButton';
-import PokemonCard from '../components/PokemonCard/PokemonCard';
-import { Center, Image, Text } from '@chakra-ui/react';
 import { getType } from '../utils';
-import Loading from '../components/Loading';
-import { Link, useNavigate } from 'react-router-dom';
-import openBall from '../assets/images/pokeballs/open-ball.png';
 import '../assets/styles/PokemonPage.css';
+import Loading from '../components/Loading';
+import BackButton from '../components/BackButton';
+import { useEffect, useState, useRef } from 'react';
+import { Center, Image, Text } from '@chakra-ui/react';
+import { useOutletContext, useParams } from 'react-router-dom';
+import PokemonCard from '../components/PokemonCard/PokemonCard';
+import openBall from '../assets/images/pokeballs/open-ball.png';
 
 function PokemonPage() {
   const timerId = useRef(null);
   const {
     team,
     myTeam,
-    setMyTeam,
     disabled,
     setDisabled,
     isLoading,
@@ -54,7 +52,6 @@ function PokemonPage() {
   };
 
   useEffect(() => {
-    // console.log('***USE EFFECT TRIGGERED***');
     getPokemon();
   }, [name]);
 
@@ -87,7 +84,7 @@ function PokemonPage() {
         <Center flexDirection={'column'} className="not-found" id="root">
           <Image src={openBall} />
           <Text>
-            No such pokemon with name or id <span>'{name}'</span> exists!
+            No pokemon with name or id <span>'{name}'</span> exists!
           </Text>
         </Center>
       )}

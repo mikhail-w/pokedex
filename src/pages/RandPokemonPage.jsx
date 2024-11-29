@@ -1,9 +1,9 @@
 import axios from 'axios';
+import { getRandomID } from '../utils';
+import { useEffect, useState, useRef } from 'react';
+import { useOutletContext } from 'react-router-dom';
 import MainPokemonTab from '../components/MainPokemonTab';
 import GenerateButton from '../components/GenerateButton';
-import { useOutletContext } from 'react-router-dom';
-import { useEffect, useState, useRef } from 'react';
-import { getRandomID } from '../utils';
 
 function RandPokemonPage() {
   const [valid, setValid] = useState(false);
