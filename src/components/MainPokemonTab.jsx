@@ -97,8 +97,8 @@ function MainPokemonTab() {
             justifyContent="center"
             maxW="100%"
             height="auto"
-            maxHeight={['calc(100vh - 360px)', '430px']}
-            gap={['15px', '20px', '25px']}
+            maxHeight={['calc(100vh - 320px)', '430px']}
+            gap={['35px', '20px', '35px']}
             overflowY="auto"
           >
             {team.map((card, idx) => (
