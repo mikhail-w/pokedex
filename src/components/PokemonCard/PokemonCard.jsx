@@ -1,13 +1,16 @@
 import CardBack from './CardBack';
 import CardFront from './CardFront';
 import { motion } from 'framer-motion';
+import {
+  getPokemonSpecies,
+  getEvolutionChain,
+} from '../../services/pokemonService';
 import ReactCardFlip from 'react-card-flip';
 import '../../assets/styles/PokemonCard.css';
 import ModalContainer from './ModalContainer';
 import { useState, useCallback } from 'react';
 import { bgs, getBackgroundColors } from '../../utils';
 import { Box, Modal, ModalOverlay, useDisclosure } from '@chakra-ui/react';
-import axios from 'axios';
 
 function PokemonCard({ card, src, src2, name, type, id }) {
   const [isFlipped, setIsFlipped] = useState(false);
@@ -31,48 +34,43 @@ function PokemonCard({ card, src, src2, name, type, id }) {
   // console.log('POKE INFO:', pokeInfo);
   // console.log('CARD: ', card);
 
-  function handleClick() {
-    axios.get(currentCardInfo).then(res => {
-      setPokeInfo(res.data);
-      setFlavorText(res.data.flavor_text_entries);
-      axios.get(res.data.evolution_chain).then(evores => {
-        evores.data;
-      });
+  const handleClick = async () => {
+    try {
+      const speciesData = await getPokemonSpecies(currentCardInfo);
+      setPokeInfo(speciesData);
+      setFlavorText(speciesData.flavor_text_entries);
 
-      const evoResponse = res.data.evolution_chain;
+      const evolutionData = await getEvolutionChain(
+        speciesData.evolution_chain.url
+      );
 
-      axios.get(evoResponse.url).then(evr => {
-        evr.data;
+      let evoChain = [];
+      let evoData = evolutionData.chain;
+      const numberPattern = /\d+/g;
 
-        let evoChain = [];
-        let evoData = evr.data.chain;
-        let numberPattern = /\d+/g;
+      do {
+        const evoDetails = evoData.evolution_details[0] || {};
 
-        do {
-          let evoDetails = evoData['evolution_details'][0];
+        evoChain.push({
+          species_name: evoData.species.name,
+          id: evoData.species.url.slice(-4).match(numberPattern)[0],
+          min_level: evoDetails.min_level || 1,
+          trigger_name: evoDetails.trigger?.name || null,
+          item: evoDetails.item || null,
+        });
 
-          evoChain.push({
-            species_name: evoData.species.name,
-            id: evoData.species.url.slice(-4).match(numberPattern)[0],
-            min_level: !evoDetails ? 1 : evoDetails.min_level,
-            trigger_name: !evoDetails ? null : evoDetails.trigger.name,
-            item: !evoDetails ? null : evoDetails.item,
-          });
+        evoData = evoData.evolves_to[0];
+      } while (evoData);
 
-          evoData = evoData['evolves_to'][0];
-        } while (
-          !!evoData &&
-          Object.prototype.hasOwnProperty.call(evoData, 'evolves_to')
-        );
-        // console.log('EVO CHAIN:', evoChain);
-
-        const evNames = [];
-        evoChain.forEach(ele => evNames.push([ele.species_name, ele.id]));
-        // console.log(evNames);
-        setEvoNames(evNames);
-      });
-    });
-  }
+      const evoNamesArray = evoChain.map(({ species_name, id }) => [
+        species_name,
+        id,
+      ]);
+      setEvoNames(evoNamesArray);
+    } catch (error) {
+      console.error('Error in handleClick:', error);
+    }
+  };
   return (
     <motion.div
       initial={{ y: -250 }}
