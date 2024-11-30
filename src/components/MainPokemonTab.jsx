@@ -9,6 +9,7 @@ import {
   Image,
   Flex,
   Box,
+  useColorModeValue,
 } from '@chakra-ui/react';
 import { CgPokemon } from 'react-icons/cg';
 import { MdGif } from 'react-icons/md';
@@ -60,6 +61,8 @@ function MainPokemonTab({ id }) {
   const fetchData = useCallback(() => {
     if (id) fetchPokemonData(id);
   }, [id, fetchPokemonData]);
+
+  const backgroundColor = useColorModeValue('white', 'gray.800');
 
   useEffect(() => {
     fetchData();
@@ -113,28 +116,33 @@ function MainPokemonTab({ id }) {
           </TabContent>
         </TabPanel>
         <TabPanel
-          height={{ base: '580px', md: '630px' }}
+          height={{ base: '580px', md: '90%' }}
           overflow="scroll"
-          outline={'2px solid red'}
-          padding={'0'}
+          // outline={'2px solid red'}
+          // padding={'0'}
         >
-          <Box position="sticky" top="16px" zIndex="10" marginBottom={'5px'}>
+          <Box
+            position="sticky"
+            top="16px"
+            zIndex="10"
+            marginBottom={'5px'}
+            // outline={'2px solid'}
+          >
             <MainPokemonName />
           </Box>
 
           {/* Tab content with scrolling */}
-          <TabContent flexDirection="column" height="900px" overflowY="auto">
-            <Flex
+          <TabContent>
+            <Center
               flexDirection="column"
-              paddingBottom="100px"
-              overflowX="hidden"
+              paddingBottom={{ base: '200px', md: '300px' }}
             >
               <InfoTab />
               {flavorTextArray && (
                 <FlavorText flavorTextArray={flavorTextArray} onInfo />
               )}
               {evoNames && <EvolutionChain evoNames={evoNames} />}
-            </Flex>
+            </Center>
           </TabContent>
         </TabPanel>
 
@@ -182,6 +190,7 @@ function MainPokemonTab({ id }) {
           bottom={['100px', '120px']}
           px={['10px', '20px']}
           whiteSpace="nowrap"
+          backgroundColor={backgroundColor}
         >
           <Tab>
             <CgPokemon color="#ef5350" size="2em" />

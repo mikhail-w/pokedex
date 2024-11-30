@@ -6,6 +6,7 @@
   display: flex;
   justify-content: space-around;
   align-items: center;
+  margin-top: -30px;
   /* outline: 1px solid red; */
 }
 
@@ -53,7 +54,7 @@
   vertical-align: top;
   white-space: nowrap;
   width: 100%;
-  z-index: 9;
+  /* z-index: 9; */
   border: 0;
 }
 

@@ -14,13 +14,18 @@ export function usePokemonData() {
       // Fetch species data
       const speciesData = await getPokemonSpecies(id);
 
+      // Remove duplicate flavor text entries
+      const uniqueFlavorTexts = Array.from(
+        new Set(
+          speciesData.flavor_text_entries
+            .filter(entry => entry.language.name === 'en')
+            .map(entry => entry.flavor_text)
+        )
+      );
+
       // Update state in a single batch
       setPokeInfo(speciesData);
-      setFlavorTextArray(
-        speciesData.flavor_text_entries
-          .filter(entry => entry.language.name === 'en')
-          .map(entry => entry.flavor_text)
-      );
+      setFlavorTextArray(uniqueFlavorTexts);
 
       // Fetch evolution data
       const evolutionData = await getEvolutionChain(
