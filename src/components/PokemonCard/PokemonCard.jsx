@@ -1,16 +1,13 @@
 import CardBack from './CardBack';
 import CardFront from './CardFront';
 import { motion } from 'framer-motion';
-import {
-  getPokemonSpecies,
-  getEvolutionChain,
-} from '../../services/pokemonService';
 import ReactCardFlip from 'react-card-flip';
 import '../../assets/styles/PokemonCard.css';
 import ModalContainer from './ModalContainer';
 import { useState, useCallback } from 'react';
 import { bgs, getBackgroundColors } from '../../utils';
 import { Box, Modal, ModalOverlay, useDisclosure } from '@chakra-ui/react';
+import { usePokemonData } from '../../hooks/usePokemonData';
 
 function PokemonCard({ card, src, src2, name, type, id }) {
   const [isFlipped, setIsFlipped] = useState(false);
@@ -19,55 +16,14 @@ function PokemonCard({ card, src, src2, name, type, id }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const backgroundColor = getBackgroundColors(type);
 
-  const [flavorTextArray, setFlavorText] = useState([]);
-  const [evoNames, setEvoNames] = useState([]);
-  const [pokeInfo, setPokeInfo] = useState([]);
+  const { pokeInfo, flavorTextArray, evoNames, fetchPokemonData } =
+    usePokemonData();
 
   // Flip card handlers
   const handleFlip = useCallback(() => setIsFlipped(prev => !prev), []);
   const handleMouseEnter = useCallback(() => setIsHovered(true), []);
   const handleMouseLeave = useCallback(() => setIsHovered(false), []);
   const handleExpand = useCallback(() => setIsExpanded(prev => !prev), []);
-
-  const handleClick = async () => {
-    try {
-      // Fetch Pokémon species data
-      const speciesData = await getPokemonSpecies(id); // Pass the Pokémon ID directly
-      setPokeInfo(speciesData);
-      setFlavorText(speciesData.flavor_text_entries);
-
-      // Fetch evolution chain data
-      const evolutionData = await getEvolutionChain(
-        speciesData.evolution_chain.url
-      );
-
-      let evoChain = [];
-      let evoData = evolutionData.chain;
-      const numberPattern = /\d+/g;
-
-      do {
-        const evoDetails = evoData.evolution_details[0] || {};
-
-        evoChain.push({
-          species_name: evoData.species.name,
-          id: evoData.species.url.slice(-4).match(numberPattern)[0],
-          min_level: evoDetails.min_level || 1,
-          trigger_name: evoDetails.trigger?.name || null,
-          item: evoDetails.item || null,
-        });
-
-        evoData = evoData.evolves_to[0];
-      } while (evoData);
-
-      const evoNamesArray = evoChain.map(({ species_name, id }) => [
-        species_name,
-        id,
-      ]);
-      setEvoNames(evoNamesArray);
-    } catch (error) {
-      console.error('Error in handleClick:', error);
-    }
-  };
 
   return (
     <motion.div
@@ -110,7 +66,6 @@ function PokemonCard({ card, src, src2, name, type, id }) {
 
         {/* Card Front and Back */}
         <ReactCardFlip flipDirection="horizontal" isFlipped={isFlipped}>
-          {/* Card Front */}
           <CardFront
             src={src}
             name={name}
@@ -119,12 +74,11 @@ function PokemonCard({ card, src, src2, name, type, id }) {
             onFlip={handleFlip}
             handleMouseEnter={handleMouseEnter}
             handleMouseLeave={handleMouseLeave}
-            handleClick={handleClick}
+            handleClick={() => fetchPokemonData(id)}
             onOpenModal={onOpen}
             backgroundColor={backgroundColor}
           />
 
-          {/* Card Back */}
           <CardBack
             src2={src2}
             type={type}
