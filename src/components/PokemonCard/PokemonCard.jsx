@@ -7,6 +7,7 @@ import ModalContainer from './ModalContainer';
 import { useState, useCallback } from 'react';
 import { bgs, getBackgroundColors } from '../../utils';
 import { usePokemonData } from '../../hooks/usePokemonData';
+import ball from '../../assets/images/pokeballs/pokeball.png';
 import { Box, Modal, ModalOverlay, useDisclosure } from '@chakra-ui/react';
 
 function PokemonCard({ card, src, src2, name, type, id }) {
@@ -24,7 +25,7 @@ function PokemonCard({ card, src, src2, name, type, id }) {
   const handleMouseLeave = useCallback(() => setIsHovered(false), []);
   const handleFlip = useCallback(() => setIsFlipped(prev => !prev), []);
   const handleExpand = useCallback(() => setIsExpanded(prev => !prev), []);
-  console.log('Flavor Card:', flavorTextArray);
+  // console.log('Flavor Card:', flavorTextArray);
 
   return (
     <motion.div
@@ -53,7 +54,7 @@ function PokemonCard({ card, src, src2, name, type, id }) {
             card={card}
             name={name}
             id={id}
-            src={src}
+            src={src || ball}
             type={type}
             onClose={onClose}
             onExpand={handleExpand}
@@ -68,7 +69,7 @@ function PokemonCard({ card, src, src2, name, type, id }) {
         {/* Card Front and Back */}
         <ReactCardFlip flipDirection="horizontal" isFlipped={isFlipped}>
           <CardFront
-            src={src}
+            src={src || ball}
             name={name}
             id={id}
             type={type}
