@@ -13,6 +13,13 @@ import {
 import '../../assets/styles/pokeDetail.css';
 
 function PokemonTabs({ card, pokeInfo }) {
+  if (!pokeInfo) {
+    return (
+      <Text fontSize={{ base: 'sm', md: 'md' }} textAlign="center">
+        Loading Pokémon data...
+      </Text>
+    );
+  }
   return (
     <Tabs
       className="pokeDetail-info-container"

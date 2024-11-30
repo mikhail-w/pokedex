@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import ReactPaginate from 'react-paginate';
 import '../../assets/styles/FlavorText.css';
-import { Center, Flex, Text, Box, useMediaQuery } from '@chakra-ui/react';
+import { Center, Text, useMediaQuery } from '@chakra-ui/react';
 
 const FlavorText = ({ flavorTextArray }) => {
   const [pageNumber, setPageNumber] = useState(0);
@@ -12,12 +12,14 @@ const FlavorText = ({ flavorTextArray }) => {
   // Filter for English flavor text and remove duplicates
   const filteredTextArray = Array.from(
     new Set(
-      flavorTextArray
-        .filter(item => item.language.name === 'en')
-        .map(item => item.flavor_text)
+      (flavorTextArray || [])
+        .filter(item => item?.language?.name === 'en') // Safeguard for undefined language
+        .map(item => item?.flavor_text) // Ensure flavor_text is safely accessed
     )
   ).map(uniqueFlavorText => {
-    return flavorTextArray.find(item => item.flavor_text === uniqueFlavorText);
+    return (flavorTextArray || []).find(
+      item => item?.flavor_text === uniqueFlavorText
+    );
   });
 
   const pageCount = Math.ceil(filteredTextArray.length / linesPerPage);
@@ -31,6 +33,8 @@ const FlavorText = ({ flavorTextArray }) => {
     (pageNumber + 1) * linesPerPage
   );
 
+  console.log('Current Text:', currentText);
+
   return (
     <Center flexDirection="column" mt="20px" maxW="90%">
       <Text
@@ -43,11 +47,15 @@ const FlavorText = ({ flavorTextArray }) => {
         fontSize={{ base: '17px', md: '20px' }}
         lineHeight={{ base: '20px', md: '24px' }}
       >
-        {currentText.map((flavorText, index) => (
-          <span className="flavorText" key={index}>
-            {flavorText.flavor_text || 'No text available'}
-          </span>
-        ))}
+        {currentText.length > 0 ? (
+          currentText.map((flavorText, index) => (
+            <span className="flavorText" key={index}>
+              {flavorText?.flavor_text || 'No text available'}
+            </span>
+          ))
+        ) : (
+          <span>No flavor text available.</span>
+        )}
       </Text>
 
       <Center mt={{ base: '10px', md: '20px' }} width="100%">

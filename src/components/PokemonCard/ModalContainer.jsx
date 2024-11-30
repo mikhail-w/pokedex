@@ -23,22 +23,23 @@ import CatchReleaseButton from './CatchReleaseButton';
 import ball from '../../assets/images/pokeballs/pokeball.png';
 
 function ModalContainer({
-  card,
-  name,
-  id,
+  card = {},
+  name = '',
+  id = '',
   src,
-  type,
+  type = [],
   onClose,
   onExpand,
   isExpanded,
-  evoNames,
-  pokeInfo,
+  evoNames = [],
+  pokeInfo = {},
   flavorTextArray,
-  backgroundColor,
+  backgroundColor = ['#fff', '#f8f9fa'],
 }) {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 900);
+  console.log('Cont flavor:', flavorTextArray);
 
-  // Update isMobile state on window resize
+  // Update `isMobile` state on window resize
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth <= 900);
     window.addEventListener('resize', handleResize);
@@ -58,7 +59,7 @@ function ModalContainer({
 
   return (
     <ModalContent
-      w={'90%'}
+      w="90%"
       className={
         isExpanded
           ? isMobile
@@ -67,14 +68,14 @@ function ModalContainer({
           : 'modal-content'
       }
       background={`linear-gradient(in lch, ${backgroundColor[0]}, ${backgroundColor[1]})`}
-      alignItems={'center'}
-      borderRadius={'50px'}
+      alignItems="center"
+      borderRadius="50px"
       overflow="hidden"
       maxHeight={isMobile ? '80vh' : 'fit-content'}
       flexDirection={isMobile ? 'column' : 'row'}
     >
       {/* NORMAL SECTION */}
-      <Box w="100%" maxWidth={'450px'} marginTop={'10px'}>
+      <Box w="100%" maxWidth="450px" marginTop="10px">
         {/* BACK ARROW AND CATCH RELEASE ICON */}
         <Flex
           w="90%"
@@ -93,7 +94,7 @@ function ModalContainer({
         <ModalHeader textTransform="capitalize" w="100%" textAlign="center">
           {/* NAME AND ID SECTION */}
           <Flex
-            position={'relative'}
+            position="relative"
             justifyContent="space-between"
             marginBottom="10px"
           >
@@ -109,7 +110,7 @@ function ModalContainer({
                   : '2rem'
               }
             >
-              {name}
+              {name || 'Unknown Pokémon'}
             </Text>
             <Box
               position="absolute"
@@ -144,45 +145,43 @@ function ModalContainer({
                     : '4.5rem'
                 }
               >
-                #{String(id).padStart(3, '0')}
+                #{String(id || '000').padStart(3, '0')}
               </Text>
             </Box>
           </Flex>
           {/* POKEMON TYPE SECTION */}
           <Flex justifyContent="left" flexWrap="wrap">
-            {type.map((t, index) => (
-              <Flex
-                cursor={'pointer'}
-                key={index}
-                className="pokeDetail-type-tab"
-                bg={colors[t]}
-                marginLeft={index === 0 ? '0px' : '10px'}
-                alignItems="center"
-                padding="8px 12px" // Increased padding for better spacing
-                borderRadius="12px" // More rounded corners
-                boxShadow="0 4px 6px rgba(0, 0, 0, 0.2)" // Add a subtle shadow
-                transition="transform 0.2s, box-shadow 0.2s" // Add hover animation
-                _hover={{
-                  transform: 'scale(1.05)', // Slight zoom effect on hover
-                  boxShadow: '0 6px 8px rgba(0, 0, 0, 0.3)', // Enhanced shadow on hover
-                }}
-                style={{
-                  filter: 'saturate(2.5) brightness(1.1)', // Slightly increased brightness
-                }}
-              >
-                <Image w="24px" h="24px" src={modalIcons[t]} />{' '}
-                {/* Larger icon */}
-                <Text
-                  paddingLeft="8px" // Increased padding between icon and text
-                  fontWeight="bold" // Bold text for emphasis
-                  fontSize="14px" // Adjust font size
-                  color="white" // Consistent text color
-                  textShadow="0px 1px 2px rgba(0, 0, 0, 0.8)" // Softer text shadow
-                >
-                  {t}
-                </Text>
-              </Flex>
-            ))}
+            {type.length > 0
+              ? type.map((t, index) => (
+                  <Flex
+                    cursor="pointer"
+                    key={index}
+                    className="pokeDetail-type-tab"
+                    bg={colors[t] || 'gray.300'}
+                    marginLeft={index === 0 ? '0px' : '10px'}
+                    alignItems="center"
+                    padding="8px 12px"
+                    borderRadius="12px"
+                    boxShadow="0 4px 6px rgba(0, 0, 0, 0.2)"
+                    transition="transform 0.2s, box-shadow 0.2s"
+                    _hover={{
+                      transform: 'scale(1.05)',
+                      boxShadow: '0 6px 8px rgba(0, 0, 0, 0.3)',
+                    }}
+                  >
+                    <Image w="24px" h="24px" src={modalIcons[t] || ball} />
+                    <Text
+                      paddingLeft="8px"
+                      fontWeight="bold"
+                      fontSize="14px"
+                      color="white"
+                      textShadow="0px 1px 2px rgba(0, 0, 0, 0.8)"
+                    >
+                      {t}
+                    </Text>
+                  </Flex>
+                ))
+              : null}
           </Flex>
         </ModalHeader>
         {/* POKEMON IMAGE AND MODAL EXPAND BUTTON SECTION */}
@@ -193,8 +192,9 @@ function ModalContainer({
           position="relative"
         >
           <Image
-            src={src == null ? ball : src}
+            src={src || ball}
             maxW={{ base: '200px', md: '300px' }}
+            alt={name || 'Pokémon'}
           />
           {isMobile ? (
             <IoArrowDownCircleOutline
@@ -226,12 +226,12 @@ function ModalContainer({
         {isExpanded && (
           <Flex
             className="extended-section"
-            height={'700px'}
+            height="700px"
             flexDirection="column"
             w="100%"
-            alignItems={'center'}
+            alignItems="center"
           >
-            <FlavorText flavorTextArray={flavorTextArray} />
+            <FlavorText flavorTextArray={flavorTextArray} onInfo={false} />
             <EvolutionChain evoNames={evoNames} />
           </Flex>
         )}

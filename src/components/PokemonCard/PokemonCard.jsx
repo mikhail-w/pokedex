@@ -6,8 +6,8 @@ import '../../assets/styles/PokemonCard.css';
 import ModalContainer from './ModalContainer';
 import { useState, useCallback } from 'react';
 import { bgs, getBackgroundColors } from '../../utils';
-import { Box, Modal, ModalOverlay, useDisclosure } from '@chakra-ui/react';
 import { usePokemonData } from '../../hooks/usePokemonData';
+import { Box, Modal, ModalOverlay, useDisclosure } from '@chakra-ui/react';
 
 function PokemonCard({ card, src, src2, name, type, id }) {
   const [isFlipped, setIsFlipped] = useState(false);
@@ -20,10 +20,11 @@ function PokemonCard({ card, src, src2, name, type, id }) {
     usePokemonData();
 
   // Flip card handlers
-  const handleFlip = useCallback(() => setIsFlipped(prev => !prev), []);
   const handleMouseEnter = useCallback(() => setIsHovered(true), []);
   const handleMouseLeave = useCallback(() => setIsHovered(false), []);
+  const handleFlip = useCallback(() => setIsFlipped(prev => !prev), []);
   const handleExpand = useCallback(() => setIsExpanded(prev => !prev), []);
+  console.log('Flavor Card:', flavorTextArray);
 
   return (
     <motion.div

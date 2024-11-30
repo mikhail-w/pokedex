@@ -1,42 +1,40 @@
+import { useCallback, useEffect, useState, useRef } from 'react';
+import { useOutletContext } from 'react-router-dom';
 import { getPokemonById, getPokemonByType } from '../services/pokemonService';
 import { getRandomID } from '../utils';
-import { useEffect, useState, useRef } from 'react';
-import { useOutletContext } from 'react-router-dom';
 import MainPokemonTab from '../components/MainPokemonTab';
 import GenerateButton from '../components/GenerateButton';
 
 function RandPokemonPage() {
   const [valid, setValid] = useState(false);
+  const [randomID, setRandomID] = useState(null); // Separate state for random ID
   const timerId = useRef(null);
-  const { setTeam, setPokemon, randomID, setrandomID, setIsLoading } =
-    useOutletContext();
+  const { setTeam, setPokemon, setIsLoading } = useOutletContext();
 
-  const getRandomPokemon = async () => {
+  const getRandomPokemon = useCallback(async () => {
+    setIsLoading(true);
     try {
-      setIsLoading(true);
-      setrandomID(getRandomID(1025));
+      const randomID = getRandomID(1025); // Generate random ID
+      setRandomID(randomID); // Update random ID state
 
-      // Fetch the main Pokémon using pokemonService.js
-      const mainPokemon = await getPokemonById(randomID);
+      const mainPokemon = await getPokemonById(randomID); // Fetch main Pokémon
       setPokemon(mainPokemon);
       window.localStorage.setItem('MAIN_POKEMON', JSON.stringify(mainPokemon));
 
-      // Fetch Pokémon team by type using pokemonService.js
-      const teamTypeURL = mainPokemon.types[0].type.url;
+      const teamTypeURL = mainPokemon.types[0]?.type.url; // Get Pokémon type URL
+      if (!teamTypeURL) throw new Error('Main Pokémon type URL not found.');
+
       const teamDataResponse = await getPokemonByType(teamTypeURL);
 
-      const teamIndexes = [];
-      while (teamIndexes.length < 5) {
-        const randomIndex = getRandomID(teamDataResponse.pokemon.length);
-        if (!teamIndexes.includes(randomIndex)) {
-          teamIndexes.push(randomIndex);
-        }
+      const teamIndexes = new Set(); // Use Set for unique random indexes
+      while (teamIndexes.size < 5) {
+        teamIndexes.add(getRandomID(teamDataResponse.pokemon.length));
       }
 
       const teamData = await Promise.all(
-        teamIndexes.map(
-          async i =>
-            await getPokemonById(teamDataResponse.pokemon[i].pokemon.name)
+        [...teamIndexes].map(
+          async index =>
+            await getPokemonById(teamDataResponse.pokemon[index].pokemon.name)
         )
       );
 
@@ -48,27 +46,20 @@ function RandPokemonPage() {
       setValid(true);
     } catch (error) {
       setValid(false);
-      console.error('Failed to fetch Pokémon data:', error);
+      console.error('Failed to fetch Pokémon data:', error.message || error);
     } finally {
-      timerId.current = setTimeout(() => {
-        setIsLoading(false);
-      }, 500); // Ensure loading spinner is cleared
+      setIsLoading(false);
     }
-  };
+  }, [setIsLoading, setPokemon, setTeam]);
 
   useEffect(() => {
-    // Fetch new Pokémon data on component mount
-    getRandomPokemon();
-    return () => {
-      if (timerId.current) {
-        clearTimeout(timerId.current);
-      }
-    };
-  }, []); // Empty dependency to ensure this runs only once
+    getRandomPokemon(); // Fetch Pokémon on component mount
+    return () => clearTimeout(timerId.current); // Cleanup any pending timers
+  }, [getRandomPokemon]);
 
   return (
     <>
-      {valid && <MainPokemonTab />}
+      {valid && randomID && <MainPokemonTab id={randomID} />}
       <GenerateButton getRandomPokemon={getRandomPokemon} />
     </>
   );

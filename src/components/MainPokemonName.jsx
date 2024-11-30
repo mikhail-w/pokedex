@@ -1,19 +1,21 @@
 import { useOutletContext } from 'react-router-dom';
-import { Center } from '@chakra-ui/react';
+import { Center, useColorModeValue } from '@chakra-ui/react';
 
 function MainPokemonName({ isTeam }) {
   const { pokemon } = useOutletContext();
+  const backgroundColor = useColorModeValue('white', 'gray.800');
+
   return (
     <Center
-      // marginTop={'50px'}
-      marginBottom={'20px'}
+      position="sticky"
       textDecoration="underline"
-      textTransform={'capitalize'}
+      textTransform="capitalize"
       textUnderlineOffset="8px"
       letterSpacing="5px"
       fontFamily="Pokemon Solid"
-      fontSize={'2rem'}
+      fontSize={['1.5rem', '2rem']}
       as="h3"
+      backgroundColor={backgroundColor}
     >
       {isTeam === 'true' ? pokemon.name + "'s Team" : pokemon.name}
     </Center>

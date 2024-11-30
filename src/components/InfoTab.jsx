@@ -1,5 +1,13 @@
 import { useOutletContext } from 'react-router-dom';
-import { Box, TableContainer, Table, Tbody, Tr, Td } from '@chakra-ui/react';
+import {
+  Box,
+  Flex,
+  TableContainer,
+  Table,
+  Tbody,
+  Tr,
+  Td,
+} from '@chakra-ui/react';
 import { getType, getAbilities } from '../utils';
 import '../assets/styles/InfoTab.css';
 
@@ -16,15 +24,21 @@ function InfoTab() {
   const movesToDisplay = moves.slice(0, 4); // Safely handle moves array
 
   return (
-    <Box
+    <Flex
+      direction="column"
       w="100%"
-      p={[2, 4]} // Smaller padding for mobile
+      h="100%"
+      // p={[2, 4]}
+      px={[10]}
+      minH={'300px'}
       maxW="500px"
       mx="auto"
-      overflowX="auto" // Enable scrolling for overflow
+      mt={'40px'}
     >
-      <TableContainer>
-        <Table size="sm" mt="20" fontSize={['xs', 'sm']}>
+      <TableContainer flex="1" overflowY="auto">
+        {' '}
+        {/* Make the TableContainer fill available height */}
+        <Table size="sm" mt="4" fontSize={['xs', 'sm']}>
           <Tbody>
             <Tr>
               <Td
@@ -118,7 +132,7 @@ function InfoTab() {
           </Tbody>
         </Table>
       </TableContainer>
-    </Box>
+    </Flex>
   );
 }
 

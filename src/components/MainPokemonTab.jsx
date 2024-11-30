@@ -1,3 +1,4 @@
+import React, { useCallback, useEffect, Suspense } from 'react';
 import {
   Tabs,
   TabList,
@@ -7,24 +8,31 @@ import {
   Center,
   Image,
   Flex,
-  useBreakpointValue,
+  Box,
 } from '@chakra-ui/react';
-import InfoTab from './InfoTab';
-import Loading from './Loading';
-import { getType } from '../utils';
+import { CgPokemon } from 'react-icons/cg';
 import { MdGif } from 'react-icons/md';
 import { FaInfo } from 'react-icons/fa';
-import { Suspense } from 'react';
-import { CgPokemon } from 'react-icons/cg';
-import MainPokemonName from './MainPokemonName';
 import { useOutletContext } from 'react-router-dom';
+import MainPokemonName from './MainPokemonName';
 import LazyPokemonCard from './PokemonCard/PokemonCard';
+import FlavorText from './PokemonCard/FlavorText';
+import EvolutionChain from './PokemonCard/EvolutionChain';
+import Loading from './Loading';
+import { usePokemonData } from '../hooks/usePokemonData';
 import ball from '../assets/images/pokeballs/pokeball.png';
 import groupImg from '../assets/images/pokeballs/group.png';
+import { getType } from '../utils';
+import InfoTab from '../components/InfoTab';
 
-function TabContent({ children, height = '550px' }) {
+function TabContent({ children, height = 'auto' }) {
   return (
-    <Center objectFit="contain" height={height} flexDirection="column">
+    <Center
+      height={height}
+      flexDirection="column"
+      overflowY={height === 'auto' ? 'scroll' : 'hidden'}
+      px="10px"
+    >
       {children}
     </Center>
   );
@@ -37,42 +45,66 @@ function PokemonImage({ src }) {
       maxH="90%"
       src={src || ball}
       alt="Pokemon image"
-      pb={'30px'}
+      pb="30px"
     />
   );
 }
 
-function MainPokemonTab() {
+function MainPokemonTab({ id }) {
+  let isTeam = 'false';
   const { team, myTeam, disabled, setDisabled, isLoading, pokemon } =
     useOutletContext();
 
-  if (isLoading) return <Loading />;
+  const { flavorTextArray, evoNames, fetchPokemonData } = usePokemonData();
 
-  const pokemonArt = pokemon.sprites.other[`official-artwork`]?.front_default;
+  const fetchData = useCallback(() => {
+    if (id) fetchPokemonData(id);
+  }, [id, fetchPokemonData]);
+
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
+
+  if (isLoading || !pokemon) return <Loading />;
+
+  const pokemonArt = pokemon.sprites.other['official-artwork']?.front_default;
   const pokemonShowdown = pokemon.sprites.other.showdown?.front_default;
 
   return (
     <Tabs align="center" variant="enclosed" size={['sm', 'md', 'lg']}>
-      <TabPanels
-        mt={['0px', '0px', '20px']} // Adjust margin-top for mobile screens
-      >
+      <TabPanels mt={['0px', '0px', '20px']}>
         <TabPanel>
           <MainPokemonName />
-          <TabContent>
+          <TabContent
+            display="flex" // Enable flexbox
+            justifyContent="center" // Center horizontally
+            alignItems="center" // Center vertically
+            height="calc(100vh - 250px)" // Adjust height to fill the viewport, minus the header and footer space
+          >
             <PokemonImage src={pokemon.sprites.other.home?.front_default} />
           </TabContent>
         </TabPanel>
 
         <TabPanel>
           <MainPokemonName />
-          <TabContent>
+          <TabContent
+            display="flex" // Enable flexbox
+            justifyContent="center" // Center horizontally
+            alignItems="center" // Center vertically
+            height="calc(100vh - 200px)" // Adjust height to fill the viewport, minus the header and footer space
+          >
             <PokemonImage src={pokemonArt} />
           </TabContent>
         </TabPanel>
 
         <TabPanel>
           <MainPokemonName />
-          <TabContent>
+          <TabContent
+            display="flex" // Enable flexbox
+            justifyContent="center" // Center horizontally
+            alignItems="center" // Center vertically
+            height="calc(100vh - 200px)" // Adjust height to fill the viewport, minus the header and footer space
+          >
             <Image
               src={pokemonShowdown || ball}
               boxSize="200px"
@@ -80,15 +112,33 @@ function MainPokemonTab() {
             />
           </TabContent>
         </TabPanel>
+        <TabPanel
+          height={{ base: '580px', md: '630px' }}
+          overflow="scroll"
+          outline={'2px solid red'}
+          padding={'0'}
+        >
+          <Box position="sticky" top="16px" zIndex="10" marginBottom={'5px'}>
+            <MainPokemonName />
+          </Box>
 
-        <TabPanel>
-          <MainPokemonName />
-          <TabContent height="auto">
-            <InfoTab />
+          {/* Tab content with scrolling */}
+          <TabContent flexDirection="column" height="900px" overflowY="auto">
+            <Flex
+              flexDirection="column"
+              paddingBottom="100px"
+              overflowX="hidden"
+            >
+              <InfoTab />
+              {flavorTextArray && (
+                <FlavorText flavorTextArray={flavorTextArray} onInfo />
+              )}
+              {evoNames && <EvolutionChain evoNames={evoNames} />}
+            </Flex>
           </TabContent>
         </TabPanel>
 
-        <TabPanel paddingBottom={'20px'}>
+        <TabPanel>
           <MainPokemonName pokemonName={pokemon.name} isTeam="true" />
           <Flex
             flexWrap="wrap"
@@ -106,7 +156,7 @@ function MainPokemonTab() {
                 <LazyPokemonCard
                   index={idx}
                   card={card}
-                  src={card.sprites.other[`official-artwork`]?.front_default}
+                  src={card.sprites.other['official-artwork']?.front_default}
                   src2={card.sprites.other.showdown?.front_default}
                   name={card.name}
                   pokemon={pokemon}
@@ -129,10 +179,9 @@ function MainPokemonTab() {
           justifyContent="space-evenly"
           maxWidth="100%"
           pos="fixed"
-          bottom={'120px'}
+          bottom={['100px', '120px']}
           px={['10px', '20px']}
           whiteSpace="nowrap"
-          // marginTop={'15px'}
         >
           <Tab>
             <CgPokemon color="#ef5350" size="2em" />
