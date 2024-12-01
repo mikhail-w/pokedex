@@ -26,8 +26,8 @@ const FlavorText = ({ flavorTextArray, onInfo }) => {
     <Center flexDirection="column">
       <Text
         // margin={{ base: '30px', md: '40px' }}
-        mt={{ base: '40px', md: '20px' }}
-        mb={{ base: '-40px', md: '20px' }}
+        mt={{ base: '20px', md: '20px' }}
+        mb={{ base: '-20px', md: '20px' }}
         fontFamily="Alleyn W01 Regular"
         textAlign="center"
         height={{ base: '150px', md: '150px' }}

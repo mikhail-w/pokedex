@@ -121,7 +121,16 @@ function MainPokemonTab({ id }) {
           // outline={'2px solid red'}
           // padding={'0'}
         >
-          <Box position="sticky" top="16px" zIndex="10" marginBottom={'5px'}>
+          <Box
+            position="sticky"
+            top="-16px"
+            marginTop={'0px'}
+            zIndex="10"
+            marginBottom={'5px'}
+            backgroundColor={backgroundColor}
+            // backgroundColor={'green'}
+            width={'100%'}
+          >
             <MainPokemonName />
           </Box>
 
