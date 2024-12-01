@@ -1,7 +1,7 @@
 import { useOutletContext } from 'react-router-dom';
 import { Center, useColorModeValue } from '@chakra-ui/react';
 
-function MainPokemonName({ isTeam }) {
+function MainPokemonName({ isTeam, isMobileLandscape }) {
   const { pokemon } = useOutletContext();
   const backgroundColor = useColorModeValue('white', 'gray.800');
 
@@ -13,7 +13,7 @@ function MainPokemonName({ isTeam }) {
       textUnderlineOffset="8px"
       letterSpacing="5px"
       fontFamily="Pokemon Solid"
-      fontSize={['1.5rem', '2rem']}
+      fontSize={isMobileLandscape ? '1rem' : [('1.5rem', '2rem')]}
       as="h3"
       backgroundColor={backgroundColor}
     >

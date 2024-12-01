@@ -4,12 +4,14 @@ import { getPokemonById, getPokemonByType } from '../services/pokemonService';
 import { getRandomID } from '../utils';
 import MainPokemonTab from '../components/MainPokemonTab';
 import GenerateButton from '../components/GenerateButton';
+import { Box, Flex } from '@chakra-ui/react';
 
 function RandPokemonPage() {
   const [valid, setValid] = useState(false);
   const [randomID, setRandomID] = useState(null); // Separate state for random ID
   const timerId = useRef(null);
   const { setTeam, setPokemon, setIsLoading } = useOutletContext();
+  const [isMobileLandscape, setIsMobileLandscape] = useState(false);
 
   const getRandomPokemon = useCallback(async () => {
     setIsLoading(true);
@@ -53,14 +55,38 @@ function RandPokemonPage() {
   }, [setIsLoading, setPokemon, setTeam]);
 
   useEffect(() => {
-    getRandomPokemon(); // Fetch Pokémon on component mount
-    return () => clearTimeout(timerId.current); // Cleanup any pending timers
+    function checkMobileLandscape() {
+      const isLandscape =
+        window.innerWidth > window.innerHeight && window.innerWidth <= 918;
+      setIsMobileLandscape(isLandscape);
+    }
+
+    // Initial check
+    checkMobileLandscape();
+    getRandomPokemon();
+
+    // Listen for resize events
+    window.addEventListener('resize', checkMobileLandscape);
+
+    // Cleanup event listener on component unmount
+    return () => {
+      window.removeEventListener('resize', checkMobileLandscape);
+      clearTimeout(timerId.current);
+    };
   }, [getRandomPokemon]);
 
   return (
     <>
-      {valid && randomID && <MainPokemonTab id={randomID} />}
-      <GenerateButton getRandomPokemon={getRandomPokemon} />
+      <Box>
+        {valid && randomID && (
+          <MainPokemonTab id={randomID} isMobileLandscape={isMobileLandscape} />
+        )}
+      </Box>
+
+      <GenerateButton
+        getRandomPokemon={getRandomPokemon}
+        isMobileLandscape={isMobileLandscape}
+      />
     </>
   );
 }

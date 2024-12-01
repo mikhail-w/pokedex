@@ -1,26 +1,33 @@
 import { useOutletContext } from 'react-router-dom';
-import { Button, useColorModeValue, Center } from '@chakra-ui/react';
+import { Button, useColorModeValue, Flex } from '@chakra-ui/react';
 
-function GenerateButton({ getRandomPokemon }) {
+function GenerateButton({ getRandomPokemon, isMobileLandscape }) {
   const { setIsLoading } = useOutletContext();
+
   function handleClick() {
     setIsLoading(true);
     getRandomPokemon();
   }
+
+  // Set button text dynamically
+  const text = isMobileLandscape ? 'Generate' : 'Generate Random Pokemon';
+
   return (
-    <Center>
+    <Flex
+      position="fixed"
+      bottom="30px"
+      right={isMobileLandscape ? '30px' : '50%'}
+      transform={isMobileLandscape ? 'none' : 'translateX(50%)'}
+    >
       <Button
-        pos={'fixed'}
-        bottom={'30px'}
         onClick={handleClick}
-        marginTop={'60px'}
         colorScheme="red"
         size="lg"
         backgroundColor={useColorModeValue('#3d7dca', '#e53e3e')}
       >
-        Generate Random Pokemon
+        {text}
       </Button>
-    </Center>
+    </Flex>
   );
 }
 

@@ -3,7 +3,7 @@ import ReactPaginate from 'react-paginate';
 import '../../assets/styles/FlavorText.css';
 import { Center, Text, useMediaQuery } from '@chakra-ui/react';
 
-const FlavorText = ({ flavorTextArray, onInfo }) => {
+const FlavorText = ({ flavorTextArray, onInfo, isMobileLandscape }) => {
   const [pageNumber, setPageNumber] = useState(0);
   const [isMobile] = useMediaQuery('(max-width: 500px)');
 
@@ -20,7 +20,7 @@ const FlavorText = ({ flavorTextArray, onInfo }) => {
   );
 
   // Determine max width based on onInfo
-  const maxWidth = onInfo ? '300px' : '100%'; // Adjust values as needed
+  const maxWidth = onInfo ? '300px' : '100%';
 
   return (
     <Center flexDirection="column">
@@ -42,9 +42,10 @@ const FlavorText = ({ flavorTextArray, onInfo }) => {
       </Text>
 
       <Center
-        mt={{ base: '10px', md: '20px' }}
-        mb={{ base: '-150px', md: '20px' }}
+        mt={isMobileLandscape ? '-20px' : { base: '10px', md: '20px' }}
+        mb={isMobileLandscape ? '-160px' : { base: '-150px', md: '20px' }}
         width="400px"
+        // outline={'2px solid'}
       >
         <ReactPaginate
           previousLabel={'prev'}
