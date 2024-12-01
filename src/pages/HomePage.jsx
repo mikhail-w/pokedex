@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import '../assets/styles/HomePage.css';
 import { useNavigate } from 'react-router-dom';
 import { useOutletContext } from 'react-router-dom';
@@ -8,6 +9,27 @@ function HomePage() {
   const { setRandomChoice, setIsLoading, passed, setPassed } =
     useOutletContext();
   const navigate = useNavigate();
+
+  const [isMobileLandscape, setIsMobileLandscape] = useState(false);
+
+  useEffect(() => {
+    function checkMobileLandscape() {
+      const isLandscape =
+        window.innerWidth > window.innerHeight && window.innerWidth <= 918;
+      setIsMobileLandscape(isLandscape);
+    }
+
+    // Initial check
+    checkMobileLandscape();
+
+    // Listen for resize events
+    window.addEventListener('resize', checkMobileLandscape);
+
+    // Cleanup event listener on component unmount
+    return () => {
+      window.removeEventListener('resize', checkMobileLandscape);
+    };
+  }, []);
 
   // Navigate to random or list pages
   function handleClick() {
@@ -24,29 +46,39 @@ function HomePage() {
   return (
     <Flex
       direction="column"
-      justify="space-between" // Ensures proper spacing
+      justify="space-between"
       align="center"
-      height="90vh" // Takes the full viewport height
-      px={4} // Padding for smaller screens
+      height="90vh"
+      px={4}
     >
       {/* Top Content */}
       <Box flex="1" width="100%">
         <HomePageImages />
       </Box>
 
+      {/* Conditional rendering based on mobile landscape */}
+      {isMobileLandscape && (
+        <Box mb={4} color="blue.500">
+          Mobile Landscape Mode Detected!
+        </Box>
+      )}
+
       {/* Buttons at the Bottom */}
       <Flex
-        direction="column"
+        direction={isMobileLandscape ? 'row' : 'column'}
+        mb={isMobileLandscape ? '20' : '10'}
         align="center"
         justify="center"
-        pb={4} // Padding at the bottom for spacing
+        gap={5}
+        // pb={4}
+        // outline={'2px solid'}
       >
         <Button
           onClick={handleClick}
-          mb="12px" // Space between buttons
+          // mb="12px"
           colorScheme="blue"
           size={buttonSize}
-          width="130px" // Fixed width
+          width="130px"
         >
           Get Pokemon
         </Button>
@@ -54,7 +86,7 @@ function HomePage() {
           onClick={handleViewList}
           colorScheme="red"
           size={buttonSize}
-          width="168px" // Fixed width
+          width="168px"
         >
           View Pokemon List
         </Button>
