@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import ReactCardFlip from 'react-card-flip';
 import '../../assets/styles/PokemonCard.css';
 import ModalContainer from './ModalContainer';
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect, useRef } from 'react';
 import { bgs, getBackgroundColors } from '../../utils';
 import { usePokemonData } from '../../hooks/usePokemonData';
 import ball from '../../assets/images/pokeballs/pokeball.png';
@@ -26,6 +26,28 @@ function PokemonCard({ card, src, src2, name, type, id }) {
   const handleFlip = useCallback(() => setIsFlipped(prev => !prev), []);
   const handleExpand = useCallback(() => setIsExpanded(prev => !prev), []);
   // console.log('Flavor Card:', flavorTextArray);
+  const timerId = useRef(null);
+  const [isMobileLandscape, setIsMobileLandscape] = useState(false);
+
+  useEffect(() => {
+    function checkMobileLandscape() {
+      const isLandscape =
+        window.innerWidth > window.innerHeight && window.innerWidth <= 918;
+      setIsMobileLandscape(isLandscape);
+    }
+
+    // Initial check
+    checkMobileLandscape();
+
+    // Listen for resize events
+    window.addEventListener('resize', checkMobileLandscape);
+
+    // Cleanup event listener on component unmount
+    return () => {
+      window.removeEventListener('resize', checkMobileLandscape);
+      clearTimeout(timerId.current);
+    };
+  }, []);
 
   return (
     <motion.div
@@ -63,6 +85,7 @@ function PokemonCard({ card, src, src2, name, type, id }) {
             flavorTextArray={flavorTextArray}
             evoNames={evoNames}
             backgroundColor={backgroundColor}
+            isMobileLandscape={isMobileLandscape}
           />
         </Modal>
 

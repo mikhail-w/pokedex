@@ -35,9 +35,9 @@ function ModalContainer({
   pokeInfo = {},
   flavorTextArray,
   backgroundColor = ['#fff', '#f8f9fa'],
+  isMobileLandscape,
 }) {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 900);
-  console.log('Cont flavor:', flavorTextArray);
 
   // Update `isMobile` state on window resize
   useEffect(() => {
@@ -70,7 +70,7 @@ function ModalContainer({
       background={`linear-gradient(in lch, ${backgroundColor[0]}, ${backgroundColor[1]})`}
       alignItems="center"
       borderRadius="50px"
-      overflow="hidden"
+      overflow={isMobileLandscape ? 'scroll' : 'hidden'}
       maxHeight={isMobile ? '80vh' : 'fit-content'}
       flexDirection={isMobile ? 'column' : 'row'}
     >

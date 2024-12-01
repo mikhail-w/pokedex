@@ -8,7 +8,7 @@ import { Box, Flex } from '@chakra-ui/react';
 
 function RandPokemonPage() {
   const [valid, setValid] = useState(false);
-  const [randomID, setRandomID] = useState(null); // Separate state for random ID
+  const [randomID, setRandomID] = useState(null);
   const timerId = useRef(null);
   const { setTeam, setPokemon, setIsLoading } = useOutletContext();
   const [isMobileLandscape, setIsMobileLandscape] = useState(false);

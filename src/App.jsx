@@ -17,7 +17,7 @@ function App() {
   return (
     <>
       <NavBar myTeam={myTeam} isLoading={isLoading} />
-      <Outlet
+      {/* <Outlet
         context={{
           team,
           setTeam,
@@ -36,7 +36,7 @@ function App() {
           randomID,
           setrandomID,
         }}
-      />
+      /> */}
     </>
   );
 }

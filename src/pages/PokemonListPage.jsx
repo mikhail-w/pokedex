@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Center, Button, Text } from '@chakra-ui/react';
 import PokemonCard from '../components/PokemonCard/PokemonCard';
 import { getType } from '../utils';
@@ -9,6 +9,8 @@ function PokemonListPage() {
     'https://pokeapi.co/api/v2/pokemon?limit=20'
   );
   const [isLoading, setIsLoading] = useState(false);
+  const [isMobileLandscape, setIsMobileLandscape] = useState(false);
+  const timerId = useRef(null);
 
   const getAllPokemons = async () => {
     if (isLoading) return; // Prevent multiple calls at once
@@ -39,7 +41,24 @@ function PokemonListPage() {
   };
 
   useEffect(() => {
+    function checkMobileLandscape() {
+      const isLandscape =
+        window.innerWidth > window.innerHeight && window.innerWidth <= 918;
+      setIsMobileLandscape(isLandscape);
+    }
+
+    // Initial check
+    checkMobileLandscape();
     getAllPokemons();
+
+    // Listen for resize events
+    window.addEventListener('resize', checkMobileLandscape);
+
+    // Cleanup event listener on component unmount
+    return () => {
+      window.removeEventListener('resize', checkMobileLandscape);
+      clearTimeout(timerId.current);
+    };
   }, []);
 
   return (
@@ -76,6 +95,7 @@ function PokemonListPage() {
             pokemon={p}
             type={getType(p.types)}
             id={p.id}
+            isMobileLandscape={isMobileLandscape}
           />
         ))}
       </Center>

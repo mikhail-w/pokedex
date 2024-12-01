@@ -218,7 +218,7 @@ function MainPokemonTab({ id, isMobileLandscape }) {
           px={['10px', '20px']}
           backgroundColor={backgroundColor}
           // outline={'2px solid'}
-          top={isMobileLandscape ? '120px' : ''}
+          top={isMobileLandscape ? '60px' : ''}
           ml={isMobileLandscape ? '50px' : ''}
         >
           <Tab>

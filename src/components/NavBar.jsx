@@ -104,7 +104,6 @@ function NavBar({ myTeam }) {
         <Flex alignItems="center">
           <Stack direction="row" spacing={7}>
             <Box display={{ base: 'none', md: 'block' }}>{SearchBar}</Box>{' '}
-            {/* Responsive Chakra UI Display */}
             {/* Theme Toggle */}
             <Button onClick={toggleColorMode}>
               {colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
