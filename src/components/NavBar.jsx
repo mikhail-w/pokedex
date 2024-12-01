@@ -89,6 +89,7 @@ function NavBar({ myTeam }) {
       position="sticky"
       top="0"
       zIndex="1000"
+      overflow={'hidden'}
     >
       <Flex h={16} alignItems="center" justifyContent="space-between">
         {/* Logo Section */}
