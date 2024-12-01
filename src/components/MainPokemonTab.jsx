@@ -116,18 +116,12 @@ function MainPokemonTab({ id }) {
           </TabContent>
         </TabPanel>
         <TabPanel
-          height={{ base: '580px', md: '90%' }}
+          height={{ base: '580px', md: '700px' }}
           overflow="scroll"
           // outline={'2px solid red'}
           // padding={'0'}
         >
-          <Box
-            position="sticky"
-            top="16px"
-            zIndex="10"
-            marginBottom={'5px'}
-            // outline={'2px solid'}
-          >
+          <Box position="sticky" top="16px" zIndex="10" marginBottom={'5px'}>
             <MainPokemonName />
           </Box>
 
@@ -136,6 +130,7 @@ function MainPokemonTab({ id }) {
             <Center
               flexDirection="column"
               paddingBottom={{ base: '200px', md: '300px' }}
+              maxWidth={'500px'}
             >
               <InfoTab />
               {flavorTextArray && (
