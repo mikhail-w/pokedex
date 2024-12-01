@@ -10,6 +10,10 @@
   animation: rotation 20s infinite linear;
 }
 
+.ballOutline2.landscape {
+  right: -500px;
+}
+
 .ballOutline3 {
   position: fixed;
   bottom: 50px;
@@ -71,6 +75,10 @@
   top: 200px;
   right: -65px;
   transform: rotate(-0.1turn);
+}
+
+.charizard.landscape {
+  top: 70px;
 }
 
 .charizard img {

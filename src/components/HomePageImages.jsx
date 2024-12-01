@@ -8,10 +8,14 @@ import ballOutline3 from '../assets/images/pokeballs/balloutline3.svg';
 import { Center, useColorModeValue, Box } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 
-function HomePageImages() {
+function HomePageImages({ isMobileLandscape }) {
   return (
     <>
-      <div className="ballOutline2">
+      <div
+        className={
+          isMobileLandscape ? 'ballOutline2 landscape' : 'ballOutline2'
+        }
+      >
         <img src={ballOutline2} alt="pokeball outline" />
       </div>
       <div className="ballOutline3">
@@ -26,7 +30,13 @@ function HomePageImages() {
       <div className="pokemon pickachu">
         <img src={pickachu} alt="pickachu" />
       </div>
-      <div className="pokemon charizard">
+      <div
+        className={
+          isMobileLandscape
+            ? 'pokemon charizard landscape'
+            : 'pokemon charizard'
+        }
+      >
         <img src={charizard} alt="charizard" />
       </div>
       <div className="pokeball3">

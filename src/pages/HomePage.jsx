@@ -53,7 +53,7 @@ function HomePage() {
     >
       {/* Top Content */}
       <Box flex="1" width="100%">
-        <HomePageImages />
+        <HomePageImages isMobileLandscape={isMobileLandscape} />
       </Box>
 
       {/* Conditional rendering based on mobile landscape */}
