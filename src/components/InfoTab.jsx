@@ -23,6 +23,16 @@ function InfoTab() {
   const abilityList = getAbilities(abilities);
   const movesToDisplay = moves.slice(0, 4); // Safely handle moves array
 
+  // Height in meters
+  const heightInMeters = height / 10;
+
+  // Convert meters to total inches (1 meter = 39.3701 inches)
+  const totalInches = heightInMeters * 39.3701;
+
+  // Convert total inches to feet and remaining inches
+  const feet = Math.floor(totalInches / 12);
+  const inches = Math.round(totalInches % 12);
+
   return (
     <Flex
       direction="column"
@@ -90,7 +100,7 @@ function InfoTab() {
                 textAlign="right"
                 fontSize={['xs', 'sm']}
               >
-                {height} inches
+                {`${heightInMeters.toFixed(2)} m (${feet}'${inches}")`}
               </Td>
             </Tr>
             <Tr>

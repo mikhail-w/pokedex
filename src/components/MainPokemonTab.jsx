@@ -90,7 +90,7 @@ function MainPokemonTab({ id, isMobileLandscape }) {
             justifyContent="center"
             alignItems="center"
             height={
-              isMobileLandscape ? 'calc(100vh - 70px)' : 'calc(100vh - 250px)'
+              isMobileLandscape ? 'calc(100vh - 70px)' : 'calc(100vh - 350px)'
             }
           >
             <PokemonImage src={pokemon.sprites.other.home?.front_default} />
@@ -183,7 +183,7 @@ function MainPokemonTab({ id, isMobileLandscape }) {
             justifyContent="center"
             maxW="100%"
             height="auto"
-            maxHeight={['calc(100vh - 315px)', '430px']}
+            maxHeight={['calc(100vh - 260px)', '430px']}
             gap={['35px', '20px', '35px']}
             overflowY="auto"
             marginTop={'10px'}

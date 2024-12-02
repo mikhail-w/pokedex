@@ -35,7 +35,7 @@ const FlavorText = ({ flavorTextArray, onInfo, isMobileLandscape }) => {
         textOverflow="ellipsis"
         fontSize={{ base: '17px', md: '20px' }}
         lineHeight={{ base: '20px', md: '24px' }}
-        width={{ base: '300px', md: '90%' }}
+        width={{ base: '300px', md: '500px' }}
         // outline={'2px solid'}
       >
         <span className="flavorText">{currentText}</span>
