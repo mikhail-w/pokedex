@@ -87,7 +87,7 @@ function MyTeamPage() {
         gap={'30px'}
         overflow={'auto'}
         margin={'10px'}
-        maxHeight={'60vh'}
+        maxHeight={'73vh'}
       >
         {loading ? (
           <Loading />
