@@ -10,7 +10,7 @@ import {
   Image,
   Text,
 } from '@chakra-ui/react';
-import '../../assets/styles/pokeDetail.css';
+import '../../assets/styles/PokeDetail.css';
 
 function PokemonTabs({ card, pokeInfo }) {
   console.log('CARD:', card);

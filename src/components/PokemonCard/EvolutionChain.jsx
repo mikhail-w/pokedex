@@ -1,4 +1,4 @@
-import '../../assets/styles/pokeDetail.css';
+import '../../assets/styles/PokeDetail.css';
 import { Flex, Image, Text, Box, Center } from '@chakra-ui/react';
 import { ArrowForwardIcon } from '@chakra-ui/icons';
 

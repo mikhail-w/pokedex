@@ -15,8 +15,8 @@ import {
 import FlavorText from './FlavorText';
 import PokemonTabs from './PokemonTabs';
 import { modalIcons } from '../../icons';
-import { CgPokemon } from 'react-icons/cg';
-import '../../assets/styles/pokeDetail.css';
+// import '../../assets/styles/pokeDetail.css';
+import '../../assets/styles/PokeDetail.css';
 import EvolutionChain from './EvolutionChain';
 import { FaArrowLeftLong } from 'react-icons/fa6';
 import CatchReleaseButton from './CatchReleaseButton';

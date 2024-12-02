@@ -6,6 +6,7 @@ import RandPokemonPage from './pages/RandPokemonPage.jsx';
 import PokemonPage from './pages/PokemonPage.jsx';
 import MyTeamPage from './pages/MyTeamPage.jsx';
 import PokemonListPage from './pages/PokemonListPage.jsx';
+import PokeFlipPage from './pages/PokeFlipPage.jsx';
 import NotFoundPage from './pages/NotFoundPage.jsx';
 
 const router = createBrowserRouter([
@@ -32,6 +33,10 @@ const router = createBrowserRouter([
       {
         path: '/list/',
         element: <PokemonListPage />,
+      },
+      {
+        path: '/flip/',
+        element: <PokeFlipPage />,
       },
     ],
     errorElement: <NotFoundPage />,

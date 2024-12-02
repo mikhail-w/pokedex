@@ -126,6 +126,7 @@ function NavBar({ myTeam }) {
                 </Box>
                 <MenuDivider />
                 <CustomMenuItem to="/">Home</CustomMenuItem>
+                <CustomMenuItem to="/flip/">Pokemon Flip Game</CustomMenuItem>
                 <CustomMenuItem to="/random/">
                   Get Random Pokemon
                 </CustomMenuItem>
