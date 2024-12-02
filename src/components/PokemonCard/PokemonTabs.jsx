@@ -13,6 +13,7 @@ import {
 import '../../assets/styles/pokeDetail.css';
 
 function PokemonTabs({ card, pokeInfo }) {
+  console.log('CARD:', card);
   if (!pokeInfo) {
     return (
       <Text fontSize={{ base: 'sm', md: 'md' }} textAlign="center">
@@ -20,6 +21,15 @@ function PokemonTabs({ card, pokeInfo }) {
       </Text>
     );
   }
+  // Height in meters
+  const heightInMeters = card.height / 10;
+
+  // Convert meters to total inches (1 meter = 39.3701 inches)
+  const totalInches = heightInMeters * 39.3701;
+
+  // Convert total inches to feet and remaining inches
+  const feet = Math.floor(totalInches / 12); // 1 foot = 12 inches
+  const inches = Math.round(totalInches % 12); // Remaining inches after dividing by 12
   return (
     <Tabs
       className="pokeDetail-info-container"
@@ -89,7 +99,9 @@ function PokemonTabs({ card, pokeInfo }) {
                     className="description"
                     fontSize={{ base: 'xs', md: 'md' }}
                   >
-                    {card.height ? `${card.height / 10} m` : 'N/A'}
+                    {card.height
+                      ? `${heightInMeters.toFixed(2)} m (${feet}'${inches}")`
+                      : 'N/A'}
                   </Text>
                 </Box>
                 <Box
@@ -108,7 +120,9 @@ function PokemonTabs({ card, pokeInfo }) {
                     className="description"
                     fontSize={{ base: 'xs', md: 'md' }}
                   >
-                    {card.weight ? `${card.weight} lbs` : 'N/A'}
+                    {card.weight
+                      ? `${((card.weight / 10) * 2.2046).toFixed(2)} lbs`
+                      : 'N/A'}
                   </Text>
                 </Box>
                 <Box

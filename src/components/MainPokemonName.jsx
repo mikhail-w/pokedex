@@ -13,7 +13,7 @@ function MainPokemonName({ isTeam, isMobileLandscape }) {
       textUnderlineOffset="8px"
       letterSpacing="5px"
       fontFamily="Pokemon Solid"
-      fontSize={isMobileLandscape ? '1rem' : [('1.5rem', '2rem')]}
+      fontSize={isMobileLandscape ? '1rem' : { base: '1rem', lg: '2rem' }}
       as="h3"
       backgroundColor={backgroundColor}
     >

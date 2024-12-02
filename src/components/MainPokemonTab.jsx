@@ -151,9 +151,9 @@ function MainPokemonTab({ id, isMobileLandscape }) {
             <Center
               flexDirection="column"
               paddingBottom={
-                isMobileLandscape ? '50px' : { base: '200px', md: '300px' }
+                isMobileLandscape ? '50px' : { base: '200px', lg: '300px' }
               }
-              maxWidth={'500px'}
+              // maxWidth={'500px'}
             >
               <InfoTab />
               {flavorTextArray && (
@@ -169,11 +169,13 @@ function MainPokemonTab({ id, isMobileLandscape }) {
         </TabPanel>
 
         <TabPanel>
-          <MainPokemonName
-            isMobileLandscape={isMobileLandscape}
-            pokemonName={pokemon.name}
-            isTeam="true"
-          />
+          <Box marginTop={'-30px'}>
+            <MainPokemonName
+              isMobileLandscape={isMobileLandscape}
+              pokemonName={pokemon.name}
+              isTeam="true"
+            />
+          </Box>
           <Flex
             flexWrap="wrap"
             pt={['20px', '40px', '60px']}
