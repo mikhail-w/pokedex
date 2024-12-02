@@ -3,14 +3,13 @@ import '../assets/styles/PokemonPage.css';
 import Loading from '../components/Loading';
 import BackButton from '../components/BackButton';
 import { useEffect, useState, useRef } from 'react';
-import { Center, Image, Text } from '@chakra-ui/react';
+import { Center, Flex, Image, Text } from '@chakra-ui/react';
 import { useOutletContext, useParams } from 'react-router-dom';
 import { getPokemonById } from '../services/pokemonService';
 import PokemonCard from '../components/PokemonCard/PokemonCard';
 import openBall from '../assets/images/pokeballs/open-ball.png';
 
 function PokemonPage() {
-  const timerId = useRef(null);
   const {
     team,
     myTeam,
@@ -24,6 +23,8 @@ function PokemonPage() {
   } = useOutletContext();
   const [valid, setValid] = useState(false);
   const { name } = useParams();
+  const timerId = useRef(null);
+  const [isMobileLandscape, setIsMobileLandscape] = useState(false);
 
   const getPokemon = async () => {
     try {
@@ -42,11 +43,22 @@ function PokemonPage() {
   };
 
   useEffect(() => {
+    function checkMobileLandscape() {
+      const isLandscape =
+        window.innerWidth > window.innerHeight && window.innerWidth <= 918;
+      setIsMobileLandscape(isLandscape);
+    }
+
+    // Initial check
+    checkMobileLandscape();
     getPokemon();
+
+    // Listen for resize events
+    window.addEventListener('resize', checkMobileLandscape);
+
     return () => {
-      if (timerId.current) {
-        clearTimeout(timerId.current);
-      }
+      window.removeEventListener('resize', checkMobileLandscape);
+      clearTimeout(timerId.current);
     };
   }, [name]);
 
@@ -55,7 +67,10 @@ function PokemonPage() {
       {isLoading ? (
         <Loading />
       ) : valid ? (
-        <Center marginTop={'150px'} flexDirection={'column'}>
+        <Center
+          marginTop={isMobileLandscape ? '' : '150px'}
+          flexDirection={'column'}
+        >
           <PokemonCard
             card={pokemon}
             src={pokemon.sprites.other[`official-artwork`].front_default}
@@ -71,15 +86,15 @@ function PokemonPage() {
             myTeam={myTeam}
             setIsCaught={setIsCaught}
           />
-          <Center>
+          <Flex marginRight={isMobileLandscape ? '500px' : ''}>
             <BackButton />
-          </Center>
+          </Flex>
         </Center>
       ) : (
         <Center flexDirection={'column'} className="not-found" id="root">
           <Image src={openBall} />
           <Text>
-            No Pokémon with name or id <span>'{name}'</span> exists!
+            No Pokémon with name or id <span>`{name}`</span> exists!
           </Text>
         </Center>
       )}

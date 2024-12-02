@@ -65,13 +65,13 @@ function PokemonListPage() {
     <>
       <Center>
         <Text
-          marginBottom={'20px'}
+          marginBottom={{ base: '10px', lg: '20px' }}
           textDecoration="underline"
           textTransform={'capitalize'}
           textUnderlineOffset="8px"
           letterSpacing="5px"
           fontFamily="Pokemon Solid"
-          fontSize={'2rem'}
+          fontSize={{ base: '1rem', lg: '2rem' }}
           as="h3"
         >
           Pokemon List

@@ -1,7 +1,7 @@
-import { Center } from '@chakra-ui/react';
+import { Center, Flex } from '@chakra-ui/react';
 import BackButton from '../components/BackButton';
 import { useOutletContext } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import noCatch from '../assets/images/pokeballs/ball-no-catch.png';
 import { Image, Text } from '@chakra-ui/react';
 import '../assets/styles/MyTeamPage.css';
@@ -15,7 +15,9 @@ function MyTeamPage() {
 
   const [pokemonData, setPokemonData] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [animatingCard, setAnimatingCard] = useState(null); // Track the animating Pokémon card
+  const [animatingCard, setAnimatingCard] = useState(null);
+  const timerId = useRef(null);
+  const [isMobileLandscape, setIsMobileLandscape] = useState(false);
 
   useEffect(() => {
     const fetchPokemonData = async () => {
@@ -31,11 +33,27 @@ function MyTeamPage() {
       }
     };
 
+    function checkMobileLandscape() {
+      const isLandscape =
+        window.innerWidth > window.innerHeight && window.innerWidth <= 918;
+      setIsMobileLandscape(isLandscape);
+    }
+
+    // Initial check
+    checkMobileLandscape();
+
     if (myTeam.length > 0) {
       fetchPokemonData();
     } else {
       setPokemonData([]);
     }
+    // Listen for resize events
+    window.addEventListener('resize', checkMobileLandscape);
+
+    return () => {
+      window.removeEventListener('resize', checkMobileLandscape);
+      clearTimeout(timerId.current);
+    };
   }, [myTeam]);
 
   // Handle releasing a Pokémon
@@ -50,16 +68,15 @@ function MyTeamPage() {
 
   return (
     <>
-      <Center marginTop={'20px'}>
+      <Center marginTop={isMobileLandscape ? '5px' : '20px'}>
         <Text
-          marginBottom={'30px'}
+          marginBottom={{ base: '10px', lg: '50px' }}
           textDecoration="underline"
           textTransform={'capitalize'}
           textUnderlineOffset="8px"
           letterSpacing="5px"
           fontFamily="Pokemon Solid"
-          fontSize={'2rem'}
-          as="h3"
+          fontSize={{ base: '1rem', md: '1rem', lg: '2rem' }}
         >
           My Pokémon Team
         </Text>
@@ -81,12 +98,12 @@ function MyTeamPage() {
               index={idx}
               card={pokemon}
               src={pokemon.sprites.other['official-artwork'].front_default}
-              src2={pokemon.sprites.other.showdown?.front_default} // Include `src2` for flipping functionality
+              src2={pokemon.sprites.other.showdown?.front_default}
               name={pokemon.name}
               type={getType(pokemon.types)}
               id={pokemon.id}
-              animating={animatingCard === pokemon.id} // Pass animation state
-              onRelease={() => releasePokemon(pokemon.id)} // Pass release handler
+              animating={animatingCard === pokemon.id}
+              onRelease={() => releasePokemon(pokemon.id)}
             />
           ))
         ) : (
@@ -95,9 +112,9 @@ function MyTeamPage() {
             <h3>No Pokémon Caught Yet</h3>
           </div>
         )}
-      </Center>
-      <Center>
-        <BackButton />
+        <Flex marginRight={isMobileLandscape ? '620px' : ''}>
+          <BackButton />
+        </Flex>
       </Center>
     </>
   );
