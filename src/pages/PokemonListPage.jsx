@@ -101,7 +101,7 @@ function PokemonListPage() {
       </Center>
       <Center>
         <Button
-          margin={'50px'}
+          marginTop={'5px'}
           colorScheme="red"
           onClick={getAllPokemons}
           isLoading={isLoading}
