@@ -179,7 +179,7 @@ function MainPokemonTab({ id, isMobileLandscape }) {
           <Flex
             flexWrap="wrap"
             pt={['20px', '40px', '60px']}
-            pb={['20px', '40px', '60px']}
+            pb={['60px']}
             justifyContent="center"
             maxW="100%"
             height="auto"
