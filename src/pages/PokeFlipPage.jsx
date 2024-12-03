@@ -1,11 +1,10 @@
-import { useState, useEffect } from 'react';
 import '../assets/styles/PokeFlipPage.css';
-import SingleCard from '../components/flipCard/SingleCard';
-
+import { useState, useEffect } from 'react';
 import ng from '../assets/images/flip/ng.png';
-import background from '../assets/images/flip/background2.png';
 import Logo from '../components/flipCard/Logo';
-import { Box, Center, Image, Flex } from '@chakra-ui/react';
+import SingleCard from '../components/flipCard/SingleCard';
+import { Box, Image, Flex } from '@chakra-ui/react';
+import background from '../assets/images/flip/background4.png';
 
 function PokeFlipPage() {
   const [cards, setCards] = useState([]);
@@ -64,7 +63,7 @@ function PokeFlipPage() {
     const res = [];
     const totalPokemon = 1015;
 
-    for (let i = 0; i < 6; i++) {
+    for (let i = 0; i < 8; i++) {
       const id = Math.floor(Math.random() * totalPokemon) + 1;
       const url = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/${id}.png`;
       res.push({ src: url });
@@ -84,11 +83,7 @@ function PokeFlipPage() {
       overflow="auto"
       justifyContent={'start'}
     >
-      <Flex
-        flexDirection={'column'}
-        alignItems={'center'}
-        // outline={'2px solid'}
-      >
+      <Flex flexDirection={'column'} alignItems={'center'}>
         <Logo />
 
         <Box
@@ -118,7 +113,6 @@ function PokeFlipPage() {
           lg: 'repeat(4, 1fr)', // 4 columns on large screens
         }}
         gap="10px"
-        // outline={'2px solid green'}
       >
         {cards.map(card => (
           <SingleCard
