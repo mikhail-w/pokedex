@@ -1,5 +1,5 @@
 .logo {
-  /* max-width: 300px; */
+  max-width: 300px;
   /* max-height: 100px; */
 }
 
@@ -81,7 +81,7 @@
 }
 
 .card-grid {
-  margin-top: 40px;
+  /* margin-top: 40px; */
   margin-bottom: 30px;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
@@ -91,16 +91,6 @@
   margin-right: auto;
 }
 
-/* .background {
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: top center;
-  height: 100vh;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-} */
 .background {
   background-size: cover;
   background-position: center;

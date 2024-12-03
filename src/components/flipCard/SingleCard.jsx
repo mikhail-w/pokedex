@@ -4,9 +4,6 @@ import { Box, Image } from '@chakra-ui/react';
 
 function SingleCard({ card, handleChoice, flipped, disabled }) {
   const handleClick = () => {
-    // console.log('Card Clicked!');
-
-    // prevents user from clicking multiple cards too quickly
     if (!disabled) {
       handleChoice(card);
     }

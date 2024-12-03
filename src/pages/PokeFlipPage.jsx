@@ -73,7 +73,7 @@ function PokeFlipPage() {
   };
 
   return (
-    <Box
+    <Flex
       className="background"
       style={{
         backgroundImage: `url(${background})`,
@@ -81,27 +81,44 @@ function PokeFlipPage() {
       display="flex"
       flexDirection="column"
       height="93vh"
-      overflow="hidden"
+      overflow="auto"
+      justifyContent={'start'}
     >
-      <Logo />
+      <Flex
+        flexDirection={'column'}
+        alignItems={'center'}
+        // outline={'2px solid'}
+      >
+        <Logo />
 
-      <Flex flex="1" justify="center" align="center">
-        <Box className="newgame" height={'50px'} onClick={shuffleCards}>
-          <Image height={'100%'} src={ng} alt="New Game" />
+        <Box
+          marginTop={'10px'}
+          className="newgame"
+          height={'50px'}
+          onClick={shuffleCards}
+        >
+          <Image
+            display={'fixed'}
+            top={'100px'}
+            height={'100%'}
+            src={ng}
+            alt="New Game"
+          />
         </Box>
       </Flex>
-
       <Box
         className="card-grid"
         maxWidth="90%"
         margin="0 auto"
         display="grid"
+        marginTop={'30px'}
         gridTemplateColumns={{
-          base: 'repeat(2, 1fr)', // 2 columns on small screens
-          md: 'repeat(3, 1fr)', // 3 columns on medium screens
+          base: 'repeat(4, 1fr)', // 2 columns on small screens
+          md: 'repeat(4, 1fr)', // 3 columns on medium screens
           lg: 'repeat(4, 1fr)', // 4 columns on large screens
         }}
-        gap="20px"
+        gap="10px"
+        // outline={'2px solid green'}
       >
         {cards.map(card => (
           <SingleCard
@@ -113,7 +130,7 @@ function PokeFlipPage() {
           />
         ))}
       </Box>
-    </Box>
+    </Flex>
   );
 }
 
