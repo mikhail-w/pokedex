@@ -3,10 +3,12 @@ import { useState, useEffect } from 'react';
 import ng from '../assets/images/flip/ng.png';
 import Logo from '../components/flipCard/Logo';
 import SingleCard from '../components/flipCard/SingleCard';
-import { Box, Image, Flex } from '@chakra-ui/react';
+import { Box, Image, Flex, useColorMode } from '@chakra-ui/react';
 import background from '../assets/images/flip/background4.png';
+import background2 from '../assets/images/flip/background14.png';
 
 function PokeFlipPage() {
+  const { colorMode } = useColorMode();
   const [cards, setCards] = useState([]);
   const [turns, setTurns] = useState(0);
   const [choiceOne, setChoiceOne] = useState(null);
@@ -71,17 +73,23 @@ function PokeFlipPage() {
     return res;
   };
 
+  // Dynamic background based on color mode
+  const backgroundImage =
+    colorMode === 'light' ? `url(${background})` : `url(${background2})`;
+
   return (
     <Flex
       className="background"
-      style={{
-        backgroundImage: `url(${background})`,
+      sx={{
+        backgroundImage,
+        display: 'flex',
+        flexDirection: 'column',
+        height: '93vh',
+        overflow: 'auto',
+        justifyContent: 'start',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
       }}
-      display="flex"
-      flexDirection="column"
-      height="93vh"
-      overflow="auto"
-      justifyContent={'start'}
     >
       <Flex flexDirection={'column'} alignItems={'center'}>
         <Logo />
