@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
-import '../assets/styles/PokeFligPage.css';
+import '../assets/styles/PokeFlipPage.css';
 import SingleCard from '../components/flipCard/SingleCard';
 
 import ng from '../assets/images/flip/ng.png';
-import background from '../assets/images/flip/background.jpg';
-import turnImg from '../assets/images/flip/turns.png';
+import background from '../assets/images/flip/background2.png';
 import Logo from '../components/flipCard/Logo';
+import { Box, Center, Image, Flex } from '@chakra-ui/react';
 
 function PokeFlipPage() {
   const [cards, setCards] = useState([]);
@@ -14,127 +14,106 @@ function PokeFlipPage() {
   const [choiceTwo, setChoiceTwo] = useState(null);
   const [disabled, setDisabled] = useState(false);
 
-  // Shuffle cards
-  const shuffleCards = async () => {
+  // Shuffle cards and start a new game
+  const shuffleCards = () => {
     const pokemonImages = getRandomPokemon();
 
-    // Duplicate the cards
     const shuffledCards = [...pokemonImages, ...pokemonImages]
       .sort(() => Math.random() - 0.5)
-      .map((card, idx) => {
-        let ans = { ...addId(card, idx) };
-        return ans;
-      });
+      .map((card, idx) => ({ ...card, id: idx, matched: false }));
 
-    // Update Game Screen
     setChoiceOne(null);
     setChoiceTwo(null);
     setCards(shuffledCards);
     setTurns(0);
-
-    // console.log('SHUFFLED CARDS: ', shuffledCards);
   };
 
-  // Add Id and matched key/value pairs to card object
-  const addId = (card, idx) => {
-    return { ...card, id: idx, matched: false };
-  };
-
-  // Handle a choice
+  // Handle card selection
   const handleChoice = card => {
-    // console.log(card);
     choiceOne ? setChoiceTwo(card) : setChoiceOne(card);
   };
 
+  // Compare selected cards
   useEffect(() => {
     if (choiceOne && choiceTwo) {
-      //prevents user from clicking multiple cards too quickly
       setDisabled(true);
 
       if (choiceOne.src === choiceTwo.src) {
-        console.log(`They match!`);
-        setCards(prevCards => {
-          return prevCards.map(card => {
-            if (card.src === choiceOne.src) {
-              return { ...card, matched: true };
-            } else {
-              return card;
-            }
-          });
-        });
+        setCards(prevCards =>
+          prevCards.map(card =>
+            card.src === choiceOne.src ? { ...card, matched: true } : card
+          )
+        );
         resetTurn();
       } else {
-        // console.log(`They DO NOT match: c1: ${choiceOne.src} c2: ${choiceTwo}`);
-        // resetTurn();
-        // console.log(`They DO NOT match`);
         setTimeout(() => resetTurn(), 1000);
       }
     }
   }, [choiceOne, choiceTwo]);
-  console.log(cards);
 
+  // Reset choices after a turn
   const resetTurn = () => {
-    console.log('=== RESET ===');
     setChoiceOne(null);
     setChoiceTwo(null);
     setTurns(prevTurns => prevTurns + 1);
     setDisabled(false);
   };
 
-  function getRandomId(max) {
-    return Math.floor(Math.random() * max);
-  }
-
+  // Generate random Pokémon images
   const getRandomPokemon = () => {
     const res = [];
+    const totalPokemon = 1015;
 
     for (let i = 0; i < 6; i++) {
-      let id = getRandomId(1015);
-      let url = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/${id}.png`;
-      // let url = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/${id}.gif`;
+      const id = Math.floor(Math.random() * totalPokemon) + 1;
+      const url = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/${id}.png`;
       res.push({ src: url });
     }
     return res;
   };
 
-  // console.log(cards, turns);
-  // console.log('Choice One: ', choiceOne);
-  // console.log('Choice Two: ', choiceTwo);
-
-  // Start the game automatically
-  // useEffect(() => {
-  //   shuffleCards();
-  // }, []);
-
   return (
-    <>
-      <div
-        className="background"
-        style={{ backgroundImage: `url(${background})` }}
+    <Box
+      className="background"
+      style={{
+        backgroundImage: `url(${background})`,
+      }}
+      display="flex"
+      flexDirection="column"
+      height="93vh"
+      overflow="hidden"
+    >
+      <Logo />
+
+      <Flex flex="1" justify="center" align="center">
+        <Box className="newgame" height={'50px'} onClick={shuffleCards}>
+          <Image height={'100%'} src={ng} alt="New Game" />
+        </Box>
+      </Flex>
+
+      <Box
+        className="card-grid"
+        maxWidth="90%"
+        margin="0 auto"
+        display="grid"
+        gridTemplateColumns={{
+          base: 'repeat(2, 1fr)', // 2 columns on small screens
+          md: 'repeat(3, 1fr)', // 3 columns on medium screens
+          lg: 'repeat(4, 1fr)', // 4 columns on large screens
+        }}
+        gap="20px"
       >
-        {/* <h1>Poke-Memory</h1> */}
-        <Logo></Logo>
-        {/* <button onClick={shuffleCards}>New Game</button> */}
-        <button onClick={shuffleCards}>
-          <img src={ng} alt="button" />
-        </button>
-        {/* <NewGameBtn onClick={shuffleCards}></NewGameBtn> */}
-        <div className="card-grid">
-          {cards.map(card => (
-            <SingleCard
-              key={card.id}
-              card={card}
-              handleChoice={handleChoice}
-              flipped={card === choiceOne || card === choiceTwo || card.matched}
-              disabled={disabled}
-            />
-          ))}
-        </div>
-        <div>
-          {/* <img className="turns" src={turnImg} alt="button" /> {turns} */}
-        </div>
-      </div>
-    </>
+        {cards.map(card => (
+          <SingleCard
+            key={card.id}
+            card={card}
+            handleChoice={handleChoice}
+            flipped={card === choiceOne || card === choiceTwo || card.matched}
+            disabled={disabled}
+          />
+        ))}
+      </Box>
+    </Box>
   );
 }
 

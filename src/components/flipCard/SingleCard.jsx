@@ -1,5 +1,6 @@
 import '../../assets/styles/SingleCard.css';
 import back from '../../assets/images/flip/ball.png';
+import { Box, Image } from '@chakra-ui/react';
 
 function SingleCard({ card, handleChoice, flipped, disabled }) {
   const handleClick = () => {
@@ -12,17 +13,17 @@ function SingleCard({ card, handleChoice, flipped, disabled }) {
   };
 
   return (
-    <div className="card">
-      <div className={flipped ? 'flipped' : ''}>
-        <img className="front" src={card.src} alt="card-front" />
-        <img
+    <Box className="card">
+      <Box className={flipped ? 'flipped' : ''}>
+        <Image className="front" src={card.src} alt="card-front" />
+        <Image
           className="back"
           src={back}
           onClick={handleClick}
           alt="card-back"
         />
-      </div>
-    </div>
+      </Box>
+    </Box>
   );
 }
 
