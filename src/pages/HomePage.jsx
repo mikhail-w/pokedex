@@ -40,6 +40,10 @@ function HomePage() {
     return navigate(`/list/`);
   }
 
+  function handlePokeFlip() {
+    return navigate(`/flip/`);
+  }
+
   // Adjust layout and size dynamically based on screen size
   const buttonSize = useBreakpointValue({ base: 'md', md: 'md' });
 
@@ -89,6 +93,14 @@ function HomePage() {
           width="168px"
         >
           View Pokemon List
+        </Button>
+        <Button
+          onClick={handlePokeFlip}
+          colorScheme="yellow"
+          size={buttonSize}
+          width="168px"
+        >
+          PokeFlip Game
         </Button>
       </Flex>
     </Flex>
