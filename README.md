@@ -14,7 +14,7 @@ randomly generated Pokemon teams, and play an interactive pokeflip memory game.
 - Buttons for generating random Pokemon, viewing the Pokemon list, or playing
   the PokeFlip game.
 - Toggle between light and dark mode.
-- View your team of Pokemon you've caught.
+- View the team of Pokemon you've caught.
 ### 📖 Pokemon List
 
 - Displays a paginated list of all Pokemon.
