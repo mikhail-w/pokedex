@@ -13,7 +13,8 @@ randomly generated Pokemon teams, and play an interactive pokeflip memory game.
 - View dynamic Pokemon images and navigate to different sections.
 - Buttons for generating random Pokemon, viewing the Pokemon list, or playing
   the PokeFlip game.
-
+- Toggle between light and dark mode.
+- View your team of Pokemon you've caught.
 ### 📖 Pokemon List
 
 - Displays a paginated list of all Pokemon.
@@ -26,7 +27,7 @@ randomly generated Pokemon teams, and play an interactive pokeflip memory game.
 
 ### 🧩 Team Builder
 
-- Whenever you generate a new Pokemon a random team is created for you base on
+- Whenever you generate a new Pokemon a random team is created for you based on
   the Pokemon type.
 
 ### 🎲 PokeFlip Game
