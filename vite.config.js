@@ -2,7 +2,7 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 // import { visualizer } from 'rollup-plugin-visualizer';
 export default defineConfig({
-  base: './', // Use relative paths for assets
+  base: '/pokedex/', // Use relative paths for assets
   plugins: [
     react(),
     // visualizer({
