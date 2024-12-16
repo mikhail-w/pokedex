@@ -90,7 +90,7 @@ Follow these steps to get the app up and running:
    ```
 4. **View in Browser**
    ```bash
-   Open http://localhost:5173 in your browser.
+   http://localhost:5173
    ```
 
 ## 🌐 Live Demo
