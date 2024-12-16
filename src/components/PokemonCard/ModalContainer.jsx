@@ -222,14 +222,18 @@ function ModalContainer({
         <PokemonTabs card={card} pokeInfo={pokeInfo} />
       </Box>
       {/* EXPANDED SECTION */}
-      <Box>
+      <Box
+        width={'100%'}
+        height={'100%'}
+        className={isMobile ? 'mobile-extended' : ''}
+      >
         {isExpanded && (
           <Flex
             className="extended-section"
-            height="700px"
-            flexDirection="column"
             w="100%"
+            h="100%"
             alignItems="center"
+            justifyContent="center"
           >
             <FlavorText flavorTextArray={flavorTextArray} onInfo={false} />
             <EvolutionChain evoNames={evoNames} />
