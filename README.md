@@ -1,8 +1,99 @@
-# React + Vite
+# Pokedex WebApp
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Welcome to the **Pokedex WebApp** — a React-based web app for Pokemon
+enthusiasts! This app lets you explore Pokemon, generate random ones, view
+randomly generated Pokemon teams, and play an interactive pokeflip memory game.
 
-Currently, two official plugins are available:
+![Pokedex Logo](./src/assets/images/pokemon/pokedex.png)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🚀 Features
+
+### 🎮 Interactive Home Page
+
+- View dynamic Pokemon images and navigate to different sections.
+- Buttons for generating random Pokemon, viewing the Pokemon list, or playing
+  the PokeFlip game.
+
+### 📖 Pokemon List
+
+- Displays a paginated list of all Pokemon.
+- Filtered search functionality for finding specific Pokemon.
+
+### 🔄 Generate Random Pokemon
+
+- Discover random Pokemon with a single click.
+- View their stats, moves, abilities, and evolution chain.
+
+### 🧩 Team Builder
+
+- Whenever you generate a new Pokemon a random team is created for you base on
+  the Pokemon type.
+
+### 🎲 PokeFlip Game
+
+- Play a memory game with Pokemon cards.
+- Test your memory and match the Pokemon pairs!
+
+## 💻 Tech Stack
+
+- **React** - Component-based architecture.
+- **Vite** - Fast and modern development build tool.
+- **CSS** - Custom styling for a visually appealing UI.
+- **React-Router** - For seamless page navigation.
+- **Pokemon API** - Fetches real-time Pokemon data.
+
+## 🖼 Screenshots
+
+### Home Page
+
+![Home Page](./src/assets/images/screenshots/home.png)
+![Home Page](./src/assets/images/screenshots/home-dark.png)
+
+### Random Pokemon Generator
+
+![Random Pokemon](./src/assets/images/screenshots/random.png)
+
+### Random Pokemon Team
+
+![Pokemon Details](./src/assets/images/screenshots/team.png)
+![Pokemon Details](./src/assets/images/screenshots/team-back.png)
+
+### Pokemon List
+
+![Pokemon Details](./src/assets/images/screenshots/list.png)
+
+### Pokemon Card
+
+![Pokemon Card](./src/assets/images/screenshots/card.png)
+![Pokemon Card](./src/assets/images/screenshots/card-extended.png)
+
+### PokeFLip Game
+
+## ![PokeFlip](./src/assets/images/screenshots/flip.png)
+
+## 🛠 Installation and Setup
+
+Follow these steps to get the app up and running:
+
+1. **Clone the Repository**
+   ```bash
+   git clone https://github.com/mikhail-w/pokedex.git
+   cd pokedex
+   ```
+2. **Install Dependencies**
+   ```bash
+   npm install
+   ```
+3. **Run the App**
+   ```bash
+   npm run dev
+   ```
+4. **View in Browser**
+   ```bash
+   Open http://localhost:5173 in your browser.
+   ```
+
+## 🌐 Live Demo
+
+Check out the live version of the app
+[here](https://mikhail-w.github.io/pokedex/#/).

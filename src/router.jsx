@@ -1,4 +1,4 @@
-import { createBrowserRouter } from 'react-router-dom';
+import { createHashRouter } from 'react-router-dom';
 import React, { lazy } from 'react';
 import App from './App.jsx';
 import HomePage from './pages/HomePage.jsx';
@@ -9,7 +9,7 @@ import PokemonListPage from './pages/PokemonListPage.jsx';
 import PokeFlipPage from './pages/PokeFlipPage.jsx';
 import NotFoundPage from './pages/NotFoundPage.jsx';
 
-const router = createBrowserRouter([
+const router = createHashRouter([
   {
     path: '/',
     element: <App />,
