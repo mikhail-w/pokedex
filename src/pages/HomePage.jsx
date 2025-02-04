@@ -1,15 +1,9 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useOutletContext } from 'react-router-dom';
-import {
-  Box,
-  Button,
-  Flex,
-  Text,
-  useBreakpointValue,
-  keyframes,
-} from '@chakra-ui/react';
-import HomePageImages from '../components/HomePageImages';
+import { Box, Button, Flex, Text, useBreakpointValue } from '@chakra-ui/react';
+import HomePageImages from '@/components/HomePageImages';
 import '../assets/styles/HomePage.css';
+import { keyframes } from '@emotion/react';
 
 function HomePage() {
   const { setRandomChoice, setIsLoading, passed, setPassed } =

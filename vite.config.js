@@ -1,12 +1,13 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
+import { visualizer } from 'rollup-plugin-visualizer';
 
+// https://vitejs.dev/config/
 export default defineConfig({
-  base: '/pokedex/', // Use relative paths to work on S3 and local file opening
-  plugins: [react()],
+  base: '/pokedex/',
+  plugins: [react(), visualizer()],
   build: {
     sourcemap: false,
-    chunkSizeWarningLimit: 1000,
     rollupOptions: {
       output: {
         manualChunks(id) {
@@ -17,8 +18,13 @@ export default defineConfig({
       },
     },
   },
-  server: {
-    open: true,
-    port: 3000,
+  resolve: {
+    alias: {
+      '@': '/src',
+      components: '/src/components',
+      assets: '/src/assets',
+      services: '/src/services',
+      utils: '/src/utils',
+    },
   },
 });
