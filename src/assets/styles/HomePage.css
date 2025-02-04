@@ -41,7 +41,7 @@
   left: -65px;
 }
 
-.pickachu {
+.pikachu {
   height: 200px;
   position: fixed;
   top: 170px;
@@ -69,7 +69,7 @@
 
 .pokeball3 img,
 .bulbasaur img,
-.pickachu img,
+.pikachu img,
 .charizard img {
   width: 100%;
   height: 100%;

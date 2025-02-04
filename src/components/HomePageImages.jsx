@@ -1,5 +1,5 @@
 import bulbasaur from '../assets/images/pokemon/bulbasaur.png';
-import pickachu from '../assets/images/pokemon/pikachu.png';
+import pikachu from '../assets/images/pokemon/pikachu.png';
 import charizard from '../assets/images/pokemon/charizard.png';
 import pokedex from '../assets/images/pokemon/pokedex.png';
 import pokeball3 from '../assets/images/pokeballs/pokeball3.png';
@@ -27,8 +27,8 @@ function HomePageImages({ isMobileLandscape }) {
       <div className="pokemon bulbasaur">
         <img src={bulbasaur} alt="bulbasaur" />
       </div>
-      <div className="pokemon pickachu">
-        <img src={pickachu} alt="pickachu" />
+      <div className="pokemon pikachu">
+        <img src={pikachu} alt="pikachu" />
       </div>
       <div
         className={
