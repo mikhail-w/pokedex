@@ -56,24 +56,33 @@ Check out the live version of the app
 ### Home Page
 
 ![Home Page](./src/assets/images/screenshots/home.png)
+
+### Dark Mode
+
 ![Home Page](./src/assets/images/screenshots/home-dark.png)
 
 ### Random Pokemon Generator
 
 ![Random Pokemon](./src/assets/images/screenshots/random.png)
 
-### Random Pokemon Team
+### Pokemon Card Front
 
 ![Pokemon Details](./src/assets/images/screenshots/team.png)
+
+### Pokemon Card Back
+
 ![Pokemon Details](./src/assets/images/screenshots/team-back.png)
 
 ### Pokemon List
 
 ![Pokemon Details](./src/assets/images/screenshots/list.png)
 
-### Pokemon Card
+### Pokemon Card Info
 
 ![Pokemon Card](./src/assets/images/screenshots/card.png)
+
+### Pokemon Card Info Expanded
+
 ![Pokemon Card](./src/assets/images/screenshots/card-extended.png)
 
 ### PokeFLip Game

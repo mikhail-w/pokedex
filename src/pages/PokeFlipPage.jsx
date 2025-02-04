@@ -140,22 +140,34 @@ function PokeFlipPage() {
           <Logo />
 
           {/* Mode selection buttons */}
-          <Flex gap="10px" mt="10px">
+          <Flex gap="20px" mt="20px">
             <Button
+              outline={
+                mode === 'easy' ? '4px solid #ffcc01' : '4px solid #3760aa'
+              }
+              backgroundColor={mode === 'easy' ? '#3760aa' : '#eeeeee'}
+              color={mode === 'easy' ? '#ffcc01' : '#3760aa'}
               onClick={() => setMode('easy')}
-              colorScheme={mode === 'easy' ? 'blue' : 'gray'}
             >
               Easy
             </Button>
             <Button
+              outline={
+                mode === 'medium' ? '4px solid #ffcc01' : '4px solid #3760aa'
+              }
+              backgroundColor={mode === 'medium' ? '#3760aa' : '#eeeeee'}
+              color={mode === 'medium' ? '#ffcc01' : '#3760aa'}
               onClick={() => setMode('medium')}
-              colorScheme={mode === 'medium' ? 'blue' : 'gray'}
             >
               Medium
             </Button>
             <Button
+              outline={
+                mode === 'hard' ? '4px solid #ffcc01' : '4px solid #3760aa'
+              }
+              backgroundColor={mode === 'hard' ? '#3760aa' : '#eeeeee'}
+              color={mode === 'hard' ? '#ffcc01' : '#3760aa'}
               onClick={() => setMode('hard')}
-              colorScheme={mode === 'hard' ? 'blue' : 'gray'}
             >
               Hard
             </Button>
