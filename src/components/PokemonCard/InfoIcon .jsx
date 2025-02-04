@@ -36,7 +36,7 @@ function InfoIcon({ handleClick, onOpenModal, id }) {
               handleClick(); // Call handleClick with any necessary arguments
               onOpenModal(); // Call onOpenModal
             }}
-            boxSize="26px" // Adjust the size of the image
+            size="26px" // Adjust the size of the image
           />
         </Tooltip>
       </MotionBox>

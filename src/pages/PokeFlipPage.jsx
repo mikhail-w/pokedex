@@ -1,23 +1,48 @@
 import '../assets/styles/PokeFlipPage.css';
 import { useState, useEffect } from 'react';
 import ng from '../assets/images/flip/ng.png';
+import winImg from '../assets/images/flip/win.png';
 import Logo from '../components/flipCard/Logo';
 import SingleCard from '../components/flipCard/SingleCard';
-import { Box, Image, Flex, useColorMode } from '@chakra-ui/react';
+import {
+  Box,
+  Image,
+  Flex,
+  useColorMode,
+  Button,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+  Text,
+} from '@chakra-ui/react';
 import background from '../assets/images/flip/background4.png';
 import background2 from '../assets/images/flip/background14.png';
 
+const modeConfig = {
+  easy: { pairs: 6, columns: 4 },
+  medium: { pairs: 8, columns: 4 },
+  hard: { pairs: 12, columns: 6 }, // Desktop: 6 columns, Mobile will be overridden.
+};
+
 function PokeFlipPage() {
   const { colorMode } = useColorMode();
+
+  // Set default mode to "medium"
+  const [mode, setMode] = useState('medium');
   const [cards, setCards] = useState([]);
-  const [turns, setTurns] = useState(0);
+  const [turns, setTurns] = useState(0); // Counts moves (or turns)
   const [choiceOne, setChoiceOne] = useState(null);
   const [choiceTwo, setChoiceTwo] = useState(null);
   const [disabled, setDisabled] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  // Shuffle cards and start a new game
+  // Shuffle cards and start a new game based on the current mode.
+  // Also reset the move counter and modal.
   const shuffleCards = () => {
-    const pokemonImages = getRandomPokemon();
+    const pokemonImages = getRandomPokemon(modeConfig[mode].pairs);
 
     const shuffledCards = [...pokemonImages, ...pokemonImages]
       .sort(() => Math.random() - 0.5)
@@ -27,14 +52,16 @@ function PokeFlipPage() {
     setChoiceTwo(null);
     setCards(shuffledCards);
     setTurns(0);
+    setIsModalOpen(false);
   };
 
-  // Handle card selection
+  // Handle card selection with a guard against double-clicking the same card.
   const handleChoice = card => {
+    if (disabled || (choiceOne && card.id === choiceOne.id)) return;
     choiceOne ? setChoiceTwo(card) : setChoiceOne(card);
   };
 
-  // Compare selected cards
+  // Compare selected cards.
   useEffect(() => {
     if (choiceOne && choiceTwo) {
       setDisabled(true);
@@ -52,7 +79,7 @@ function PokeFlipPage() {
     }
   }, [choiceOne, choiceTwo]);
 
-  // Reset choices after a turn
+  // Reset choices after a turn and increment the move counter.
   const resetTurn = () => {
     setChoiceOne(null);
     setChoiceTwo(null);
@@ -60,12 +87,12 @@ function PokeFlipPage() {
     setDisabled(false);
   };
 
-  // Generate random Pokémon images
-  const getRandomPokemon = () => {
+  // Generate random Pokémon images based on the number of pairs needed.
+  const getRandomPokemon = numPairs => {
     const res = [];
     const totalPokemon = 1015;
 
-    for (let i = 0; i < 8; i++) {
+    for (let i = 0; i < numPairs; i++) {
       const id = Math.floor(Math.random() * totalPokemon) + 1;
       const url = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/${id}.png`;
       res.push({ src: url });
@@ -73,66 +100,151 @@ function PokeFlipPage() {
     return res;
   };
 
-  // Dynamic background based on color mode
+  // Dynamic background based on color mode.
   const backgroundImage =
     colorMode === 'light' ? `url(${background})` : `url(${background2})`;
 
-  return (
-    <Flex
-      className="background"
-      sx={{
-        backgroundImage,
-        display: 'flex',
-        flexDirection: 'column',
-        height: '93vh',
-        overflow: 'auto',
-        justifyContent: 'start',
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-      }}
-    >
-      <Flex flexDirection={'column'} alignItems={'center'}>
-        <Logo />
+  // Reshuffle cards automatically when the mode changes.
+  useEffect(() => {
+    shuffleCards();
+  }, [mode]);
 
+  // Check if all cards have been matched and open the modal if so.
+  useEffect(() => {
+    if (cards.length > 0 && cards.every(card => card.matched)) {
+      setIsModalOpen(true);
+    }
+  }, [cards]);
+
+  const gridTemplateColumns =
+    mode === 'hard'
+      ? { base: 'repeat(4, 1fr)', md: 'repeat(6, 1fr)' }
+      : `repeat(${modeConfig[mode].columns}, 1fr)`;
+
+  return (
+    <>
+      <Flex
+        className="background"
+        sx={{
+          backgroundImage,
+          display: 'flex',
+          flexDirection: 'column',
+          height: '93vh',
+          overflow: 'auto', // Allows scrolling when content is too tall
+          justifyContent: 'start',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+        }}
+      >
+        <Flex flexDirection="column" alignItems="center">
+          <Logo />
+
+          {/* Mode selection buttons */}
+          <Flex gap="10px" mt="10px">
+            <Button
+              onClick={() => setMode('easy')}
+              colorScheme={mode === 'easy' ? 'blue' : 'gray'}
+            >
+              Easy
+            </Button>
+            <Button
+              onClick={() => setMode('medium')}
+              colorScheme={mode === 'medium' ? 'blue' : 'gray'}
+            >
+              Medium
+            </Button>
+            <Button
+              onClick={() => setMode('hard')}
+              colorScheme={mode === 'hard' ? 'blue' : 'gray'}
+            >
+              Hard
+            </Button>
+          </Flex>
+
+          <Box
+            marginTop="10px"
+            className="newgame"
+            height="50px"
+            onClick={shuffleCards}
+          >
+            <Image
+              display="fixed"
+              top="100px"
+              height="100%"
+              src={ng}
+              alt="New Game"
+            />
+          </Box>
+        </Flex>
+
+        {/* Card grid container */}
         <Box
-          marginTop={'10px'}
-          className="newgame"
-          height={'50px'}
-          onClick={shuffleCards}
+          className="card-grid"
+          maxWidth="90%"
+          margin="0 auto"
+          display="grid"
+          marginTop="30px"
+          gridTemplateColumns={gridTemplateColumns}
+          gap="10px"
+          overflowY="auto"
         >
-          <Image
-            display={'fixed'}
-            top={'100px'}
-            height={'100%'}
-            src={ng}
-            alt="New Game"
-          />
+          {cards.map(card => (
+            <SingleCard
+              key={card.id}
+              card={card}
+              handleChoice={handleChoice}
+              flipped={card === choiceOne || card === choiceTwo || card.matched}
+              disabled={disabled}
+            />
+          ))}
         </Box>
       </Flex>
-      <Box
-        className="card-grid"
-        maxWidth="90%"
-        margin="0 auto"
-        display="grid"
-        marginTop={'30px'}
-        gridTemplateColumns={{
-          base: 'repeat(4, 1fr)', // 2 columns on small screens
-          md: 'repeat(4, 1fr)', // 3 columns on medium screens
-          lg: 'repeat(4, 1fr)', // 4 columns on large screens
-        }}
-        gap="10px"
+
+      {/* Pokémon-themed Modal for game completion */}
+      <Modal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        isCentered
+        size="lg"
       >
-        {cards.map(card => (
-          <SingleCard
-            key={card.id}
-            card={card}
-            handleChoice={handleChoice}
-            flipped={card === choiceOne || card === choiceTwo || card.matched}
-            disabled={disabled}
-          />
-        ))}
-      </Box>
-    </Flex>
+        <ModalOverlay />
+        <ModalContent
+          bg="#f39b2d"
+          borderRadius="xl"
+          border="4px solid #000"
+          boxShadow="2xl"
+        >
+          <ModalCloseButton />
+          <ModalBody>
+            <Flex direction="column" align="center" justify="center">
+              <Image src={winImg} alt="You Win!" mb={4} />
+              <Text
+                textAlign="center"
+                fontFamily="'Pokemon Solid', sans-serif"
+                fontSize="xl"
+                fontWeight="bold"
+                letterSpacing={2}
+              >
+                You completed the game in {turns} moves!
+              </Text>
+            </Flex>
+          </ModalBody>
+          <ModalFooter justifyContent="center">
+            <Button
+              onClick={() => {
+                setIsModalOpen(false);
+                shuffleCards();
+              }}
+              colorScheme="blue"
+              letterSpacing={4}
+              fontFamily="'Pokemon Solid', sans-serif"
+            >
+              New Game
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+    </>
   );
 }
 

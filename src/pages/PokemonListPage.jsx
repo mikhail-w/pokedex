@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { Center, Button, Text } from '@chakra-ui/react';
 import PokemonCard from '../components/PokemonCard/PokemonCard';
 import { getType } from '../utils';
@@ -10,17 +10,21 @@ function PokemonListPage() {
   );
   const [isLoading, setIsLoading] = useState(false);
   const [isMobileLandscape, setIsMobileLandscape] = useState(false);
-  const timerId = useRef(null);
 
+  // Fetch Pokémon data from the API.
   const getAllPokemons = async () => {
-    if (isLoading) return; // Prevent multiple calls at once
+    // Prevent fetching if already loading or if there are no more pages.
+    if (isLoading || !loadMore) return;
+
     setIsLoading(true);
     try {
       const res = await fetch(loadMore);
       const data = await res.json();
 
+      // Update URL for the next batch.
       setLoadMore(data.next);
 
+      // Fetch detailed data for each Pokémon.
       const pokemonDataPromises = data.results.map(async pokemon => {
         const res = await fetch(
           `https://pokeapi.co/api/v2/pokemon/${pokemon.name}`
@@ -30,6 +34,7 @@ function PokemonListPage() {
 
       const pokemonData = await Promise.all(pokemonDataPromises);
 
+      // Add new Pokémon to the existing list and sort by ID.
       setAllPokemons(prevList =>
         [...prevList, ...pokemonData].sort((a, b) => a.id - b.id)
       );
@@ -40,24 +45,23 @@ function PokemonListPage() {
     }
   };
 
+  // Initial load and mobile landscape orientation check.
   useEffect(() => {
-    function checkMobileLandscape() {
+    // Load the initial Pokémon.
+    getAllPokemons();
+
+    // Check mobile landscape orientation.
+    const checkMobileLandscape = () => {
       const isLandscape =
         window.innerWidth > window.innerHeight && window.innerWidth <= 918;
       setIsMobileLandscape(isLandscape);
-    }
+    };
 
-    // Initial check
     checkMobileLandscape();
-    getAllPokemons();
-
-    // Listen for resize events
     window.addEventListener('resize', checkMobileLandscape);
 
-    // Cleanup event listener on component unmount
     return () => {
       window.removeEventListener('resize', checkMobileLandscape);
-      clearTimeout(timerId.current);
     };
   }, []);
 
@@ -65,31 +69,33 @@ function PokemonListPage() {
     <>
       <Center>
         <Text
-          marginBottom={{ base: '10px', lg: '20px' }}
+          mb={{ base: '10px', lg: '20px' }}
           textDecoration="underline"
-          textTransform={'capitalize'}
+          textTransform="capitalize"
           textUnderlineOffset="8px"
           letterSpacing="5px"
           fontFamily="Pokemon Solid"
           fontSize={{ base: '1rem', lg: '2rem' }}
           as="h3"
         >
-          Pokemon List
+          Pokémon List
         </Text>
       </Center>
+
+      {/* Container for Pokémon cards */}
       <Center
-        padding={'50px'}
-        flexWrap={'wrap'}
-        gap={'30px'}
-        overflow={'scroll'}
-        margin={'10px'}
-        maxHeight={'70vh'}
+        p="50px"
+        flexWrap="wrap"
+        gap="30px"
+        overflow="scroll"
+        m="10px"
+        maxH="70vh"
       >
         {allPokemons.map(p => (
           <PokemonCard
             key={p.id}
             card={p}
-            src={p.sprites.other[`official-artwork`].front_default}
+            src={p.sprites.other['official-artwork'].front_default}
             src2={p.sprites.other.showdown?.front_default || ''}
             name={p.name}
             pokemon={p}
@@ -99,14 +105,17 @@ function PokemonListPage() {
           />
         ))}
       </Center>
-      <Center>
+
+      {/* "Load More" Button */}
+      <Center mb={4}>
         <Button
-          marginTop={'5px'}
+          mt="5px"
           colorScheme="red"
           onClick={getAllPokemons}
           isLoading={isLoading}
+          disabled={!loadMore}
         >
-          Load more
+          {loadMore ? 'Load More' : 'No More Pokémon'}
         </Button>
       </Center>
     </>

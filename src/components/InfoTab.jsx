@@ -7,6 +7,10 @@ import {
   Tbody,
   Tr,
   Td,
+  Heading,
+  Text,
+  Divider,
+  useColorModeValue,
 } from '@chakra-ui/react';
 import { getType, getAbilities } from '../utils';
 import '../assets/styles/InfoTab.css';
@@ -14,134 +18,85 @@ import '../assets/styles/InfoTab.css';
 function InfoTab() {
   const { pokemon } = useOutletContext();
 
+  // Define color values that adjust based on light or dark mode
+  const bgColor = useColorModeValue('white', 'gray.700');
+  const headingColor = useColorModeValue('gray.700', 'gray.200');
+  const textColor = useColorModeValue('gray.600', 'gray.400');
+  const dividerColor = useColorModeValue('gray.300', 'gray.600');
+
   if (!pokemon) {
-    return <p>Loading...</p>; // Fallback for missing data
+    return (
+      <Text textAlign="center" fontSize="lg">
+        Loading...
+      </Text>
+    );
   }
 
   const { name, id, height, weight, moves, types, abilities } = pokemon;
   const [primaryType, secondaryType] = getType(types);
   const abilityList = getAbilities(abilities);
-  const movesToDisplay = moves.slice(0, 4); // Safely handle moves array
+  const movesToDisplay = moves.slice(0, 4);
 
-  // Height in meters
+  // Convert height to meters and also format feet/inches
   const heightInMeters = height / 10;
-
-  // Convert meters to total inches (1 meter = 39.3701 inches)
   const totalInches = heightInMeters * 39.3701;
-
-  // Convert total inches to feet and remaining inches
   const feet = Math.floor(totalInches / 12);
   const inches = Math.round(totalInches % 12);
 
   return (
-    <Flex
-      direction="column"
-      w="100%"
-      h="100%"
-      // p={[2, 4]}
-      px={[10]}
-      minH={'300px'}
-      maxW="500px"
-      mx="auto"
-      mt={'40px'}
-    >
-      <TableContainer flex="1" overflowY="auto">
-        {' '}
-        {/* Make the TableContainer fill available height */}
-        <Table size="sm" mt="4" fontSize={['xs', 'sm']}>
-          <Tbody>
-            <Tr>
-              <Td
-                className="title"
-                fontSize={['xs', 'sm']}
-                wordBreak="break-word"
-              >
-                Name:
-              </Td>
-              <Td
-                className="info-value"
-                textAlign="right"
-                fontSize={['xs', 'sm']}
-              >
-                {name}
-              </Td>
-            </Tr>
-            <Tr>
-              <Td className="title" fontSize={['xs', 'sm']}>
-                Type:
-              </Td>
-              <Td
-                className="info-value"
-                textAlign="right"
-                fontSize={['xs', 'sm']}
-              >
-                {primaryType}
-                {secondaryType && ` / ${secondaryType}`}
-              </Td>
-            </Tr>
-            <Tr>
-              <Td className="title" fontSize={['xs', 'sm']}>
-                ID:
-              </Td>
-              <Td
-                className="info-value"
-                textAlign="right"
-                fontSize={['xs', 'sm']}
-              >
-                {id}
-              </Td>
-            </Tr>
-            <Tr>
-              <Td className="title" fontSize={['xs', 'sm']}>
-                Height:
-              </Td>
-              <Td
-                className="info-value"
-                textAlign="right"
-                fontSize={['xs', 'sm']}
-              >
-                {`${heightInMeters.toFixed(2)} m (${feet}'${inches}")`}
-              </Td>
-            </Tr>
-            <Tr>
-              <Td className="title" fontSize={['xs', 'sm']}>
-                Weight:
-              </Td>
-              <Td
-                className="info-value"
-                textAlign="right"
-                fontSize={['xs', 'sm']}
-              >
-                {weight} lbs
-              </Td>
-            </Tr>
-            <Tr>
-              <Td className="title" fontSize={['xs', 'sm']}>
-                Abilities:
-              </Td>
-              <Td
-                className="info-value"
-                textAlign="right"
-                fontSize={['xs', 'sm']}
-              >
-                {abilityList.length > 0 ? abilityList.join(', ') : 'None'}
-              </Td>
-            </Tr>
-            <Tr>
-              <Td className="title" fontSize={['xs', 'sm']}>
-                Moves:
-              </Td>
-              <Td
-                className="info-value"
-                textAlign="right"
-                fontSize={['xs', 'sm']}
-              >
-                {movesToDisplay.map(move => move.move.name).join(', ')}
-              </Td>
-            </Tr>
-          </Tbody>
-        </Table>
-      </TableContainer>
+    <Flex direction="column" w="100%" maxW="500px" mx="auto" mt="40px">
+      <Box
+        bg={bgColor}
+        boxShadow="md"
+        borderRadius="lg"
+        p={6}
+        overflow="hidden"
+      >
+        <Heading size="md" textAlign="center" mb={4} color={headingColor}>
+          Pokémon Info
+        </Heading>
+        <Divider mb={4} borderColor={dividerColor} />
+
+        <TableContainer>
+          <Table size="sm" variant="simple">
+            <Tbody>
+              {[
+                { label: 'Name', value: name },
+                {
+                  label: 'Type',
+                  value: secondaryType
+                    ? `${primaryType} / ${secondaryType}`
+                    : primaryType,
+                },
+                { label: 'ID', value: id },
+                {
+                  label: 'Height',
+                  value: `${heightInMeters.toFixed(2)} m (${feet}'${inches}")`,
+                },
+                { label: 'Weight', value: `${weight} lbs` },
+                {
+                  label: 'Abilities',
+                  value:
+                    abilityList.length > 0 ? abilityList.join(', ') : 'None',
+                },
+                {
+                  label: 'Moves',
+                  value: movesToDisplay.map(move => move.move.name).join(', '),
+                },
+              ].map(({ label, value }) => (
+                <Tr key={label}>
+                  <Td fontWeight="bold" fontSize="sm" color={textColor}>
+                    {label}:
+                  </Td>
+                  <Td textAlign="right" fontSize="sm" color={textColor}>
+                    {value}
+                  </Td>
+                </Tr>
+              ))}
+            </Tbody>
+          </Table>
+        </TableContainer>
+      </Box>
     </Flex>
   );
 }

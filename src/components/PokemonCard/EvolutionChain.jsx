@@ -35,7 +35,7 @@ function EvolutionChain({ evoNames }) {
             {index < evoNames.length - 1 && (
               <Center mx={3}>
                 <ArrowForwardIcon
-                  boxSize={{ base: 3, md: 8 }} // Responsive size
+                  size={{ base: 3, md: 8 }} // Responsive size
                   color="gray.700"
                   aria-label="evolution transition"
                 />
