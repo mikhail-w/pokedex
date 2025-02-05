@@ -91,7 +91,7 @@ function InfoTab() {
               </Tr>
               <Tr>
                 <Td fontWeight="bold">Weight</Td>
-                <Td>{`${weight} lbs`}</Td>
+                <Td>{`${((weight / 10) * 2.2046).toFixed(2)} lbs`}</Td>
               </Tr>
               <Tr>
                 <Td fontWeight="bold">Abilities</Td>

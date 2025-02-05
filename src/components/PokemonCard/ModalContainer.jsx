@@ -105,7 +105,7 @@ const ModalContainer = ({
     if (isExpanded) {
       const timer = setTimeout(() => {
         setIsContentVisible(true);
-      }, 100);
+      }, 150);
       return () => clearTimeout(timer);
     } else {
       setIsContentVisible(false);

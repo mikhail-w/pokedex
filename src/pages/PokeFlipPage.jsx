@@ -259,11 +259,21 @@ function PokeFlipPage() {
                 setIsModalOpen(false);
                 shuffleCards();
               }}
-              colorScheme="blue"
-              letterSpacing={4}
-              fontFamily="'Pokemon Solid', sans-serif"
+              background="linear-gradient(180deg, #FFD700 0%, #FFC107 100%)"
+              padding="14px 32px"
+              border="3px solid #3760aa"
+              borderRadius="full"
+              transition="transform 0.2s, background 0.2s"
+              _hover={{
+                background: 'linear-gradient(180deg, #FFC107 0%, #FFA000 100%)',
+                transform: 'scale(1.05)',
+              }}
+              _active={{
+                transform: 'scale(0.95)',
+              }}
+              aria-label="New Game"
             >
-              New Game
+              <Image src={ng} alt="New Game" height="40px" />
             </Button>
           </ModalFooter>
         </ModalContent>

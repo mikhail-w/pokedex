@@ -51,7 +51,7 @@ function PokemonCard({ card, src, src2, name, type, id }) {
 
   return (
     <motion.div
-      initial={{ y: -250 }}
+      // initial={{ y: 250 }}
       animate={{ y: 1 }}
       exit={{ opacity: 0, y: '-100%' }}
       transition={{ ease: 'linear', duration: 0.5 }}
@@ -63,7 +63,7 @@ function PokemonCard({ card, src, src2, name, type, id }) {
           isOpen={isOpen}
           onClose={onClose}
           isCentered
-          motionPreset="slideInBottom"
+          motionPreset="none"
           scrollBehavior="inside"
           size="md"
         >
@@ -71,22 +71,28 @@ function PokemonCard({ card, src, src2, name, type, id }) {
             bgColor={`${bgs[`${type[0]}`]}`}
             backdropFilter="blur(10px) hue-rotate(90deg)"
           />
-
-          <ModalContainer
-            card={card}
-            name={name}
-            id={id}
-            src={src || ball}
-            type={type}
-            onClose={onClose}
-            onExpand={handleExpand}
-            isExpanded={isExpanded}
-            pokeInfo={pokeInfo}
-            flavorTextArray={flavorTextArray}
-            evoNames={evoNames}
-            backgroundColor={backgroundColor}
-            isMobileLandscape={isMobileLandscape}
-          />
+          <motion.div
+            initial={{ opacity: 0, y: 50, scale: 0.9 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 50, scale: 0.9 }}
+            transition={{ duration: 0.2, ease: 'easeOut' }}
+          >
+            <ModalContainer
+              card={card}
+              name={name}
+              id={id}
+              src={src || ball}
+              type={type}
+              onClose={onClose}
+              onExpand={handleExpand}
+              isExpanded={isExpanded}
+              pokeInfo={pokeInfo}
+              flavorTextArray={flavorTextArray}
+              evoNames={evoNames}
+              backgroundColor={backgroundColor}
+              isMobileLandscape={isMobileLandscape}
+            />
+          </motion.div>
         </Modal>
         {/* Card Front and Back */}
 
