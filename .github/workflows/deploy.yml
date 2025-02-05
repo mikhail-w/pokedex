@@ -28,7 +28,7 @@ jobs:
           npm install
           npm fund
 
-      - name: Build
+      - name: Build project
         run: |
           npm run build
         env:
@@ -38,6 +38,6 @@ jobs:
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          personal_token: ${{ secrets.GH_PAT }}
           publish_branch: gh-pages
           publish_dir: ./dist
