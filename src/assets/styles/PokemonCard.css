@@ -1,3 +1,30 @@
+/* Remove tap highlights and enable smooth interactions */
+.pokemonCard,
+.card-container,
+.back-image,
+.type-icon,
+[role="button"],
+.chakra-modal__overlay,
+.info-icon {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+/* Remove highlight from interactive elements */
+.card-container button,
+.card-container a,
+.pokemonCard button,
+.pokemonCard a {
+  -webkit-tap-highlight-color: transparent !important;
+}
+
+/* Prevent image dragging */
+img {
+  -webkit-user-drag: none;
+}
+
 .pokemonCard {
   justify-content: center;
   cursor: pointer;
@@ -259,8 +286,8 @@
   left: -2%;
   width: 104%;
   height: 104%;
-  background: linear-gradient(90deg, #a292bc, #705898, #493963, #a292bc);
-  background: linear-gradient(to right, #ff00cc, #333399, #705898, #ff00cc);
+  background: linear-gradient(90deg, #a292bc, #705898, #ba95f6, #a292bc);
+  background: linear-gradient(to right, #ff00cc, #7272e4, #705898, #ff00cc);
   border-radius: 25px;
   background-size: 400%;
   filter: blur(18px);
@@ -275,7 +302,7 @@
   left: -2%;
   width: 104%;
   height: 104%;
-  background: linear-gradient(to right, #f0c27b, #4b1248, #e0c068, #f0c27b);
+  background: linear-gradient(to right, #f0c27b, #ed95e9, #e0c068, #f0c27b);
   border-radius: 25px;
   background-size: 400%;
   filter: blur(18px);
@@ -320,7 +347,7 @@
   left: -2%;
   width: 104%;
   height: 104%;
-  background: linear-gradient(to right, #cc208e, #6713d2, #a040a0, #cc208e);
+  background: linear-gradient(to right, #cc208e, #9a67dd, #a040a0, #cc208e);
   border-radius: 25px;
   background-size: 400%;
   filter: blur(18px);
@@ -350,7 +377,7 @@
   left: -2%;
   width: 104%;
   height: 104%;
-  background: linear-gradient(90deg, #d1c17d, #b8a038, #786824, #d1c17d);
+  background: linear-gradient(90deg, #d1c17d, #b8a038, #eac41c, #d1c17d);
   border-radius: 25px;
   background-size: 400%;
   filter: blur(18px);

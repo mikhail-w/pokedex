@@ -89,7 +89,7 @@ function PokemonListPage() {
         gap="30px"
         overflow="scroll"
         m="10px"
-        maxH="70vh"
+        maxH="75vh"
       >
         {allPokemons.map(p => (
           <PokemonCard

@@ -88,8 +88,8 @@ function PokemonCard({ card, src, src2, name, type, id }) {
             isMobileLandscape={isMobileLandscape}
           />
         </Modal>
-
         {/* Card Front and Back */}
+
         <ReactCardFlip flipDirection="horizontal" isFlipped={isFlipped}>
           <CardFront
             src={src || ball}

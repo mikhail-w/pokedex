@@ -1,104 +1,137 @@
+import React from 'react';
 import { useOutletContext } from 'react-router-dom';
 import {
   Box,
   Flex,
-  TableContainer,
+  Text,
+  Heading,
+  Badge,
+  Container,
+  useColorModeValue,
   Table,
   Tbody,
   Tr,
   Td,
-  Heading,
-  Text,
-  Divider,
-  useColorModeValue,
 } from '@chakra-ui/react';
-import { getType, getAbilities } from '../utils';
-import '../assets/styles/InfoTab.css';
 
 function InfoTab() {
   const { pokemon } = useOutletContext();
-
-  // Define color values that adjust based on light or dark mode
-  const bgColor = useColorModeValue('white', 'gray.700');
-  const headingColor = useColorModeValue('gray.700', 'gray.200');
-  const textColor = useColorModeValue('gray.600', 'gray.400');
-  const dividerColor = useColorModeValue('gray.300', 'gray.600');
+  const bgColor = useColorModeValue('white', 'gray.800');
+  const textColor = useColorModeValue('gray.600', 'gray.300');
 
   if (!pokemon) {
     return (
-      <Text textAlign="center" fontSize="lg">
-        Loading...
-      </Text>
+      <Container centerContent>
+        <Text fontSize="lg">Loading...</Text>
+      </Container>
     );
   }
 
   const { name, id, height, weight, moves, types, abilities } = pokemon;
-  const [primaryType, secondaryType] = getType(types);
-  const abilityList = getAbilities(abilities);
-  const movesToDisplay = moves.slice(0, 4);
 
-  // Convert height to meters and also format feet/inches
+  // Process types
+  const pokemonTypes = types.map(type => type.type.name);
+
+  // Process abilities
+  const abilityList = abilities
+    .map(ability => ability.ability.name.replace('-', ' '))
+    .join(', ');
+
+  // Get first 4 moves
+  const movesToDisplay = moves
+    .slice(0, 4)
+    .map(move => move.move.name.replace('-', ' '))
+    .join(', ');
+
+  // Height conversion
   const heightInMeters = height / 10;
   const totalInches = heightInMeters * 39.3701;
   const feet = Math.floor(totalInches / 12);
   const inches = Math.round(totalInches % 12);
 
   return (
-    <Flex direction="column" w="100%" maxW="500px" mx="auto" mt="40px">
-      <Box
-        bg={bgColor}
-        boxShadow="md"
-        borderRadius="lg"
-        p={6}
-        overflow="hidden"
-      >
-        <Heading size="md" textAlign="center" mb={4} color={headingColor}>
-          Pokémon Info
-        </Heading>
-        <Divider mb={4} borderColor={dividerColor} />
+    <Container maxW="container.md" py={6}>
+      <Box bg={bgColor} borderRadius="lg" boxShadow="base" overflow="hidden">
+        <Box p={6}>
+          {/* Header */}
+          <Flex justify="space-between" align="center" mb={4}>
+            <Heading size="lg" textTransform="capitalize">
+              {name}
+            </Heading>
+            <Text color={textColor} fontSize="lg" fontWeight="bold">
+              #{String(id).padStart(3, '0')}
+            </Text>
+          </Flex>
 
-        <TableContainer>
-          <Table size="sm" variant="simple">
+          {/* Types */}
+          <Flex gap={2} mb={4}>
+            {pokemonTypes.map(type => (
+              <Badge
+                key={type}
+                colorScheme={getTypeColor(type)}
+                padding="1"
+                px={3}
+                borderRadius="full"
+                textTransform="capitalize"
+                fontSize="sm"
+              >
+                {type}
+              </Badge>
+            ))}
+          </Flex>
+
+          {/* Info Table */}
+          <Table variant="simple" size="sm">
             <Tbody>
-              {[
-                { label: 'Name', value: name },
-                {
-                  label: 'Type',
-                  value: secondaryType
-                    ? `${primaryType} / ${secondaryType}`
-                    : primaryType,
-                },
-                { label: 'ID', value: id },
-                {
-                  label: 'Height',
-                  value: `${heightInMeters.toFixed(2)} m (${feet}'${inches}")`,
-                },
-                { label: 'Weight', value: `${weight} lbs` },
-                {
-                  label: 'Abilities',
-                  value:
-                    abilityList.length > 0 ? abilityList.join(', ') : 'None',
-                },
-                {
-                  label: 'Moves',
-                  value: movesToDisplay.map(move => move.move.name).join(', '),
-                },
-              ].map(({ label, value }) => (
-                <Tr key={label}>
-                  <Td fontWeight="bold" fontSize="sm" color={textColor}>
-                    {label}:
-                  </Td>
-                  <Td textAlign="right" fontSize="sm" color={textColor}>
-                    {value}
-                  </Td>
-                </Tr>
-              ))}
+              <Tr>
+                <Td fontWeight="bold" width="30%">
+                  Height
+                </Td>
+                <Td>{`${heightInMeters.toFixed(2)} m (${feet}'${inches}")`}</Td>
+              </Tr>
+              <Tr>
+                <Td fontWeight="bold">Weight</Td>
+                <Td>{`${weight} lbs`}</Td>
+              </Tr>
+              <Tr>
+                <Td fontWeight="bold">Abilities</Td>
+                <Td textTransform="capitalize">{abilityList}</Td>
+              </Tr>
+              <Tr>
+                <Td fontWeight="bold">Moves</Td>
+                <Td textTransform="capitalize">{movesToDisplay}</Td>
+              </Tr>
             </Tbody>
           </Table>
-        </TableContainer>
+        </Box>
       </Box>
-    </Flex>
+    </Container>
   );
+}
+
+// Helper function to map Pokemon types to Chakra UI color schemes
+function getTypeColor(type) {
+  const typeColors = {
+    normal: 'gray',
+    fire: 'red',
+    water: 'blue',
+    electric: 'yellow',
+    grass: 'green',
+    ice: 'cyan',
+    fighting: 'orange',
+    poison: 'purple',
+    ground: 'orange',
+    flying: 'blue',
+    psychic: 'pink',
+    bug: 'green',
+    rock: 'orange',
+    ghost: 'purple',
+    dragon: 'purple',
+    dark: 'gray',
+    steel: 'gray',
+    fairy: 'pink',
+  };
+  return typeColors[type] || 'gray';
 }
 
 export default InfoTab;

@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import { colors } from '../../utils';
+import React, { useEffect, useState, memo } from 'react';
 import {
   Box,
   Flex,
@@ -12,17 +11,64 @@ import {
   IoArrowForwardCircleOutline,
   IoArrowDownCircleOutline,
 } from 'react-icons/io5';
+import { FaArrowLeftLong } from 'react-icons/fa6';
 import FlavorText from './FlavorText';
 import PokemonTabs from './PokemonTabs';
-import { modalIcons } from '../../icons';
-// import '../../assets/styles/pokeDetail.css';
-import '../../assets/styles/PokeDetail.css';
 import EvolutionChain from './EvolutionChain';
-import { FaArrowLeftLong } from 'react-icons/fa6';
 import CatchReleaseButton from './CatchReleaseButton';
+import { colors } from '../../utils';
+import { modalIcons } from '../../icons';
 import ball from '../../assets/images/pokeballs/pokeball.png';
+import '../../assets/styles/PokeDetail.css';
 
-function ModalContainer({
+const MOBILE_BREAKPOINT = 900;
+const DEFAULT_BACKGROUND = ['#fff', '#f8f9fa'];
+
+const TypeBadge = memo(({ type, index }) => (
+  <Flex
+    cursor="pointer"
+    className="pokeDetail-type-tab"
+    bg={colors[type] || 'gray.300'}
+    marginLeft={index === 0 ? '0px' : '10px'}
+    alignItems="center"
+    padding="8px 12px"
+    borderRadius="12px"
+    boxShadow="0 4px 6px rgba(0, 0, 0, 0.2)"
+    transition="transform 0.2s, box-shadow 0.2s"
+    _hover={{
+      transform: 'scale(1.05)',
+      boxShadow: '0 6px 8px rgba(0, 0, 0, 0.3)',
+    }}
+  >
+    <Image w="24px" h="24px" src={modalIcons[type] || ball} />
+    <Text
+      paddingLeft="8px"
+      fontWeight="bold"
+      fontSize="14px"
+      color="white"
+      textShadow="0px 1px 2px rgba(0, 0, 0, 0.8)"
+    >
+      {type}
+    </Text>
+  </Flex>
+));
+
+const ExpandButton = memo(({ isMobile, isExpanded, onClick }) => {
+  const Icon = isMobile
+    ? IoArrowDownCircleOutline
+    : IoArrowForwardCircleOutline;
+  return (
+    <Icon
+      onClick={onClick}
+      size="3em"
+      className={
+        isExpanded ? 'isExtended extend-modal' : 'extend-modal notExtended'
+      }
+    />
+  );
+});
+
+const ModalContainer = ({
   card = {},
   name = '',
   id = '',
@@ -34,22 +80,20 @@ function ModalContainer({
   evoNames = [],
   pokeInfo = {},
   flavorTextArray,
-  backgroundColor = ['#fff', '#f8f9fa'],
+  backgroundColor = DEFAULT_BACKGROUND,
   isMobileLandscape,
-}) {
-  const [isMobile, setIsMobile] = useState(window.innerWidth <= 900);
+}) => {
+  const [isMobile, setIsMobile] = useState(
+    () => window.innerWidth <= MOBILE_BREAKPOINT
+  );
+  const [isContentVisible, setIsContentVisible] = useState(false);
 
-  // Update `isMobile` state on window resize
   useEffect(() => {
-    const handleResize = () => setIsMobile(window.innerWidth <= 900);
+    const handleResize = () =>
+      setIsMobile(window.innerWidth <= MOBILE_BREAKPOINT);
     window.addEventListener('resize', handleResize);
 
-    // Prevent background scrolling when modal is open
-    if (isExpanded) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'auto';
-    }
+    document.body.style.overflow = isExpanded ? 'hidden' : 'auto';
 
     return () => {
       window.removeEventListener('resize', handleResize);
@@ -57,14 +101,74 @@ function ModalContainer({
     };
   }, [isExpanded]);
 
+  useEffect(() => {
+    if (isExpanded) {
+      const timer = setTimeout(() => {
+        setIsContentVisible(true);
+      }, 100);
+      return () => clearTimeout(timer);
+    } else {
+      setIsContentVisible(false);
+    }
+  }, [isExpanded]);
+
+  const handleExpandClick = () => {
+    if (isExpanded) {
+      setIsContentVisible(false);
+      setTimeout(() => {
+        onExpand();
+      }, 300);
+    } else {
+      onExpand();
+    }
+  };
+
+  const getFontSize = (text, isMobileView) => {
+    const length = String(text).length;
+    return length > 13
+      ? isMobileView
+        ? '.7rem'
+        : '1rem'
+      : isMobileView
+      ? '1.5rem'
+      : '2rem';
+  };
+
+  const getIdPosition = (idString, isMobileView) => ({
+    left:
+      idString.length > 3
+        ? isMobileView
+          ? '250px'
+          : '340px'
+        : isMobileView
+        ? '220px'
+        : '300px',
+    top:
+      idString.length > 3
+        ? isMobileView
+          ? '20px'
+          : '30px'
+        : isMobileView
+        ? '10px'
+        : '20px',
+  });
+
+  const getIdFontSize = (idString, isMobileView) => {
+    return idString.length > 3
+      ? isMobileView
+        ? '1.7rem'
+        : '2.5rem'
+      : isMobileView
+      ? '3rem'
+      : '4.5rem';
+  };
+
   return (
     <ModalContent
       w="90%"
       className={
         isExpanded
-          ? isMobile
-            ? 'modal-content extended-column'
-            : 'modal-content extended-row'
+          ? `modal-content ${isMobile ? 'extended-column' : 'extended-row'}`
           : 'modal-content'
       }
       background={`linear-gradient(in lch, ${backgroundColor[0]}, ${backgroundColor[1]})`}
@@ -74,9 +178,7 @@ function ModalContainer({
       maxHeight={isMobile ? '80vh' : 'fit-content'}
       flexDirection={isMobile ? 'column' : 'row'}
     >
-      {/* NORMAL SECTION */}
       <Box w="100%" maxWidth="450px" marginTop="10px">
-        {/* BACK ARROW AND CATCH RELEASE ICON */}
         <Flex
           w="90%"
           margin="20px auto"
@@ -90,9 +192,8 @@ function ModalContainer({
           />
           <CatchReleaseButton id={id} name={name} />
         </Flex>
-        {/* MODAL HEADER SECTION */}
+
         <ModalHeader textTransform="capitalize" w="100%" textAlign="center">
-          {/* NAME AND ID SECTION */}
           <Flex
             position="relative"
             justifyContent="space-between"
@@ -100,91 +201,28 @@ function ModalContainer({
           >
             <Text
               className="modal-title"
-              fontSize={
-                String(name).length > 13
-                  ? isMobile
-                    ? '.7rem'
-                    : '1rem'
-                  : isMobile
-                  ? '1.5rem'
-                  : '2rem'
-              }
+              fontSize={getFontSize(name, isMobile)}
             >
               {name || 'Unknown Pokémon'}
             </Text>
             <Box
               position="absolute"
-              left={
-                String(id).length > 3
-                  ? isMobile
-                    ? '250px'
-                    : '340px'
-                  : isMobile
-                  ? '220px'
-                  : '300px'
-              }
-              top={
-                String(id).length > 3
-                  ? isMobile
-                    ? '20px'
-                    : '30px'
-                  : isMobile
-                  ? '10px'
-                  : '20px'
-              }
+              {...getIdPosition(String(id), isMobile)}
               className="background-watermark"
             >
-              <Text
-                fontSize={
-                  String(id).length > 3
-                    ? isMobile
-                      ? '1.7rem'
-                      : '2.5rem'
-                    : isMobile
-                    ? '3rem'
-                    : '4.5rem'
-                }
-              >
+              <Text fontSize={getIdFontSize(String(id), isMobile)}>
                 #{String(id || '000').padStart(3, '0')}
               </Text>
             </Box>
           </Flex>
-          {/* POKEMON TYPE SECTION */}
+
           <Flex justifyContent="left" flexWrap="wrap">
-            {type.length > 0
-              ? type.map((t, index) => (
-                  <Flex
-                    cursor="pointer"
-                    key={index}
-                    className="pokeDetail-type-tab"
-                    bg={colors[t] || 'gray.300'}
-                    marginLeft={index === 0 ? '0px' : '10px'}
-                    alignItems="center"
-                    padding="8px 12px"
-                    borderRadius="12px"
-                    boxShadow="0 4px 6px rgba(0, 0, 0, 0.2)"
-                    transition="transform 0.2s, box-shadow 0.2s"
-                    _hover={{
-                      transform: 'scale(1.05)',
-                      boxShadow: '0 6px 8px rgba(0, 0, 0, 0.3)',
-                    }}
-                  >
-                    <Image w="24px" h="24px" src={modalIcons[t] || ball} />
-                    <Text
-                      paddingLeft="8px"
-                      fontWeight="bold"
-                      fontSize="14px"
-                      color="white"
-                      textShadow="0px 1px 2px rgba(0, 0, 0, 0.8)"
-                    >
-                      {t}
-                    </Text>
-                  </Flex>
-                ))
-              : null}
+            {type.map((t, index) => (
+              <TypeBadge key={`${t}-${index}`} type={t} index={index} />
+            ))}
           </Flex>
         </ModalHeader>
-        {/* POKEMON IMAGE AND MODAL EXPAND BUTTON SECTION */}
+
         <Flex
           w="100%"
           justifyContent="center"
@@ -196,52 +234,32 @@ function ModalContainer({
             maxW={{ base: '200px', md: '300px' }}
             alt={name || 'Pokémon'}
           />
-          {isMobile ? (
-            <IoArrowDownCircleOutline
-              onClick={onExpand}
-              size="3em"
-              className={
-                isExpanded
-                  ? 'isExtended extend-modal'
-                  : 'extend-modal notExtended'
-              }
-            />
-          ) : (
-            <IoArrowForwardCircleOutline
-              onClick={onExpand}
-              size="3em"
-              className={
-                isExpanded
-                  ? 'isExtended extend-modal'
-                  : 'extend-modal notExtended'
-              }
-            />
-          )}
+          <ExpandButton
+            isMobile={isMobile}
+            isExpanded={isExpanded}
+            onClick={handleExpandClick}
+          />
         </Flex>
-        {/* TAB INFO SECTION */}
+
         <PokemonTabs card={card} pokeInfo={pokeInfo} />
       </Box>
-      {/* EXPANDED SECTION */}
+
       <Box
-        width={'100%'}
-        height={'100%'}
+        width="100%"
+        height="100%"
         className={isMobile ? 'mobile-extended' : ''}
       >
-        {isExpanded && (
-          <Flex
-            className="extended-section"
-            w="100%"
-            h="100%"
-            alignItems="center"
-            justifyContent="center"
+        <Flex className="extended-section">
+          <div
+            className={`extended-content ${isContentVisible ? 'visible' : ''}`}
           >
             <FlavorText flavorTextArray={flavorTextArray} onInfo={false} />
             <EvolutionChain evoNames={evoNames} />
-          </Flex>
-        )}
+          </div>
+        </Flex>
       </Box>
     </ModalContent>
   );
-}
+};
 
-export default ModalContainer;
+export default memo(ModalContainer);

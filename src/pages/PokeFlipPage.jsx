@@ -148,6 +148,10 @@ function PokeFlipPage() {
               backgroundColor={mode === 'easy' ? '#3760aa' : '#eeeeee'}
               color={mode === 'easy' ? '#ffcc01' : '#3760aa'}
               onClick={() => setMode('easy')}
+              _hover={{
+                backgroundColor: mode === 'easy' ? '#cc3f3f' : '#cc3f3f',
+                color: 'white',
+              }}
             >
               Easy
             </Button>
@@ -158,6 +162,10 @@ function PokeFlipPage() {
               backgroundColor={mode === 'medium' ? '#3760aa' : '#eeeeee'}
               color={mode === 'medium' ? '#ffcc01' : '#3760aa'}
               onClick={() => setMode('medium')}
+              _hover={{
+                backgroundColor: mode === 'medium' ? '#cc3f3f' : '#cc3f3f',
+                color: 'white',
+              }}
             >
               Medium
             </Button>
@@ -168,6 +176,10 @@ function PokeFlipPage() {
               backgroundColor={mode === 'hard' ? '#3760aa' : '#eeeeee'}
               color={mode === 'hard' ? '#ffcc01' : '#3760aa'}
               onClick={() => setMode('hard')}
+              _hover={{
+                backgroundColor: mode === 'hard' ? '#cc3f3f' : '#cc3f3f',
+                color: 'white',
+              }}
             >
               Hard
             </Button>
