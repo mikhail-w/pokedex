@@ -7,7 +7,7 @@ randomly generated Pokemon teams, and play an interactive pokeflip memory game.
 ## 🌐 Live Demo
 
 Check out the live version of the app
-[here](https://mikhail-w.github.io/pokedex/#/).
+[here](https://mikhail-w.github.io/pokedex/?v=1).
 
 <p align="center"style="margin-top: 30px;">
   <img src="./src/assets/images/pokemon/pokedex.png" alt="Pokedex Logo">
