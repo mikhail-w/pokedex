@@ -51,11 +51,11 @@ function PokemonCard({ card, src, src2, name, type, id }) {
 
   return (
     <motion.div
-      // initial={{ y: 250 }}
-      animate={{ y: 1 }}
-      exit={{ opacity: 0, y: '-100%' }}
-      transition={{ ease: 'linear', duration: 0.5 }}
       layout
+      initial={{ opacity: 0, scale: 0.9, y: 20 }}
+      animate={{ opacity: 1, scale: 1, y: 0 }}
+      exit={{ opacity: 0, scale: 0.5, y: -20 }}
+      transition={{ duration: 0.4, ease: 'easeInOut' }}
     >
       <Box className="card-container">
         {/* Modal for detailed Pokémon information */}

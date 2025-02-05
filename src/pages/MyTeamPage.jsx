@@ -8,6 +8,7 @@ import PokemonCard from '../components/PokemonCard/PokemonCard';
 import { getType } from '../utils';
 import Loading from '../components/Loading';
 import { getPokemonById } from '../services/pokemonService';
+import { AnimatePresence } from 'framer-motion';
 
 function MyTeamPage() {
   const { myTeam, setMyTeam } = useOutletContext();
@@ -93,19 +94,21 @@ function MyTeamPage() {
         {loading ? (
           <Loading />
         ) : pokemonData.length > 0 ? (
-          pokemonData.map(pokemon => (
-            <PokemonCard
-              key={pokemon.id} // Ensure each card has a unique key
-              card={pokemon}
-              src={pokemon.sprites.other['official-artwork'].front_default}
-              src2={pokemon.sprites.other.showdown?.front_default}
-              name={pokemon.name}
-              type={getType(pokemon.types)}
-              id={pokemon.id}
-              animating={animatingCard === pokemon.id}
-              onRelease={() => releasePokemon(pokemon.id)}
-            />
-          ))
+          <AnimatePresence>
+            {pokemonData.map(pokemon => (
+              <PokemonCard
+                key={pokemon.id}
+                card={pokemon}
+                src={pokemon.sprites.other['official-artwork'].front_default}
+                src2={pokemon.sprites.other.showdown?.front_default}
+                name={pokemon.name}
+                type={getType(pokemon.types)}
+                id={pokemon.id}
+                animating={animatingCard === pokemon.id}
+                onRelease={() => releasePokemon(pokemon.id)}
+              />
+            ))}
+          </AnimatePresence>
         ) : (
           <div className="not-caught-message container">
             <Image maxW="400px" src={noCatch} />
