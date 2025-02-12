@@ -129,7 +129,15 @@ const backendApiClient = {
         credentials: 'include',
       });
 
-      return await backendApiClient.handleResponse(response);
+      const data = await backendApiClient.handleResponse(response);
+      // Store username along with tokens
+      if (data.token) {
+        localStorage.setItem('username', username);
+        localStorage.setItem('token', data.token);
+        localStorage.setItem('refresh', data.refresh);
+      }
+
+      return data;
     } catch (error) {
       console.error('Login error:', {
         message: error.message,

@@ -10,6 +10,7 @@ import PokeFlipPage from './pages/PokeFlipPage.jsx';
 import NotFoundPage from './pages/NotFoundPage.jsx';
 import LoginPage from './pages/LoginPage.jsx';
 import SignUpPage from './pages/SignUpPage.jsx';
+import ProfilePage from './pages/ProfilePage.jsx';
 
 const router = createBrowserRouter(
   [
@@ -48,6 +49,10 @@ const router = createBrowserRouter(
         {
           path: 'signup',
           element: <SignUpPage />,
+        },
+        {
+          path: 'profile',
+          element: <ProfilePage />,
         },
       ],
       errorElement: <NotFoundPage />,

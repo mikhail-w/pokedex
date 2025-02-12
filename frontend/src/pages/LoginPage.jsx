@@ -59,7 +59,7 @@ function LoginPage() {
 
       // Wait 2 seconds before redirecting to let user see the success message
       setTimeout(() => {
-        navigate('/team');
+        navigate('/profile');
       }, 2000);
     } catch (err) {
       setError(err.message);

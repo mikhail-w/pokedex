@@ -44,6 +44,7 @@ function PokemonTabs({ card, pokeInfo }) {
       w={{ base: '100%', md: '450px' }}
       borderRadius="50px"
       height="280px"
+      mt={10}
     >
       <TabList
         position="sticky"

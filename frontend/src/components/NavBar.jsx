@@ -27,8 +27,6 @@ import {
   useToast,
 } from '@chakra-ui/react';
 
-import backendApiClient from '../services/backendApiClient';
-
 function NavBar({ myTeam }) {
   const { colorMode, toggleColorMode } = useColorMode();
   const inputRef = useRef();
@@ -86,6 +84,11 @@ function NavBar({ myTeam }) {
 
   const handleLogin = () => {
     navigate('/login');
+    onClose();
+  };
+
+  const handleProfile = () => {
+    navigate('/profile');
     onClose();
   };
 
@@ -169,6 +172,9 @@ function NavBar({ myTeam }) {
       ? [
           <MenuItem key="logout" onClick={handleLogout}>
             Logout
+          </MenuItem>,
+          <MenuItem key="profile" onClick={handleProfile}>
+            Profile
           </MenuItem>,
         ]
       : [
