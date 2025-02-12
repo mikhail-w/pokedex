@@ -20,3 +20,11 @@ node_modules
 *.njsproj
 *.sln
 *.sw?
+
+# Ignore Python cache files
+__pycache__/
+*.pyc
+
+# Ignore Virtual Environments
+venv/
+env/

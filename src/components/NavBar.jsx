@@ -3,7 +3,7 @@ import '../assets/styles/NavBar.css';
 import pokeball from '../assets/images/pokeballs/pokeball.png';
 
 import { MoonIcon, SunIcon } from '@chakra-ui/icons';
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { CgPokemon } from 'react-icons/cg';
 import { Link, useNavigate } from 'react-router-dom';
 import {
@@ -24,14 +24,49 @@ import {
   InputLeftElement,
   InputRightAddon,
   useDisclosure,
+  useToast,
 } from '@chakra-ui/react';
+
+import backendApiClient from '../services/backendApiClient';
 
 function NavBar({ myTeam }) {
   const { colorMode, toggleColorMode } = useColorMode();
   const inputRef = useRef();
   const [search, setSearch] = useState('');
   const navigate = useNavigate();
-  const { isOpen, onOpen, onClose } = useDisclosure(); // Control menu state
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const toast = useToast();
+  const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem('token'));
+
+  // Listen for changes to localStorage token
+  useEffect(() => {
+    const checkLoginStatus = () => {
+      const token = localStorage.getItem('token');
+      setIsLoggedIn(!!token);
+    };
+
+    // Check initial state
+    checkLoginStatus();
+
+    // Add event listener for storage changes
+    window.addEventListener('storage', checkLoginStatus);
+
+    // Custom event listener for login/logout
+    window.addEventListener('authStateChange', checkLoginStatus);
+
+    // Check status on focus
+    window.addEventListener('focus', checkLoginStatus);
+
+    // Regular interval check (every 30 seconds)
+    const interval = setInterval(checkLoginStatus, 30000);
+
+    return () => {
+      window.removeEventListener('storage', checkLoginStatus);
+      window.removeEventListener('authStateChange', checkLoginStatus);
+      window.removeEventListener('focus', checkLoginStatus);
+      clearInterval(interval);
+    };
+  }, []);
 
   const handleSubmit = e => {
     e.preventDefault();
@@ -39,7 +74,7 @@ function NavBar({ myTeam }) {
     if (pokemonName) {
       setSearch('');
       navigate(`/pokemon/${pokemonName}`);
-      onClose(); // Close the menu
+      onClose();
     }
   };
 
@@ -47,6 +82,35 @@ function NavBar({ myTeam }) {
     if (e.key === 'Enter') {
       handleSubmit(e);
     }
+  };
+
+  const handleLogin = () => {
+    navigate('/login');
+    onClose();
+  };
+
+  const handleLogout = () => {
+    // Simply clear local storage and update UI state
+    localStorage.removeItem('token');
+    localStorage.removeItem('refresh');
+    setIsLoggedIn(false);
+
+    // Notify other components about the logout
+    window.dispatchEvent(new Event('authStateChange'));
+
+    navigate('/');
+
+    toast({
+      title: 'Logged out successfully',
+      status: 'error',
+      duration: 3000,
+      isClosable: true,
+    });
+  };
+
+  const handleSignup = () => {
+    navigate('/signup');
+    onClose();
   };
 
   const bgColor = colorMode === 'light' ? 'gray.100' : 'gray.900';
@@ -81,6 +145,44 @@ function NavBar({ myTeam }) {
     </Box>
   );
 
+  // Define menu items based on authentication status
+  const getMenuItems = () => {
+    const commonItems = [
+      <CustomMenuItem key="home" to="/">
+        Home
+      </CustomMenuItem>,
+      <CustomMenuItem key="flip" to="/flip/">
+        Pokemon Flip Game
+      </CustomMenuItem>,
+      <CustomMenuItem key="random" to="/random/">
+        Get Random Pokemon
+      </CustomMenuItem>,
+      <CustomMenuItem key="list" to="/list/">
+        Pokemon List
+      </CustomMenuItem>,
+      <CustomMenuItem key="team" to="/team">
+        My Team #{myTeam.length}
+      </CustomMenuItem>,
+    ];
+
+    const authItems = isLoggedIn
+      ? [
+          <MenuItem key="logout" onClick={handleLogout}>
+            Logout
+          </MenuItem>,
+        ]
+      : [
+          <MenuItem key="login" onClick={handleLogin}>
+            Login
+          </MenuItem>,
+          <MenuItem key="signup" onClick={handleSignup}>
+            Sign Up
+          </MenuItem>,
+        ];
+
+    return [...commonItems, <MenuDivider key="divider" />, ...authItems];
+  };
+
   return (
     <Box className="navBar" bg={bgColor} px={4}>
       <Flex h={16} alignItems="center" justifyContent="space-between">
@@ -95,12 +197,10 @@ function NavBar({ myTeam }) {
         {/* Right Section */}
         <Flex alignItems="center">
           <Stack direction="row" spacing={7}>
-            <Box display={{ base: 'none', md: 'block' }}>{SearchBar}</Box>{' '}
-            {/* Theme Toggle */}
+            <Box display={{ base: 'none', md: 'block' }}>{SearchBar}</Box>
             <Button onClick={toggleColorMode}>
               {colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
             </Button>
-            {/* User Menu */}
             <Menu isOpen={isOpen} onClose={onClose}>
               <MenuButton
                 as={Button}
@@ -125,15 +225,7 @@ function NavBar({ myTeam }) {
                   {SearchBar}
                 </Box>
                 <MenuDivider />
-                <CustomMenuItem to="/">Home</CustomMenuItem>
-                <CustomMenuItem to="/flip/">Pokemon Flip Game</CustomMenuItem>
-                <CustomMenuItem to="/random/">
-                  Get Random Pokemon
-                </CustomMenuItem>
-                <CustomMenuItem to="/list/">Pokemon List</CustomMenuItem>
-                <CustomMenuItem to="/team">
-                  My Team #{myTeam.length}
-                </CustomMenuItem>
+                {getMenuItems()}
               </MenuList>
             </Menu>
           </Stack>
