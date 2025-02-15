@@ -29,6 +29,8 @@ import groupImg from '../assets/images/pokeballs/group.png';
 import { getType } from '../utils';
 import InfoTab from '../components/InfoTab';
 
+// Component to handle the layout and styling of tab content
+// Accepts height prop to control scrolling behavior
 const TabContent = ({ children, height = 'auto', ...props }) => (
   <Center
     height={height}
@@ -41,41 +43,48 @@ const TabContent = ({ children, height = 'auto', ...props }) => (
   </Center>
 );
 
+// Reusable component for displaying Pokemon images
+// Falls back to pokeball image if source is not available
 const PokemonImage = ({ src, size = '90%' }) => (
-  <Image
-    maxW={size}
-    maxH={size}
-    src={src || ball}
-    alt="Pokemon image"
-    pb={8}
-    // fallback={<Image src={ball} alt="Fallback Pokemon ball" />}
-  />
+  <Image maxW={size} maxH={size} src={src || ball} alt="Pokemon image" pb={8} />
 );
 
+// Main component for displaying Pokemon information in tabs
 function MainPokemonTab({ id, isMobileLandscape }) {
+  // Get shared context data including team and Pokemon information
   const { team, myTeam, disabled, setDisabled, isLoading, pokemon } =
     useOutletContext();
 
+  // Custom hook to fetch and manage Pokemon data
   const { flavorTextArray, evoNames, fetchPokemonData } = usePokemonData();
+
+  // Theme-aware background color
   const backgroundColor = useColorModeValue('white', 'gray.800');
 
+  // Responsive tab sizes based on screen width
   const tabSize = useBreakpointValue({ base: 'sm', md: 'md', lg: 'lg' });
+
+  // Calculate content height based on device orientation
   const contentHeight = isMobileLandscape
     ? 'calc(100vh - 70px)'
     : 'calc(100vh - 350px)';
 
+  // Memoized function to fetch Pokemon data when ID changes
   const fetchData = useCallback(() => {
     if (id) fetchPokemonData(id);
   }, [id, fetchPokemonData]);
 
+  // Fetch data when component mounts or ID changes
   useEffect(() => {
     fetchData();
   }, [fetchData]);
 
+  // Show loading state while data is being fetched
   if (isLoading || !pokemon) {
     return <Loading isMobileLandscape={isMobileLandscape} />;
   }
 
+  // Destructure different sprite versions from Pokemon data
   const {
     'official-artwork': { front_default: pokemonArt } = {},
     showdown: { front_default: pokemonShowdown } = {},
@@ -83,6 +92,7 @@ function MainPokemonTab({ id, isMobileLandscape }) {
   } = pokemon.sprites.other;
 
   return (
+    // Main tabs container with responsive orientation
     <Tabs
       width={isMobileLandscape ? '700px' : 'auto'}
       align="center"
@@ -91,6 +101,7 @@ function MainPokemonTab({ id, isMobileLandscape }) {
       orientation={isMobileLandscape ? 'vertical' : 'horizontal'}
     >
       <TabPanels mt={isMobileLandscape ? '-1' : { base: 0, md: 5 }}>
+        {/* Home Sprite Tab */}
         <TabPanel>
           <VStack spacing={4}>
             <MainPokemonName isMobileLandscape={isMobileLandscape} />
@@ -99,6 +110,8 @@ function MainPokemonTab({ id, isMobileLandscape }) {
             </TabContent>
           </VStack>
         </TabPanel>
+
+        {/* Official Artwork Tab */}
         <TabPanel>
           <VStack spacing={4}>
             <MainPokemonName isMobileLandscape={isMobileLandscape} />
@@ -107,19 +120,24 @@ function MainPokemonTab({ id, isMobileLandscape }) {
             </TabContent>
           </VStack>
         </TabPanel>
+
+        {/* Showdown Sprite Tab */}
         <TabPanel>
           <VStack spacing={4}>
             <MainPokemonName isMobileLandscape={isMobileLandscape} />
             <TabContent height={contentHeight}>
-              <PokemonImage src={pokemonShowdown} size="700px" />
+              <PokemonImage src={pokemonShowdown} />
             </TabContent>
           </VStack>
         </TabPanel>
+
+        {/* Information Tab */}
         <TabPanel
           maxH={{ base: 'calc(100vh - 300px)', md: '600px' }}
           overflowY="auto"
           p={0}
         >
+          {/* Sticky header with Pokemon name */}
           <Box
             position="sticky"
             top={0}
@@ -137,6 +155,7 @@ function MainPokemonTab({ id, isMobileLandscape }) {
               pb={isMobileLandscape ? 12 : { base: 48, lg: 72 }}
             >
               <InfoTab />
+              {/* Conditional rendering of flavor text and evolution chain */}
               {flavorTextArray && (
                 <FlavorText
                   isMobileLandscape={isMobileLandscape}
@@ -149,6 +168,7 @@ function MainPokemonTab({ id, isMobileLandscape }) {
           </Container>
         </TabPanel>
 
+        {/* Team Tab */}
         <TabPanel>
           <Box>
             <MainPokemonName
@@ -157,6 +177,7 @@ function MainPokemonTab({ id, isMobileLandscape }) {
               isTeam="true"
             />
           </Box>
+          {/* Grid of Pokemon team cards */}
           <Flex
             wrap="wrap"
             pt={{ base: 5, md: 10, lg: 25 }}
@@ -165,7 +186,7 @@ function MainPokemonTab({ id, isMobileLandscape }) {
             maxW="full"
             h="auto"
             maxH={{ base: 'calc(100vh - 300px)', md: '400px' }}
-            gap={{ base: 8, md: 5, lg: 8 }}
+            gap={10}
             overflowY="auto"
             mt={{ base: 30, md: 50, lg: 100 }}
           >
@@ -192,6 +213,7 @@ function MainPokemonTab({ id, isMobileLandscape }) {
         </TabPanel>
       </TabPanels>
 
+      {/* Tab navigation bar */}
       <Center>
         <TabList
           justifyContent="space-evenly"
@@ -203,6 +225,7 @@ function MainPokemonTab({ id, isMobileLandscape }) {
           top={isMobileLandscape ? '60px' : undefined}
           ml={isMobileLandscape ? '50px' : undefined}
         >
+          {/* Tab icons for different views */}
           <Tab>
             <CgPokemon
               color="#ef5350"

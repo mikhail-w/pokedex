@@ -172,6 +172,52 @@ const backendApiClient = {
       throw new Error('Logout failed');
     }
   },
+  updateHighScore: async (token, difficulty, score) => {
+    console.log('Updating high score:', {
+      difficulty,
+      score,
+      hasToken: Boolean(token),
+    });
+
+    try {
+      const response = await fetch(
+        `${BACKEND_API_BASE_URL}/users/update_high_score/`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({ difficulty, score }),
+          credentials: 'include',
+        }
+      );
+
+      return await backendApiClient.handleResponse(response);
+    } catch (error) {
+      console.error('Update high score error:', error);
+      throw error;
+    }
+  },
+  getLeaderboard: async (difficulty = 'all') => {
+    try {
+      const response = await fetch(
+        `${BACKEND_API_BASE_URL}/users/leaderboard/?difficulty=${difficulty}`,
+        {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          credentials: 'include',
+        }
+      );
+
+      return await backendApiClient.handleResponse(response);
+    } catch (error) {
+      console.error('Get leaderboard error:', error);
+      throw error;
+    }
+  },
 };
 
 export default backendApiClient;

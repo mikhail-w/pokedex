@@ -134,6 +134,18 @@ class LogoutView(APIView):
 class GetUserTeam(APIView):
     permission_classes = [IsAuthenticated]
 
+    def get_user_rank(self, difficulty, score):
+        if score is None:
+            return None
+
+        # Get count of users with better scores (lower turns)
+        rank = UserProfile.objects.filter(
+            **{f"{difficulty}_high_score__lt": score}
+        ).count()
+
+        # Add 1 to get the current user's rank (1-based ranking)
+        return rank + 1
+
     def get(self, request):
         print("\n=== Get User Team Request ===")
         print(f"Fetching team for user: {request.user.username}")
@@ -142,7 +154,7 @@ class GetUserTeam(APIView):
             # Get or create the user profile
             user_profile, created = UserProfile.objects.get_or_create(
                 user=request.user,
-                defaults={"current_team": []},  # Provide default empty list
+                defaults={"current_team": []},
             )
 
             if created:
@@ -153,11 +165,23 @@ class GetUserTeam(APIView):
                 user_profile.current_team = []
                 user_profile.save()
 
+            # Get rankings for each difficulty level
+            easy_rank = self.get_user_rank("easy", user_profile.easy_high_score)
+            medium_rank = self.get_user_rank("medium", user_profile.medium_high_score)
+            hard_rank = self.get_user_rank("hard", user_profile.hard_high_score)
+
             print(f"Current team: {user_profile.current_team}")
             return Response(
                 {
                     "message": "Team retrieved successfully",
+                    "username": request.user.username,
                     "current_team": user_profile.current_team,
+                    "easy_high_score": user_profile.easy_high_score,
+                    "medium_high_score": user_profile.medium_high_score,
+                    "hard_high_score": user_profile.hard_high_score,
+                    "easy_rank": easy_rank,
+                    "medium_rank": medium_rank,
+                    "hard_rank": hard_rank,
                 },
                 status=status.HTTP_200_OK,
             )
@@ -233,5 +257,143 @@ class UpdateUserTeam(APIView):
             print(f"Full error details: ", e)
             return Response(
                 {"error": f"Failed to update team: {str(e)}"},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            )
+
+
+class UpdateHighScore(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        print("\n=== Update High Score Request ===")
+        print(f"User: {request.user.username}")
+        print(f"Request Data: {request.data}")
+
+        try:
+            difficulty = request.data.get("difficulty")
+            score = request.data.get("score")
+
+            print(f"Received difficulty: {difficulty}")
+            print(f"Received score: {score}")
+
+            if not difficulty or score is None:
+                print("Missing required fields")
+                return Response(
+                    {"error": "Both difficulty and score are required"},
+                    status=status.HTTP_400_BAD_REQUEST,
+                )
+
+            if difficulty not in ["easy", "medium", "hard"]:
+                print(f"Invalid difficulty: {difficulty}")
+                return Response(
+                    {"error": "Invalid difficulty level"},
+                    status=status.HTTP_400_BAD_REQUEST,
+                )
+
+            user_profile = UserProfile.objects.get(user=request.user)
+            print(
+                f"Current high scores: easy={user_profile.easy_high_score}, medium={user_profile.medium_high_score}, hard={user_profile.hard_high_score}"
+            )
+
+            is_high_score = user_profile.update_high_score(difficulty, score)
+            print(f"Score updated: {is_high_score}")
+            print(
+                f"New high scores: easy={user_profile.easy_high_score}, medium={user_profile.medium_high_score}, hard={user_profile.hard_high_score}"
+            )
+
+            return Response(
+                {
+                    "message": (
+                        "High score updated successfully"
+                        if is_high_score
+                        else "Score was not high enough to update"
+                    ),
+                    "is_high_score": is_high_score,
+                    "current_high_scores": {
+                        "easy": user_profile.easy_high_score,
+                        "medium": user_profile.medium_high_score,
+                        "hard": user_profile.hard_high_score,
+                    },
+                }
+            )
+
+        except Exception as e:
+            print(f"Error updating high score: {str(e)}")
+            import traceback
+
+            print(f"Full traceback: {traceback.format_exc()}")
+            return Response(
+                {"error": f"Failed to update high score: {str(e)}"},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            )
+
+
+class GetLeaderboard(APIView):
+    def get(self, request):
+        print("\n=== Get Leaderboard Request ===")
+        try:
+            # Get the difficulty from query params, default to all
+            difficulty = request.query_params.get("difficulty", "all")
+
+            # Base query to get all non-null scores
+            queryset = UserProfile.objects.select_related("user")
+
+            leaderboard = {"easy": [], "medium": [], "hard": []}
+
+            # Get top 10 scores for each difficulty
+            if difficulty == "all" or difficulty == "easy":
+                easy_scores = (
+                    queryset.exclude(easy_high_score__isnull=True)
+                    .order_by("easy_high_score")[:10]
+                    .values("user__username", "easy_high_score")
+                )
+                leaderboard["easy"] = [
+                    {
+                        "username": score["user__username"],
+                        "score": score["easy_high_score"],
+                    }
+                    for score in easy_scores
+                ]
+
+            if difficulty == "all" or difficulty == "medium":
+                medium_scores = (
+                    queryset.exclude(medium_high_score__isnull=True)
+                    .order_by("medium_high_score")[:10]
+                    .values("user__username", "medium_high_score")
+                )
+                leaderboard["medium"] = [
+                    {
+                        "username": score["user__username"],
+                        "score": score["medium_high_score"],
+                    }
+                    for score in medium_scores
+                ]
+
+            if difficulty == "all" or difficulty == "hard":
+                hard_scores = (
+                    queryset.exclude(hard_high_score__isnull=True)
+                    .order_by("hard_high_score")[:10]
+                    .values("user__username", "hard_high_score")
+                )
+                leaderboard["hard"] = [
+                    {
+                        "username": score["user__username"],
+                        "score": score["hard_high_score"],
+                    }
+                    for score in hard_scores
+                ]
+
+            return Response(
+                {
+                    "message": "Leaderboard retrieved successfully",
+                    "leaderboard": leaderboard,
+                },
+                status=status.HTTP_200_OK,
+            )
+
+        except Exception as e:
+            print(f"Error fetching leaderboard: {str(e)}")
+            return Response(
+                {"error": "Failed to fetch leaderboard"},
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR,
             )

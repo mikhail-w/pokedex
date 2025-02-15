@@ -20,6 +20,8 @@ import {
 } from '@chakra-ui/react';
 import background from '../assets/images/flip/background4.png';
 import background2 from '../assets/images/flip/background14.png';
+import backendApiClient from '../services/backendApiClient';
+import LeaderboardModal from '../components/LeaderboardModal';
 
 const modeConfig = {
   easy: { pairs: 6, columns: 4 },
@@ -38,6 +40,8 @@ function PokeFlipPage() {
   const [choiceTwo, setChoiceTwo] = useState(null);
   const [disabled, setDisabled] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [highScoreAchieved, setHighScoreAchieved] = useState(false);
+  const [isLeaderboardOpen, setIsLeaderboardOpen] = useState(false);
 
   // Shuffle cards and start a new game based on the current mode.
   // Also reset the move counter and modal.
@@ -53,6 +57,7 @@ function PokeFlipPage() {
     setCards(shuffledCards);
     setTurns(0);
     setIsModalOpen(false);
+    setHighScoreAchieved(false);
   };
 
   // Handle card selection with a guard against double-clicking the same card.
@@ -78,6 +83,39 @@ function PokeFlipPage() {
       }
     }
   }, [choiceOne, choiceTwo]);
+
+  useEffect(() => {
+    const updateScore = async () => {
+      if (cards.length > 0 && cards.every(card => card.matched)) {
+        setIsModalOpen(true);
+
+        const token = localStorage.getItem('token');
+        if (token) {
+          try {
+            console.log(
+              `Attempting to update score - Mode: ${mode}, Turns: ${turns}`
+            );
+            const response = await backendApiClient.updateHighScore(
+              token,
+              mode,
+              turns
+            );
+
+            if (response.is_high_score) {
+              setHighScoreAchieved(true);
+              console.log('New high score achieved!');
+            }
+          } catch (error) {
+            console.error('Failed to update high score:', error);
+          }
+        } else {
+          console.log('No token found - user must be logged in to save scores');
+        }
+      }
+    };
+
+    updateScore();
+  }, [cards, mode, turns]);
 
   // Reset choices after a turn and increment the move counter.
   const resetTurn = () => {
@@ -190,6 +228,7 @@ function PokeFlipPage() {
             className="newgame"
             height="50px"
             onClick={shuffleCards}
+            // onClick={() => setIsLeaderboardOpen(true)}
           >
             <Image
               display="fixed"
@@ -197,6 +236,10 @@ function PokeFlipPage() {
               height="100%"
               src={ng}
               alt="New Game"
+            />
+            <LeaderboardModal
+              isOpen={isLeaderboardOpen}
+              onClose={() => setIsLeaderboardOpen(false)}
             />
           </Box>
         </Flex>
@@ -248,12 +291,24 @@ function PokeFlipPage() {
                 fontSize="xl"
                 fontWeight="bold"
                 letterSpacing={2}
+                mb={2}
               >
                 You completed the game in {turns} moves!
               </Text>
+              {highScoreAchieved && (
+                <Text
+                  textAlign="center"
+                  color="yellow.400"
+                  fontWeight="bold"
+                  fontSize="lg"
+                  textShadow="1px 1px 2px black"
+                >
+                  🏆 New High Score! 🏆
+                </Text>
+              )}
             </Flex>
           </ModalBody>
-          <ModalFooter justifyContent="center">
+          <ModalFooter gap={5} justifyContent="center">
             <Button
               onClick={() => {
                 setIsModalOpen(false);
@@ -275,6 +330,32 @@ function PokeFlipPage() {
             >
               <Image src={ng} alt="New Game" height="40px" />
             </Button>
+
+            <Button
+              onClick={() => setIsLeaderboardOpen(true)}
+              backgroundColor="#3760aa"
+              padding="8px 32px"
+              border="3px solid  #FFD700"
+              color="#ffcc01"
+              borderRadius="full"
+              _hover={{
+                backgroundColor: '#cc3f3f',
+                color: 'white',
+              }}
+              height="100%"
+              width="200px"
+              fontSize="xl"
+              fontFamily="'Pokemon Solid', sans-serif"
+              letterSpacing={2}
+            >
+              Leaderboard
+            </Button>
+
+            {/* Add the LeaderboardModal component */}
+            <LeaderboardModal
+              isOpen={isLeaderboardOpen}
+              onClose={() => setIsLeaderboardOpen(false)}
+            />
           </ModalFooter>
         </ModalContent>
       </Modal>

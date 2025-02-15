@@ -2,42 +2,29 @@ import React from 'react';
 import { Box, Flex, Text, Image } from '@chakra-ui/react';
 import { colors } from '../utils';
 import bgImg from '../assets/images/pokeballs/ballopacity.png';
+import { getBackgroundColors } from '../utils';
 
 // Helper function to get background colors based on Pokemon type
-const getBackgroundColor = type => {
-  const normalizedType = type.toLowerCase();
-  return colors[normalizedType] || colors.normal;
-};
 
 // Main Pokemon Card Component
 const DemoCard = ({ id, name, type, isCaught, imageUrl }) => {
   // Convert single type to array if needed
   const types = Array.isArray(type) ? type : [type];
+  const backgroundColor = getBackgroundColors(type);
 
   // Get background color based on first type
-  const bgColor = getBackgroundColor(types[0]);
-
-  // Create a slightly darker version for gradient
-  const darkerColor = bgColor
-    .replace(/^#/, '')
-    .match(/.{2}/g)
-    .map(hex =>
-      Math.max(0, parseInt(hex, 16) - 25)
-        .toString(16)
-        .padStart(2, '0')
-    )
-    .join('');
+  // const bgColor = getBackgroundColor(types[0]);
 
   return (
     <Box
       position="relative"
       borderRadius="xl"
       p={4}
-      bgGradient={`linear(to-b, ${bgColor}, #${darkerColor})`}
+      bgGradient={`linear-gradient(${backgroundColor[0]}, ${backgroundColor[1]})`}
       transition="all 0.3s"
       _hover={{ shadow: 'lg' }}
       overflow="hidden"
-      width="100%"
+      width="full"
       maxW="md"
     >
       <Image

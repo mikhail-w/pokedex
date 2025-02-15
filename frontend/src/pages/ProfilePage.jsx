@@ -18,6 +18,7 @@ import {
   Badge,
   SimpleGrid,
   Button,
+  Flex,
 } from '@chakra-ui/react';
 import backendApiClient from '../services/backendApiClient';
 import Loading from '../components/Loading';
@@ -48,10 +49,18 @@ const ProfilePage = () => {
         setLoading(true);
         const response = await backendApiClient.getUserTeam(token);
 
+        console.log('User data response:', response);
+
         setUserData({
-          username: username || 'Trainer',
+          username: response?.username,
           teamCount: response?.current_team?.length || 0,
           joinDate: new Date().toLocaleDateString(),
+          easy_high_score: response?.easy_high_score,
+          medium_high_score: response?.medium_high_score,
+          hard_high_score: response?.hard_high_score,
+          easy_rank: response?.easy_rank,
+          medium_rank: response?.medium_rank,
+          hard_rank: response?.hard_rank,
         });
 
         if (response?.current_team?.length > 0) {
@@ -63,9 +72,15 @@ const ProfilePage = () => {
       } catch (error) {
         console.error('Error in fetchUserData:', error);
         setUserData({
-          username: username || 'Trainer',
+          username: 'Trainer',
           teamCount: 0,
           joinDate: new Date().toLocaleDateString(),
+          easy_high_score: null,
+          medium_high_score: null,
+          hard_high_score: null,
+          easy_rank: null,
+          medium_rank: null,
+          hard_rank: null,
         });
       } finally {
         setLoading(false);
@@ -88,6 +103,7 @@ const ProfilePage = () => {
       minH="100vh"
       // bgGradient="linear(to-b, green.200, green.100, green.50)"
       pt={'70px'}
+      pb={'50px'}
     >
       <Container maxW="container.xl">
         <VStack spacing={8} align="stretch">
@@ -112,7 +128,12 @@ const ProfilePage = () => {
                       height="150px"
                       objectFit="cover"
                     />
-                    <Heading color="blue.900" size="lg">
+                    <Heading
+                      fontFamily={'Alleyn W01 Regular'}
+                      textTransform={'capitalize'}
+                      color="blue.900"
+                      size="lg"
+                    >
                       {userData?.username}'s Profile
                     </Heading>
                     <Badge
@@ -130,7 +151,6 @@ const ProfilePage = () => {
               </Box>
             </Box>
           </Card>
-
           {/* Stats Section */}
           <SimpleGrid columns={{ base: 1, md: 3 }} spacing={6}>
             {[
@@ -164,46 +184,118 @@ const ProfilePage = () => {
               </Card>
             ))}
           </SimpleGrid>
-
-          {/* Current Team Section */}
+          {/* High Scores Section */}
           <Card>
             <CardBody>
               <Heading size="md" mb={4} color={headingColor}>
+                Memory Game High Scores
+              </Heading>
+              <Divider mb={6} />
+
+              <SimpleGrid columns={{ base: 1, md: 3 }} spacing={6}>
+                {[
+                  {
+                    difficulty: 'Easy',
+                    score: userData?.easy_high_score,
+                    rank: userData?.easy_rank,
+                    color: 'green.500',
+                  },
+                  {
+                    difficulty: 'Medium',
+                    score: userData?.medium_high_score,
+                    rank: userData?.medium_rank,
+                    color: 'yellow.500',
+                  },
+                  {
+                    difficulty: 'Hard',
+                    score: userData?.hard_high_score,
+                    rank: userData?.hard_rank,
+                    color: 'red.500',
+                  },
+                ].map((level, index) => (
+                  <Box
+                    key={index}
+                    p={5}
+                    shadow="md"
+                    borderWidth="1px"
+                    borderRadius="lg"
+                    bg={useColorModeValue('white', 'gray.700')}
+                  >
+                    <Text
+                      fontSize="lg"
+                      fontWeight="bold"
+                      color={level.color}
+                      mb={2}
+                    >
+                      {level.difficulty}
+                    </Text>
+                    <StatGroup>
+                      <Stat>
+                        <StatLabel>Best Score</StatLabel>
+                        <StatNumber>
+                          {level.score === null || level.score === undefined
+                            ? 'No games played'
+                            : `${level.score} turns`}
+                        </StatNumber>
+                        <StatLabel mt={2}>Your Ranking</StatLabel>
+                        <StatNumber fontSize="lg" color={level.color}>
+                          {level.rank ? `#${level.rank}` : 'Not ranked'}
+                        </StatNumber>
+                      </Stat>
+                    </StatGroup>
+                  </Box>
+                ))}
+              </SimpleGrid>
+            </CardBody>
+          </Card>
+          {/* Current Team Section */}
+          <Card>
+            <CardBody>
+              <Heading
+                fontFamily={'Alleyn W01 Regular'}
+                textTransform={'uppercase'}
+                size="md"
+                mb={4}
+                color={headingColor}
+              >
                 Current Team
               </Heading>
               <Divider mb={10} />
 
               {pokemonData.length > 0 ? (
-                <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} spacing={10}>
-                  {pokemonData.map(
-                    pokemon =>
-                      pokemon && (
-                        // <PokemonCard
-                        //   key={pokemon.id}
-                        //   card={pokemon}
-                        //   src={
-                        //     pokemon.sprites?.other?.['official-artwork']
-                        //       ?.front_default
-                        //   }
-                        //   src2={pokemon.sprites?.other?.showdown?.front_default}
-                        //   name={pokemon.name}
-                        //   type={getType(pokemon.types)}
-                        //   id={pokemon.id}
-                        // />
-                        <DemoCard
-                          key={pokemon.id}
-                          id={pokemon.id}
-                          name={pokemon.name}
-                          type={getType(pokemon.types)}
-                          isCaught={'True'}
-                          imageUrl={
-                            pokemon.sprites?.other?.['official-artwork']
-                              ?.front_default
-                          }
-                        ></DemoCard>
-                      )
-                  )}
-                </SimpleGrid>
+                <Flex justify="center" align="center" w="100%">
+                  {/* <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} spacing={10}> */}
+                  <SimpleGrid minChildWidth="250px" spacing={5} w="100%">
+                    {pokemonData.map(
+                      pokemon =>
+                        pokemon && (
+                          // <PokemonCard
+                          //   key={pokemon.id}
+                          //   card={pokemon}
+                          //   src={
+                          //     pokemon.sprites?.other?.['official-artwork']
+                          //       ?.front_default
+                          //   }
+                          //   src2={pokemon.sprites?.other?.showdown?.front_default}
+                          //   name={pokemon.name}
+                          //   type={getType(pokemon.types)}
+                          //   id={pokemon.id}
+                          // />
+                          <DemoCard
+                            key={pokemon.id}
+                            id={pokemon.id}
+                            name={pokemon.name}
+                            type={getType(pokemon.types)}
+                            isCaught={'True'}
+                            imageUrl={
+                              pokemon.sprites?.other?.['official-artwork']
+                                ?.front_default
+                            }
+                          ></DemoCard>
+                        )
+                    )}
+                  </SimpleGrid>
+                </Flex>
               ) : (
                 <Text textAlign="center" color="gray.500">
                   No Pokémon in team yet
@@ -211,7 +303,6 @@ const ProfilePage = () => {
               )}
             </CardBody>
           </Card>
-
           {/* Navigation Buttons */}
           <HStack spacing={4} justify="center">
             <Button
