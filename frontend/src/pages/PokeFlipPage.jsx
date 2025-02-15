@@ -1,6 +1,7 @@
 import '../assets/styles/PokeFlipPage.css';
 import { useState, useEffect } from 'react';
 import ng from '../assets/images/flip/ng.png';
+import lb from '../assets/images/flip/lb.png';
 import winImg from '../assets/images/flip/win.png';
 import Logo from '../components/flipCard/Logo';
 import SingleCard from '../components/flipCard/SingleCard';
@@ -176,7 +177,6 @@ function PokeFlipPage() {
       >
         <Flex flexDirection="column" alignItems="center">
           <Logo />
-
           {/* Mode selection buttons */}
           <Flex gap="20px" mt="20px">
             <Button
@@ -223,25 +223,43 @@ function PokeFlipPage() {
             </Button>
           </Flex>
 
-          <Box
-            marginTop="10px"
-            className="newgame"
-            height="50px"
-            onClick={shuffleCards}
-            // onClick={() => setIsLeaderboardOpen(true)}
-          >
-            <Image
-              display="fixed"
-              top="100px"
-              height="100%"
-              src={ng}
-              alt="New Game"
-            />
-            <LeaderboardModal
-              isOpen={isLeaderboardOpen}
-              onClose={() => setIsLeaderboardOpen(false)}
-            />
-          </Box>
+          <Flex>
+            <Box
+              marginTop="10px"
+              className="newgame"
+              height="50px"
+              onClick={shuffleCards}
+            >
+              <Image
+                display="fixed"
+                top="100px"
+                height="100%"
+                src={ng}
+                alt="New Game"
+              />
+            </Box>
+
+            <Box
+              marginTop="10px"
+              className="newgame"
+              height="50px"
+              onClick={() => setIsLeaderboardOpen(true)}
+            >
+              <Image
+                display="fixed"
+                top="100px"
+                height="100%"
+                src={lb}
+                alt="New Game"
+              />
+            </Box>
+            <Box>
+              <LeaderboardModal
+                isOpen={isLeaderboardOpen}
+                onClose={() => setIsLeaderboardOpen(false)}
+              />
+            </Box>
+          </Flex>
         </Flex>
 
         {/* Card grid container */}
