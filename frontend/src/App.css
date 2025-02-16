@@ -1,8 +1,8 @@
 @font-face {
   font-family: 'Alleyn W01 Regular';
-  src: url('../src/fonts/font.ttf') format('tff'),
-    url('../src/fonts/font.woff') format('woff'),
-    url('../src/fonts/font.woff2') format('woff2');
+  src: url('https://mwpokedex.s3-website-us-east-1.amazonaws.com/fonts/font.woff2') format('woff2'),
+    url('https://mwpokedex.s3-website-us-east-1.amazonaws.com/fonts/font.woff') format('woff'),
+    url('https://mwpokedex.s3-website-us-east-1.amazonaws.com/fonts/font.ttf') format('truetype');
 }
 
 body, .text {

@@ -28,3 +28,6 @@ __pycache__/
 # Ignore Virtual Environments
 venv/
 env/
+
+deps/
+dist/

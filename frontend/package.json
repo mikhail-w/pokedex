@@ -2,7 +2,7 @@
   "name": "pokedex",
   "private": true,
   "version": "1.0.0",
-  "homepage": "https://mikhail-w.github.io/pokedex",
+  "homepage": "./",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -10,7 +10,7 @@
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist"
+    "deploy": "aws s3 sync dist s3://mwpokedex --delete"
   },
   "dependencies": {
     "@chakra-ui/icons": "^2.1.1",

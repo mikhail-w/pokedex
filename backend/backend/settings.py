@@ -23,10 +23,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = "django-insecure-8aflf8_(qc+ayi87@xam^u=y9b^w0%_=-3ep3ekz(qy06(2)4_"
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    "ec2-44-209-72-49.compute-1.amazonaws.com",
+    "44.209.72.49",
+]
 
 
 # Application definition
@@ -58,16 +60,21 @@ MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
 ]
 
-# 4. Add these CORS settings to settings.py:
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5174",
-    "http://127.0.0.1:5174",
-]
 
 CORS_ALLOW_CREDENTIALS = True
 
-# 5. If you're in development, you can alternatively use:
-CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOWED_ORIGINS = ["http://mwpokedex.s3-website-us-east-1.amazonaws.com"]
+
+CORS_ALLOW_ALL_ORIGINS = False
+
+# Security settings
+SECURE_SSL_REDIRECT = True
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+SECURE_BROWSER_XSS_FILTER = True
+SECURE_CONTENT_TYPE_NOSNIFF = True
+X_FRAME_OPTIONS = "DENY"
+
 
 ROOT_URLCONF = "backend.urls"
 
