@@ -1,4 +1,4 @@
-import React, { useEffect, useState, memo } from 'react';
+import { useEffect, useState, memo } from 'react';
 import {
   Box,
   Flex,
@@ -7,66 +7,20 @@ import {
   Image,
   ModalContent,
 } from '@chakra-ui/react';
-import {
-  IoArrowForwardCircleOutline,
-  IoArrowDownCircleOutline,
-} from 'react-icons/io5';
-import { FaArrowLeftLong } from 'react-icons/fa6';
 import FlavorText from './FlavorText';
 import PokemonTabs from './PokemonTabs';
 import EvolutionChain from './EvolutionChain';
 import CatchReleaseButton from './CatchReleaseButton';
-import { colors } from '../../utils';
-import { modalIcons } from '../../icons';
+import MobileModalContainer from './MobileModalContainer';
 import ball from '../../assets/images/pokeballs/pokeball.png';
 import '../../assets/styles/PokeDetail.css';
+import TypeBadge from './TypeBadge';
+import ExpandButton from './ExpandButton';
+import ModalBackButton from './ModalBackButton';
+import { getFontSize, getIdPosition, getIdFontSize } from '../../utils';
 
 const MOBILE_BREAKPOINT = 900;
 const DEFAULT_BACKGROUND = ['#fff', '#f8f9fa'];
-
-const TypeBadge = memo(({ type, index }) => (
-  <Flex
-    cursor="pointer"
-    className="pokeDetail-type-tab"
-    bg={colors[type] || 'gray.300'}
-    marginLeft={index === 0 ? '0px' : '10px'}
-    alignItems="center"
-    padding="8px 12px"
-    borderRadius="12px"
-    boxShadow="0 4px 6px rgba(0, 0, 0, 0.2)"
-    transition="transform 0.2s, box-shadow 0.2s"
-    _hover={{
-      transform: 'scale(1.05)',
-      boxShadow: '0 6px 8px rgba(0, 0, 0, 0.3)',
-    }}
-  >
-    <Image w="24px" h="24px" src={modalIcons[type] || ball} />
-    <Text
-      paddingLeft="8px"
-      fontWeight="bold"
-      fontSize="14px"
-      color="white"
-      textShadow="0px 1px 2px rgba(0, 0, 0, 0.8)"
-    >
-      {type}
-    </Text>
-  </Flex>
-));
-
-const ExpandButton = memo(({ isMobile, isExpanded, onClick }) => {
-  const Icon = isMobile
-    ? IoArrowDownCircleOutline
-    : IoArrowForwardCircleOutline;
-  return (
-    <Icon
-      onClick={onClick}
-      size="3em"
-      className={
-        isExpanded ? 'isExtended extend-modal' : 'extend-modal notExtended'
-      }
-    />
-  );
-});
 
 const ModalContainer = ({
   card = {},
@@ -123,46 +77,27 @@ const ModalContainer = ({
     }
   };
 
-  const getFontSize = (text, isMobileView) => {
-    const length = String(text).length;
-    return length > 13
-      ? isMobileView
-        ? '.7rem'
-        : '1rem'
-      : isMobileView
-      ? '1.5rem'
-      : '2rem';
-  };
+  // Return mobile version if screen width is below breakpoint
+  if (isMobile) {
+    return (
+      <MobileModalContainer
+        card={card}
+        name={name}
+        id={id}
+        src={src}
+        type={type}
+        onClose={onClose}
+        onExpand={onExpand}
+        isExpanded={isExpanded}
+        backgroundColor={`linear-gradient(in lch, ${backgroundColor[0]}, ${backgroundColor[1]})`}
+        pokeInfo={pokeInfo}
+        flavorTextArray={flavorTextArray}
+        evoNames={evoNames}
+      />
+    );
+  }
 
-  const getIdPosition = (idString, isMobileView) => ({
-    left:
-      idString.length > 3
-        ? isMobileView
-          ? '250px'
-          : '340px'
-        : isMobileView
-        ? '220px'
-        : '300px',
-    top:
-      idString.length > 3
-        ? isMobileView
-          ? '20px'
-          : '30px'
-        : isMobileView
-        ? '10px'
-        : '20px',
-  });
-
-  const getIdFontSize = (idString, isMobileView) => {
-    return idString.length > 3
-      ? isMobileView
-        ? '1.7rem'
-        : '2.5rem'
-      : isMobileView
-      ? '3rem'
-      : '4.5rem';
-  };
-
+  // Desktop version
   return (
     <ModalContent
       w="90%"
@@ -185,11 +120,7 @@ const ModalContainer = ({
           justifyContent="space-between"
           alignItems="center"
         >
-          <FaArrowLeftLong
-            className="modal-return"
-            onClick={onClose}
-            size="1.8rem"
-          />
+          <ModalBackButton onClose={onClose} />
           <CatchReleaseButton id={id} name={name} />
         </Flex>
 
@@ -216,7 +147,7 @@ const ModalContainer = ({
             </Box>
           </Flex>
 
-          <Flex justifyContent="left" flexWrap="wrap">
+          <Flex justifyContent="left" flexWrap="wrap" gap={5}>
             {type.map((t, index) => (
               <TypeBadge key={`${t}-${index}`} type={t} index={index} />
             ))}

@@ -1,14 +1,14 @@
-import CardBack from './CardBack';
-import CardFront from './CardFront';
 import { motion } from 'framer-motion';
 import ReactCardFlip from 'react-card-flip';
-import '../../assets/styles/PokemonCard.css';
-import ModalContainer from './ModalContainer';
 import { useState, useCallback, useEffect, useRef } from 'react';
-import { bgs, getBackgroundColors } from '../../utils';
-import { usePokemonData } from '../../hooks/usePokemonData';
-import ball from '../../assets/images/pokeballs/pokeball.png';
 import { Box, Modal, ModalOverlay, useDisclosure } from '@chakra-ui/react';
+import { bgs, getBackgroundColors } from '../../utils';
+import ball from '../../assets/images/pokeballs/pokeball.png';
+import ModalContainer from './ModalContainer';
+import CardBack from './CardBack';
+import CardFront from './CardFront';
+import { usePokemonData } from '../../hooks/usePokemonData';
+import '../../assets/styles/PokemonCard.css';
 
 function PokemonCard({ card, src, src2, name, type, id }) {
   const [isFlipped, setIsFlipped] = useState(false);
@@ -16,18 +16,33 @@ function PokemonCard({ card, src, src2, name, type, id }) {
   const [isExpanded, setIsExpanded] = useState(false);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const backgroundColor = getBackgroundColors(type);
+  const overlayRef = useRef(null);
 
   const { pokeInfo, flavorTextArray, evoNames, fetchPokemonData } =
     usePokemonData();
-
-  // Flip card handlers
-  const handleMouseEnter = useCallback(() => setIsHovered(true), []);
-  const handleMouseLeave = useCallback(() => setIsHovered(false), []);
-  const handleFlip = useCallback(() => setIsFlipped(prev => !prev), []);
-  const handleExpand = useCallback(() => setIsExpanded(prev => !prev), []);
-  // console.log('Flavor Card:', flavorTextArray);
   const timerId = useRef(null);
   const [isMobileLandscape, setIsMobileLandscape] = useState(false);
+
+  const handleClose = useCallback(() => {
+    onClose();
+    setIsExpanded(false);
+  }, [onClose]);
+
+  const handleOverlayClick = useCallback(
+    e => {
+      if (e.target === overlayRef.current) {
+        setIsExpanded(false);
+        handleClose();
+      }
+    },
+    [handleClose]
+  );
+
+  useEffect(() => {
+    if (!isOpen) {
+      setIsExpanded(false);
+    }
+  }, [isOpen]);
 
   useEffect(() => {
     function checkMobileLandscape() {
@@ -36,18 +51,19 @@ function PokemonCard({ card, src, src2, name, type, id }) {
       setIsMobileLandscape(isLandscape);
     }
 
-    // Initial check
     checkMobileLandscape();
-
-    // Listen for resize events
     window.addEventListener('resize', checkMobileLandscape);
 
-    // Cleanup event listener on component unmount
     return () => {
       window.removeEventListener('resize', checkMobileLandscape);
       clearTimeout(timerId.current);
     };
   }, []);
+
+  const handleMouseEnter = useCallback(() => setIsHovered(true), []);
+  const handleMouseLeave = useCallback(() => setIsHovered(false), []);
+  const handleFlip = useCallback(() => setIsFlipped(prev => !prev), []);
+  const handleExpand = useCallback(() => setIsExpanded(prev => !prev), []);
 
   return (
     <motion.div
@@ -58,16 +74,17 @@ function PokemonCard({ card, src, src2, name, type, id }) {
       transition={{ duration: 0.4, ease: 'easeInOut' }}
     >
       <Box className="card-container">
-        {/* Modal for detailed Pokémon information */}
         <Modal
           isOpen={isOpen}
-          onClose={onClose}
+          onClose={handleClose}
           isCentered
           motionPreset="none"
           scrollBehavior="inside"
           size="md"
         >
           <ModalOverlay
+            ref={overlayRef}
+            onClick={handleOverlayClick}
             bgColor={`${bgs[`${type[0]}`]}`}
             backdropFilter="blur(10px) hue-rotate(90deg)"
           />
@@ -83,7 +100,7 @@ function PokemonCard({ card, src, src2, name, type, id }) {
               id={id}
               src={src || ball}
               type={type}
-              onClose={onClose}
+              onClose={handleClose}
               onExpand={handleExpand}
               isExpanded={isExpanded}
               pokeInfo={pokeInfo}
@@ -94,7 +111,6 @@ function PokemonCard({ card, src, src2, name, type, id }) {
             />
           </motion.div>
         </Modal>
-        {/* Card Front and Back */}
 
         <ReactCardFlip flipDirection="horizontal" isFlipped={isFlipped}>
           <CardFront

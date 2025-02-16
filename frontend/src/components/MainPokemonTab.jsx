@@ -185,10 +185,10 @@ function MainPokemonTab({ id, isMobileLandscape }) {
             justify="center"
             maxW="full"
             h="auto"
-            maxH={{ base: 'calc(100vh - 300px)', md: '400px' }}
+            maxH={{ base: 'calc(100vh - 300px)', md: '500px' }}
             gap={10}
             overflowY="auto"
-            mt={{ base: 30, md: 50, lg: 100 }}
+            mt={{ base: 30, md: 50, lg: 50 }}
           >
             {team.map((card, idx) => (
               <Suspense key={idx} fallback={<Loading />}>

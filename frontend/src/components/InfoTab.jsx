@@ -13,6 +13,7 @@ import {
   Tr,
   Td,
 } from '@chakra-ui/react';
+import CatchReleaseButton from './PokemonCard/CatchReleaseButton';
 
 function InfoTab() {
   const { pokemon } = useOutletContext();
@@ -55,9 +56,14 @@ function InfoTab() {
         <Box p={6}>
           {/* Header */}
           <Flex justify="space-between" align="center" mb={4}>
-            <Heading size="lg" textTransform="capitalize">
-              {name}
-            </Heading>
+            <Flex align="center" justify="flex-start" width="100%">
+              <Heading size="lg" textTransform="capitalize">
+                {name}
+              </Heading>
+              <Box pl={'10%'} pt={'6%'}>
+                <CatchReleaseButton id={id} name={name} />
+              </Box>
+            </Flex>
             <Text color={textColor} fontSize="lg" fontWeight="bold">
               #{String(id).padStart(3, '0')}
             </Text>

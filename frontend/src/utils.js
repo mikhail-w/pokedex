@@ -4,7 +4,7 @@ export const colors = {
   normal: '#dcdcdc',
   fire: '#ffb971',
   water: '#8cc4e2',
-  electric: '#ffe662',
+  electric: '#F8D030',
   ice: '#8cf5e4',
   fighting: '#da7589',
   ground: '#e69a74',
@@ -146,4 +146,44 @@ export const getBackgroundColors = type => {
     return [colors[type[0]], colors[type[1]]];
   }
   return [colors[type[0]], colors[type[0]]];
+};
+
+export const getFontSize = (text, isMobileView) => {
+  const length = String(text).length;
+  return length > 13
+    ? isMobileView
+      ? '.7rem'
+      : '1rem'
+    : isMobileView
+    ? '1.5rem'
+    : '2rem';
+};
+
+export const getIdPosition = (idString, isMobileView) => ({
+  left:
+    idString.length > 3
+      ? isMobileView
+        ? '250px'
+        : '340px'
+      : isMobileView
+      ? '220px'
+      : '300px',
+  top:
+    idString.length > 3
+      ? isMobileView
+        ? '20px'
+        : '30px'
+      : isMobileView
+      ? '10px'
+      : '20px',
+});
+
+export const getIdFontSize = (idString, isMobileView) => {
+  return idString.length > 3
+    ? isMobileView
+      ? '1.7rem'
+      : '2.5rem'
+    : isMobileView
+    ? '3rem'
+    : '4.5rem';
 };

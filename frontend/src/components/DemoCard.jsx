@@ -3,6 +3,7 @@ import { Box, Flex, Text, Image } from '@chakra-ui/react';
 import { colors } from '../utils';
 import bgImg from '../assets/images/pokeballs/ballopacity.png';
 import { getBackgroundColors } from '../utils';
+import TypeBadge from './PokemonCard/TypeBadge';
 
 // Helper function to get background colors based on Pokemon type
 
@@ -79,7 +80,7 @@ const DemoCard = ({ id, name, type, isCaught, imageUrl }) => {
           </Flex>
 
           {/* Pokemon Types */}
-          <Flex gap={2}>
+          {/* <Flex gap={2}>
             {types.map((type, index) => (
               <Box
                 key={index}
@@ -94,6 +95,12 @@ const DemoCard = ({ id, name, type, isCaught, imageUrl }) => {
               >
                 <Text fontSize="sm">{type}</Text>
               </Box>
+            ))}
+          </Flex> */}
+
+          <Flex justifyContent="left" gap={5}>
+            {type.map((t, index) => (
+              <TypeBadge key={`${t}-${index}`} type={t} index={index} />
             ))}
           </Flex>
         </Box>

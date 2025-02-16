@@ -245,6 +245,18 @@
   border-radius: var(--border-radius-small);
 }
 
+/* Smooth Transition for Tabs */
+.chakra-tabs__tab {
+  transition: all 0.3s ease-in-out;
+}
+
+.chakra-tabs__tab[aria-selected="true"] {
+  transform: scale(1.1);
+  font-weight: bold;
+  color: #ffcc00;
+  /* Adjust based on type */
+}
+
 /* Animations */
 @keyframes scaleBar {
   from {
