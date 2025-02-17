@@ -60,8 +60,18 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:5174",  # Local frontend (Vite default)
     "http://127.0.0.1:5174",  # IP-based localhost
     "http://mwpokedex.s3-website-us-east-1.amazonaws.com",  # S3-hosted frontend
+    "http://44.209.72.49:8000",
 ]
-CORS_ALLOW_ALL_ORIGINS = False
+CORS_ALLOW_ALL_ORIGINS = True
+
+CORS_ALLOW_METHODS = [
+    "GET",
+    "POST",
+    "PUT",
+    "DELETE",
+    "OPTIONS",
+]
+
 CORS_ALLOW_CREDENTIALS = True  # Allow authentication cookies/tokens
 
 # SECURITY SETTINGS
