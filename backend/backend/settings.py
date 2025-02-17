@@ -27,7 +27,7 @@ ALLOWED_HOSTS = [
     "44.209.72.49",  # Your EC2 public IP
     "localhost",  # Allow local machine access
     "127.0.0.1",  # Allow access from local development server
-    "d1234abcd.cloudfront.net",  # CloudFront domain
+    "d18sty0dsu44el.cloudfront.net",  # CloudFront domain
 ]
 
 # Application definition
@@ -62,7 +62,7 @@ CORS_ALLOWED_ORIGINS = [
     "http://127.0.0.1:5174",  # IP-based localhost
     "http://mwpokedex.s3-website-us-east-1.amazonaws.com",  # S3-hosted frontend
     "http://44.209.72.49:8000",
-    "https://d1234abcd.cloudfront.net",
+    "https://d18sty0dsu44el.cloudfront.net",
 ]
 CORS_ALLOW_ALL_ORIGINS = True
 
