@@ -62,6 +62,7 @@ CORS_ALLOWED_ORIGINS = [
     "http://127.0.0.1:5174",  # IP-based localhost
     "http://mwpokedex.s3-website-us-east-1.amazonaws.com",  # S3-hosted frontend
     "http://44.209.72.49:8000",
+    "http://d18sty0dsu44el.cloudfront.net",
     "https://d18sty0dsu44el.cloudfront.net",
 ]
 CORS_ALLOW_ALL_ORIGINS = True
@@ -77,7 +78,7 @@ CORS_ALLOW_METHODS = [
 CORS_ALLOW_CREDENTIALS = True  # Allow authentication cookies/tokens
 
 # SECURITY SETTINGS
-SECURE_SSL_REDIRECT = True
+SECURE_SSL_REDIRECT = False
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
 SECURE_BROWSER_XSS_FILTER = True
