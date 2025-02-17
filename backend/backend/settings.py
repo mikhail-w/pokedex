@@ -27,6 +27,7 @@ ALLOWED_HOSTS = [
     "44.209.72.49",  # Your EC2 public IP
     "localhost",  # Allow local machine access
     "127.0.0.1",  # Allow access from local development server
+    "d1234abcd.cloudfront.net",  # CloudFront domain
 ]
 
 # Application definition
@@ -61,6 +62,7 @@ CORS_ALLOWED_ORIGINS = [
     "http://127.0.0.1:5174",  # IP-based localhost
     "http://mwpokedex.s3-website-us-east-1.amazonaws.com",  # S3-hosted frontend
     "http://44.209.72.49:8000",
+    "https://d1234abcd.cloudfront.net",
 ]
 CORS_ALLOW_ALL_ORIGINS = True
 
@@ -75,9 +77,7 @@ CORS_ALLOW_METHODS = [
 CORS_ALLOW_CREDENTIALS = True  # Allow authentication cookies/tokens
 
 # SECURITY SETTINGS
-SECURE_SSL_REDIRECT = (
-    os.getenv("SECURE_SSL_REDIRECT", "False") == "True"
-)  # ✅ Set based on environment
+SECURE_SSL_REDIRECT = True
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
 SECURE_BROWSER_XSS_FILTER = True
