@@ -11,7 +11,10 @@ randomly generated Pokemon teams, and play an interactive pokeflip memory game.
 ## 🌐 Live Demo
 
 Check out the live version of the app
-[here](https://mikhail-w.github.io/pokedex/?v=1).
+
+<!-- [here](https://mikhail-w.github.io/pokedex/?v=1). -->
+
+<a href="http://mwpokedex.s3-website-us-east-1.amazonaws.com" target="_blank" rel="noopener noreferrer">here</a>.
 
 ## 🚀 Features
 
