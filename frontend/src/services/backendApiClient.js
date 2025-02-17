@@ -1,7 +1,9 @@
 // const BACKEND_API_BASE_URL = 'http://localhost:8000/api';
 
-const BACKEND_API_BASE_URL =
-  'https://ec2-44-209-72-49.compute-1.amazonaws.com/api';
+const BACKEND_API_BASE_URL = 'http://44.209.72.49:8000/api';
+
+// const BACKEND_API_BASE_URL =
+//   'https://ec2-44-209-72-49.compute-1.amazonaws.com/api';
 
 const backendApiClient = {
   // Handle API responses and error cases
