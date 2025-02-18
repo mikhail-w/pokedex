@@ -1,7 +1,7 @@
 'use client';
 import '../assets/styles/NavBar.css';
 import pokeball from '../assets/images/pokeballs/pokeball.png';
-
+import { FaGithub } from 'react-icons/fa';
 import { MoonIcon, SunIcon } from '@chakra-ui/icons';
 import { useRef, useState, useEffect } from 'react';
 import { CgPokemon } from 'react-icons/cg';
@@ -25,6 +25,7 @@ import {
   InputRightAddon,
   useDisclosure,
   useToast,
+  Icon,
 } from '@chakra-ui/react';
 
 function NavBar({ myTeam }) {
@@ -166,6 +167,18 @@ function NavBar({ myTeam }) {
       <CustomMenuItem key="team" to="/team">
         My Team #{myTeam.length}
       </CustomMenuItem>,
+      <MenuItem
+        key="github"
+        as="a"
+        href="https://github.com/mikhail-w/pokedex"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <Flex align="center" gap={2}>
+          <Icon as={FaGithub} />
+          GitHub Repository
+        </Flex>
+      </MenuItem>,
     ];
 
     const authItems = isLoggedIn
