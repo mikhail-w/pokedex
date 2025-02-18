@@ -63,7 +63,6 @@ CORS_ALLOWED_ORIGINS = [
     "http://mwpokedex.s3-website-us-east-1.amazonaws.com",  # S3-hosted frontend
     "http://44.209.72.49:8000",
     "https://44.209.72.49:8000",
-    "http://d18sty0dsu44el.cloudfront.net",
     "https://d18sty0dsu44el.cloudfront.net",
 ]
 CORS_ALLOW_ALL_ORIGINS = True
@@ -80,11 +79,11 @@ CORS_ALLOW_CREDENTIALS = True  # Allow authentication cookies/tokens
 
 # SECURITY SETTINGS
 SECURE_SSL_REDIRECT = False
-SESSION_COOKIE_SECURE = True
-CSRF_COOKIE_SECURE = True
-SECURE_BROWSER_XSS_FILTER = True
-SECURE_CONTENT_TYPE_NOSNIFF = True
-X_FRAME_OPTIONS = "DENY"
+SESSION_COOKIE_SECURE = False
+CSRF_COOKIE_SECURE = False
+SECURE_BROWSER_XSS_FILTER = False
+SECURE_CONTENT_TYPE_NOSNIFF = False
+X_FRAME_OPTIONS = "ALLOW"
 
 ROOT_URLCONF = "backend.urls"
 

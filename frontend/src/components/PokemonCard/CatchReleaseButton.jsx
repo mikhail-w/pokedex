@@ -1,19 +1,19 @@
 import { isInTeam } from '../../utils';
 import { motion } from 'framer-motion';
-import { useMemo, useEffect } from 'react';
+import { useState, useMemo, useCallback } from 'react';
 import { TbPokeballOff } from 'react-icons/tb';
 import { useOutletContext } from 'react-router-dom';
-import { Box, Image, Tooltip } from '@chakra-ui/react';
-import { useToastNotification } from '../../hooks/useToastNotification';
+import { Box, Image, Tooltip, useToast } from '@chakra-ui/react';
 import backendApiClient from '../../services/backendApiClient';
 
-// Import Pokéball images for different states
 import catch01 from '../../assets/images/pokeballs/catch1_100.png';
 import catch02 from '../../assets/images/pokeballs/catch2_100.png';
 
 function CatchReleaseButton({ id, name }) {
   const { myTeam, setMyTeam } = useOutletContext();
-  const { showToast } = useToastNotification();
+  const toast = useToast();
+  const [isLoading, setIsLoading] = useState(false);
+
   // Get authentication token from localStorage
   const token = localStorage.getItem('token');
   const isLoggedIn = Boolean(token);
@@ -27,8 +27,23 @@ function CatchReleaseButton({ id, name }) {
     [myTeam, isPokemonInTeam, isLoggedIn]
   );
 
+  const showToast = useCallback(
+    (message, status) => {
+      toast({
+        title: message,
+        status: status,
+        duration: 3000,
+        isClosable: true,
+        position: 'bottom-right',
+      });
+    },
+    [toast]
+  );
+
   // Handle catching/releasing Pokémon
   const handleClick = async () => {
+    if (isLoading) return;
+
     // Check team size limit for non-logged in users
     if (!isLoggedIn && myTeam.length >= 6 && !isPokemonInTeam) {
       showToast('Team limit reached! Log in to add more Pokémon', 'warning');
@@ -36,6 +51,7 @@ function CatchReleaseButton({ id, name }) {
     }
 
     const action = isPokemonInTeam ? 'release' : 'catch';
+    setIsLoading(true);
 
     try {
       if (isLoggedIn) {
@@ -46,6 +62,13 @@ function CatchReleaseButton({ id, name }) {
           return;
         }
 
+        // Optimistically update the UI
+        const newTeam =
+          action === 'catch'
+            ? [...myTeam, id]
+            : myTeam.filter(pokemonId => pokemonId !== id);
+        setMyTeam(newTeam);
+
         // Make API call to update team on backend
         const data = await backendApiClient.updateUserTeam(
           accessToken,
@@ -53,14 +76,14 @@ function CatchReleaseButton({ id, name }) {
           action
         );
 
-        // Update local state if backend call succeeds
+        // Verify backend response and update if necessary
         if (data && data.current_team) {
           setMyTeam(data.current_team);
           showToast(
             `Pokémon ${name} ${
               action === 'catch' ? 'caught' : 'released'
             } successfully!`,
-            'success'
+            action === 'catch' ? 'success' : 'error'
           );
         }
       } else {
@@ -70,23 +93,37 @@ function CatchReleaseButton({ id, name }) {
         } else if (action === 'release') {
           setMyTeam(prev => prev.filter(pokemonId => pokemonId !== id));
         }
-
         showToast(
           `Pokémon ${name} ${
             action === 'catch' ? 'caught' : 'released'
           } successfully!`,
-          'success'
+          action === 'catch' ? 'success' : 'error'
         );
       }
     } catch (error) {
       console.error('Team update error:', error);
+      // Revert optimistic update on error
+      if (isLoggedIn) {
+        try {
+          const data = await backendApiClient.getUserTeam(token);
+          if (data?.current_team) {
+            setMyTeam(data.current_team);
+          }
+        } catch (fetchError) {
+          console.error('Failed to fetch current team:', fetchError);
+        }
+      }
+
       // Handle authentication errors
       if (error.response?.status === 401) {
         showToast('Your session has expired. Please log in again.', 'error');
-        // Optional: Redirect to login page or handle token expiration
+        localStorage.removeItem('token');
+        localStorage.removeItem('refresh');
       } else {
         showToast(`Failed to ${action} Pokémon. Please try again.`, 'error');
       }
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -105,16 +142,21 @@ function CatchReleaseButton({ id, name }) {
       <Box
         w="1.6rem"
         h="1.6rem"
-        className={
+        className={`${
           disabled ? 'disabled' : isPokemonInTeam ? 'release' : 'catch'
-        }
-        onClick={handleClick}
-        cursor={disabled ? 'not-allowed' : 'pointer'}
+        } ${isLoading ? 'loading' : ''}`}
+        onClick={isLoading ? undefined : handleClick}
+        cursor={disabled || isLoading ? 'not-allowed' : 'pointer'}
+        opacity={isLoading ? 0.7 : 1}
       >
         {disabled ? (
           <TbPokeballOff size={30} className="disabled-icon" />
         ) : (
-          <motion.div whileHover={{ scale: 1.2, rotate: 180 }}>
+          <motion.div
+            whileHover={{ scale: 1.2, rotate: 180 }}
+            animate={isLoading ? { rotate: 360 } : {}}
+            transition={isLoading ? { repeat: Infinity, duration: 1 } : {}}
+          >
             <Image src={isPokemonInTeam ? catch02 : catch01} alt="Poké Ball" />
           </motion.div>
         )}

@@ -176,9 +176,20 @@ function MyTeamPage() {
         p="50px"
         flexWrap="wrap"
         gap="40px"
-        overflow="scroll"
         m="10px"
-        maxH="75vh"
+        maxH="calc(100vh - 200px)"
+        overflowY="auto"
+        overflowX="hidden"
+        sx={{
+          '&::-webkit-scrollbar': {
+            width: '8px',
+            backgroundColor: 'transparent',
+          },
+          '&::-webkit-scrollbar-thumb': {
+            backgroundColor: 'gray.300',
+            borderRadius: '4px',
+          },
+        }}
       >
         {loading ? (
           <Center h="300px">
@@ -208,7 +219,7 @@ function MyTeamPage() {
         )}
       </Center>
 
-      <Center marginTop="20px">
+      <Center>
         <BackButton />
       </Center>
     </>
