@@ -64,6 +64,9 @@ function MainPokemonTab({ id, isMobileLandscape }) {
   // Responsive tab sizes based on screen width
   const tabSize = useBreakpointValue({ base: 'sm', md: 'md', lg: 'lg' });
 
+  // Calculate icon size based on device orientation
+  const iconSize = isMobileLandscape ? '0.7em' : '2em';
+
   // Calculate content height based on device orientation
   const contentHeight = isMobileLandscape
     ? 'calc(100vh - 70px)'
@@ -134,6 +137,7 @@ function MainPokemonTab({ id, isMobileLandscape }) {
         {/* Information Tab */}
         <TabPanel
           maxH={{ base: 'calc(100vh - 300px)', md: '600px' }}
+          overflowX="hidden"
           overflowY="auto"
           p={0}
         >
@@ -185,7 +189,7 @@ function MainPokemonTab({ id, isMobileLandscape }) {
             justify="center"
             maxW="full"
             h="auto"
-            maxH={{ base: 'calc(100vh - 300px)', md: '500px' }}
+            maxH={{ base: 'calc(100vh - 300px)', md: '550px' }}
             gap={10}
             overflowY="auto"
             mt={{ base: 30, md: 50, lg: 50 }}
@@ -227,28 +231,23 @@ function MainPokemonTab({ id, isMobileLandscape }) {
         >
           {/* Tab icons for different views */}
           <Tab>
-            <CgPokemon
-              color="#ef5350"
-              size={isMobileLandscape ? '.7em' : '2em'}
-            />
+            <CgPokemon color="#ef5350" size={iconSize} />
           </Tab>
           <Tab>
-            <CgPokemon
-              color="#ffcc00"
-              size={isMobileLandscape ? '.7em' : '2em'}
-            />
+            <CgPokemon color="#ffcc00" size={iconSize} />
           </Tab>
           <Tab>
-            <MdGif color="#396bba" size={isMobileLandscape ? '.7em' : '2em'} />
+            <MdGif color="#396bba" size={iconSize} />
           </Tab>
           <Tab>
-            <FaInfo color="#188038" size={isMobileLandscape ? '.7em' : '2em'} />
+            <FaInfo color="#188038" size={iconSize} />
           </Tab>
           <Tab>
             <Image
               src={groupImg}
               alt="Group image"
-              size={isMobileLandscape ? '.7em' : '2em'}
+              width={iconSize}
+              height={iconSize}
               objectFit="contain"
             />
           </Tab>

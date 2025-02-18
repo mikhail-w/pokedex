@@ -225,9 +225,9 @@ function PokeFlipPage() {
 
           <Flex>
             <Box
-              marginTop="10px"
+              marginTop="16px"
               className="newgame"
-              height="50px"
+              height="35px"
               onClick={shuffleCards}
             >
               <Image
@@ -250,7 +250,7 @@ function PokeFlipPage() {
                 top="100px"
                 height="100%"
                 src={lb}
-                alt="New Game"
+                alt="Leaderboard"
               />
             </Box>
             <Box>

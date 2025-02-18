@@ -62,6 +62,7 @@ CORS_ALLOWED_ORIGINS = [
     "http://127.0.0.1:5174",  # IP-based localhost
     "http://mwpokedex.s3-website-us-east-1.amazonaws.com",  # S3-hosted frontend
     "http://44.209.72.49:8000",
+    "https://44.209.72.49:8000",
     "http://d18sty0dsu44el.cloudfront.net",
     "https://d18sty0dsu44el.cloudfront.net",
 ]

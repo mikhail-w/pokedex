@@ -14,7 +14,9 @@ Check out the live version of the app
 
 <!-- [here](https://mikhail-w.github.io/pokedex/?v=1). -->
 
-<a href="http://mwpokedex.s3-website-us-east-1.amazonaws.com" target="_blank" rel="noopener noreferrer">here</a>.
+[here](https://d18sty0dsu44el.cloudfront.net).
+
+<!-- <a href="http://mwpokedex.s3-website-us-east-1.amazonaws.com" target="_blank" rel="noopener noreferrer">here</a>. -->
 
 ## 🚀 Features
 

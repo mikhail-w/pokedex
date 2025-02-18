@@ -36,6 +36,7 @@ const FlavorText = ({ flavorTextArray, onInfo, isMobileLandscape }) => {
         fontSize={{ base: '17px', md: '20px' }}
         lineHeight={{ base: '20px', md: '24px' }}
         width={{ base: '300px', md: '500px' }}
+        color={'black'}
         // outline={'2px solid'}
       >
         <span className="flavorText">{currentText}</span>
@@ -45,7 +46,7 @@ const FlavorText = ({ flavorTextArray, onInfo, isMobileLandscape }) => {
         mt={isMobileLandscape ? '-20px' : { base: '10px', md: '20px' }}
         mb={isMobileLandscape ? '-160px' : { base: '-150px', md: '20px' }}
         width="400px"
-        // outline={'2px solid'}
+        color={'#323030'}
       >
         <ReactPaginate
           previousLabel={'prev'}

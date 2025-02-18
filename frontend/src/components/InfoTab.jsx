@@ -60,7 +60,7 @@ function InfoTab() {
               <Heading size="lg" textTransform="capitalize">
                 {name}
               </Heading>
-              <Box pl={'10%'} pt={'6%'}>
+              <Box pl={'10%'} pt={{ base: '9%', md: '7%' }}>
                 <CatchReleaseButton id={id} name={name} />
               </Box>
             </Flex>

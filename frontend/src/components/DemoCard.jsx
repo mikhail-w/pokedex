@@ -98,7 +98,7 @@ const DemoCard = ({ id, name, type, isCaught, imageUrl }) => {
             ))}
           </Flex> */}
 
-          <Flex justifyContent="left" gap={5}>
+          <Flex justifyContent="left" gap={5} width={'210px'}>
             {type.map((t, index) => (
               <TypeBadge key={`${t}-${index}`} type={t} index={index} />
             ))}

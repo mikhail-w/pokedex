@@ -65,7 +65,7 @@ function CardFront({
       </Center>
 
       {/* NAME */}
-      <Center whiteSpace="nowrap" width="182px" height="26px">
+      <Center height="26px">
         <Text
           className="pokemonName"
           fontSize={name.length > 15 ? '10px' : '15px'}
