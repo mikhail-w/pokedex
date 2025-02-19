@@ -6,9 +6,7 @@ function EvolutionChain({ evoNames }) {
   return (
     <>
       {/* Evolution chain title */}
-      <Center color={'#323030'} className="evoTitle">
-        Evolution Chain
-      </Center>
+      <Center className="evoTitle">Evolution Chain</Center>
 
       {/* Evolution chain images and names */}
       <Flex
@@ -26,11 +24,7 @@ function EvolutionChain({ evoNames }) {
                 src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/${id}.png`}
                 alt={`${species_name} sprite`}
               />
-              <Text
-                color={'#323030'}
-                className="pname"
-                fontSize={{ base: 'sm', md: 'md' }}
-              >
+              <Text className="pname" fontSize={{ base: 'sm', md: 'md' }}>
                 {' '}
                 {/* Adjust font size */}
                 {species_name}
@@ -42,7 +36,6 @@ function EvolutionChain({ evoNames }) {
               <Center mx={3}>
                 <ArrowForwardIcon
                   size={{ base: 3, md: 8 }} // Responsive size
-                  color="gray.700"
                   aria-label="evolution transition"
                 />
               </Center>
