@@ -19,7 +19,7 @@ import ExpandButton from './ExpandButton';
 import ModalBackButton from './ModalBackButton';
 import { getFontSize, getIdPosition, getIdFontSize } from '../../utils';
 
-const MOBILE_BREAKPOINT = 900;
+const MOBILE_BREAKPOINT = 1010;
 const DEFAULT_BACKGROUND = ['#fff', '#f8f9fa'];
 
 const ModalContainer = ({
@@ -112,6 +112,7 @@ const ModalContainer = ({
       overflow={isMobileLandscape ? 'scroll' : 'hidden'}
       maxHeight={isMobile ? '80vh' : 'fit-content'}
       flexDirection={isMobile ? 'column' : 'row'}
+      // position="relative"
     >
       <Box w="100%" maxWidth="450px" marginTop="10px">
         <Flex
@@ -171,24 +172,29 @@ const ModalContainer = ({
             onClick={handleExpandClick}
           />
         </Flex>
-
-        <PokemonTabs card={card} pokeInfo={pokeInfo} />
+        <Box w="100%" maxW={450} position="relative">
+          <PokemonTabs card={card} pokeInfo={pokeInfo} />
+        </Box>
       </Box>
 
-      <Box
-        width="100%"
-        height="100%"
-        className={isMobile ? 'mobile-extended' : ''}
-      >
-        <Flex className="extended-section">
-          <div
-            className={`extended-content ${isContentVisible ? 'visible' : ''}`}
-          >
-            <FlavorText flavorTextArray={flavorTextArray} onInfo={false} />
-            <EvolutionChain evoNames={evoNames} />
-          </div>
-        </Flex>
-      </Box>
+      {isExpanded && (
+        <Box
+          width="100%"
+          height="100%"
+          className={isMobile ? 'mobile-extended' : ''}
+        >
+          <Flex className="extended-section">
+            <div
+              className={`extended-content ${
+                isContentVisible ? 'visible' : ''
+              }`}
+            >
+              <FlavorText flavorTextArray={flavorTextArray} onInfo={false} />
+              <EvolutionChain evoNames={evoNames} />
+            </div>
+          </Flex>
+        </Box>
+      )}
     </ModalContent>
   );
 };

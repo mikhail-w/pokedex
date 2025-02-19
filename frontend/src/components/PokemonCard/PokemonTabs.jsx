@@ -34,7 +34,7 @@ function PokemonTabs({ card, pokeInfo }) {
       variant="soft-rounded"
       colorScheme="green"
       size="sm"
-      w={{ base: '100%', md: '100%', lg: '450px' }}
+      w="100%"
       borderRadius="50px"
       h="280px"
       mt={10}

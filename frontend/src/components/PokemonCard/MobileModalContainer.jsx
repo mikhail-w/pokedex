@@ -159,7 +159,7 @@ const MobileModalContainer = ({
         </Flex>
 
         {/* Tabs Section*/}
-        <Box mt="auto">
+        <Box width="100%" px={0}>
           <PokemonTabs card={card} pokeInfo={pokeInfo} />
         </Box>
 
