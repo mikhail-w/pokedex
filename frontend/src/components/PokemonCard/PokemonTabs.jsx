@@ -33,8 +33,7 @@ function PokemonTabs({ card, pokeInfo }) {
       isFitted
       variant="soft-rounded"
       colorScheme="green"
-      size="sm"
-      w="100%"
+      minW={'450px'}
       borderRadius="50px"
       h="280px"
       mt={10}
