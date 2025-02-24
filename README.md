@@ -5,18 +5,13 @@ enthusiasts! This app lets you explore Pokemon, generate random ones, view
 randomly generated Pokemon teams, and play an interactive pokeflip memory game.
 
 <p align="center"style="margin-top: 30px;">
-  <img src="./src/assets/images/pokemon/pokedex.png" alt="Pokedex Logo">
+  <img src="./frontend/src/assets/images/pokemon/pokedex.png" alt="Pokedex Logo">
 </p>
 
 ## 🌐 Live Demo
 
 Check out the live version of the app
-
-<!-- [here](https://mikhail-w.github.io/pokedex/?v=1). -->
-
-[here](https://d18sty0dsu44el.cloudfront.net).
-
-<!-- <a href="http://mwpokedex.s3-website-us-east-1.amazonaws.com" target="_blank" rel="noopener noreferrer">here</a>. -->
+[here](https://d18sty0dsu44el.cloudfront.net/).
 
 ## 🚀 Features
 
@@ -27,11 +22,11 @@ Check out the live version of the app
   the PokeFlip game.
 - Toggle between light and dark mode.
 - View the team of Pokemon you've caught.
+<p>&nbsp;</p>
 
-### 📖 Pokemon List
+![Demo](./frontend/src/assets/images/screenshots/light-dark.gif)
 
-- Displays a paginated list of all Pokemon.
-- Filtered search functionality for finding specific Pokemon.
+<p>&nbsp;</p>
 
 ### 🔄 Generate Random Pokemon
 
@@ -43,16 +38,45 @@ Check out the live version of the app
 - Whenever you generate a new Pokemon a random team is created for you based on
   the Pokemon type.
 
+### 🎯 **Catch Pokémon**
+
+- Use a **Poké Ball** 🎱 to **catch** a Pokémon.
+- Store your **caught Pokémon** in your team.
+- **Release** Pokémon back into the wild whenever you want.
+- Keep track of your **captured collection** and build your ultimate Pokémon
+team! <br>
+<p>&nbsp;</p>
+
+![Demo](./frontend/src/assets/images/screenshots/rand-poke.gif)
+
+<p>&nbsp;</p>
+
+### 📖 Pokemon List
+
+- Displays a paginated list of all Pokemon.
+- Filtered search functionality for finding specific Pokemon.
+<p>&nbsp;</p>
+
+![Demo](./frontend/src/assets/images/screenshots/poke-list.gif)
+
+<p>&nbsp;</p>
+
 ### 🎲 PokeFlip Game
 
-- Play a memory game with Pokemon cards.
+- Play a memory game with Pokemon.
 - Test your memory and match the Pokemon pairs!
+- Try to beat the high score.
+<p>&nbsp;</p>
+
+![Demo](./frontend/src/assets/images/screenshots/poke-flip.gif)
+
+<p>&nbsp;</p>
 
 ## 💻 Tech Stack
 
 - **React** - Component-based architecture.
 - **Vite** - Fast and modern development build tool.
-- **CSS** - Custom styling for a visually appealing UI.
+- **Chakra UI** - Custom styling for a visually appealing UI.
 - **React-Router** - For seamless page navigation.
 - **Pokemon API** - Fetches real-time Pokemon data.
 
@@ -60,39 +84,43 @@ Check out the live version of the app
 
 ### Home Page
 
-![Home Page](./src/assets/images/screenshots/home.png)
+![Home Page](./frontend/src/assets/images/screenshots/home.png)
 
 ### Dark Mode
 
-![Home Page](./src/assets/images/screenshots/home-dark.png)
+![Home Page](./frontend/src/assets/images/screenshots/home-dark.png)
 
 ### Random Pokemon Generator
 
-![Random Pokemon](./src/assets/images/screenshots/random.png)
+![Random Pokemon](./frontend/src/assets/images/screenshots/random.png)
 
 ### Pokemon Card Front
 
-![Pokemon Details](./src/assets/images/screenshots/team.png)
+![Pokemon Details](./frontend/src/assets/images/screenshots/team.png)
 
 ### Pokemon Card Back
 
-![Pokemon Details](./src/assets/images/screenshots/team-back.png)
+![Pokemon Details](./frontend/src/assets/images/screenshots/team-back.png)
 
 ### Pokemon List
 
-![Pokemon Details](./src/assets/images/screenshots/list.png)
+![Pokemon Details](./frontend/src/assets/images/screenshots/list.png)
 
 ### Pokemon Card Info
 
-![Pokemon Card](./src/assets/images/screenshots/card.png)
+![Pokemon Card](./frontend/src/assets/images/screenshots/card.png)
 
 ### Pokemon Card Info Expanded
 
-![Pokemon Card](./src/assets/images/screenshots/card-extended.png)
+![Pokemon Card](./frontend/src/assets/images/screenshots/card-extended.png)
+
+### Build a Team
+
+![Pokemon Card](./frontend/src/assets/images/screenshots/cur-team.png)
 
 ### PokeFLip Game
 
-## ![PokeFlip](./src/assets/images/screenshots/flip.png)
+## ![PokeFlip](./frontend/src/assets/images/screenshots/flip.png)
 
 ## 🛠 Installation and Setup
 
