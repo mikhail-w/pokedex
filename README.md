@@ -129,7 +129,7 @@ Follow these steps to get the app up and running:
 1. **Clone the Repository**
    ```bash
    git clone https://github.com/mikhail-w/pokedex.git
-   cd pokedex
+   cd pokedex/frontend
    ```
 2. **Install Dependencies**
    ```bash
