@@ -356,15 +356,15 @@ function PokeFlipPage() {
               border="3px solid  #FFD700"
               color="#ffcc01"
               borderRadius="full"
+              height="100%"
+              width="200px"
+              fontSize="lg"
+              fontFamily="'Pokemon Solid', sans-serif"
+              letterSpacing={2}
               _hover={{
                 backgroundColor: '#cc3f3f',
                 color: 'white',
               }}
-              height="100%"
-              width="200px"
-              fontSize="xl"
-              fontFamily="'Pokemon Solid', sans-serif"
-              letterSpacing={2}
             >
               Leaderboard
             </Button>
